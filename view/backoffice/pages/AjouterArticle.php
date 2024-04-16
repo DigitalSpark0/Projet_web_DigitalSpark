@@ -13,8 +13,9 @@ function validerTitre($titre) {
 }
 
 function validerContenu($contenu) {
-    return ctype_upper(substr(trim($contenu), 0, 1)) && strpos($contenu, ' ') !== false && substr(trim($contenu), -1) === '.';
+    return ctype_upper(substr(trim($contenu), 0, 1)) && strpos($contenu, ' ') !== false && substr(trim($contenu), -1) === '.' && strlen(trim($contenu)) >= 20;
 }
+
 
 
 function validerAuteur($auteur) {
@@ -27,7 +28,7 @@ if (!validerTitre($titre)) {
     $erreurs[] = "Le titre doit commencer par une majuscule et contenir au moins 10 caractères.";
 }
 if (!validerContenu($contenu)) {
-    $erreurs[] = "Le contenu doit commencer par une majuscule, contenir au moins un espace et se terminer par un point.";
+    $erreurs[] = "Le contenu doit avoir au minimum 20 caractéres ,commencer par une majuscule, contenir au moins un espace et se terminer par un point.";
 }
 if (!validerAuteur($auteur)) {
     $erreurs[] = "L'auteur doit contenir seulement des caractères alphabétiques et commencer par une majuscule.";
