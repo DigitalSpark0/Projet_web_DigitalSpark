@@ -146,10 +146,10 @@
                       }
                       //////////////////////////////////////////////////////////
                       // Vérification de la catégorie
-                      var categoriesAutorisees = ["dev info", "chef projet", "graphiste", "webdesigner", "formateur", "commercial"];
+                      var categoriesAutorisees = ["Rédaction et édition", "Design graphique", "Développement web et programmation", "Marketing et publicité", "Formation et coaching"];
                       if (!categoriesAutorisees.includes(categorie)) 
                       {
-                          alert("La catégorie n'est pas valide.Categorie doit ètre 'dev info' ou 'chef projet' ou 'graphiste' ou 'webdesigner' ou 'formateur' ou 'commercial'!");
+                          alert("La catégorie n'est pas valide.Categorie doit ètre 'Rédaction et édition' ou 'Design graphique' ou 'Développement web et programmation' ou 'Marketing et publicité' ou 'Formation et coaching'!");
                           return false;
                       }
                       ///////////////////////////////////////////////////////////

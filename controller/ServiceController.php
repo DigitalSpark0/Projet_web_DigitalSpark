@@ -1,6 +1,6 @@
 <?php
 include "C:/xampp/htdocs/projet web (gestion services)/model/service.php";
-include "C:/xampp/htdocs/projet web (gestion services)/config.php";
+
 class ServiceController
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,7 +30,7 @@ class ServiceController
     ///////////////////////////////////////////////////////////////////////////////////////////
     public function listServices()
     {
-        $sql = "SELECT titre_s, prix_s, categorie_s , statut_s FROM SERVICE";
+        $sql = "SELECT * FROM SERVICE";
         $db = config::getConnexion();
         try
         {

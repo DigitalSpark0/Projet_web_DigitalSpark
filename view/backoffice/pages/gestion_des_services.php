@@ -1,9 +1,13 @@
 <?php
 include "C:/xampp/htdocs/projet web (gestion services)/controller/ServiceController.php";
+include "C:/xampp/htdocs/projet web (gestion services)/controller/CommandeController.php";
+include "C:/xampp/htdocs/projet web (gestion services)/config.php";
 
 $db=config::getConnexion(); 
-$serv = new ServiceController(); 
+$serv = new ServiceController();
+$cum = new CommandeController(); 
 $list =$serv->listServices();
+$listaa=$cum->listcommande();
 ?>
  <!--
 =========================================================
@@ -157,7 +161,7 @@ $list =$serv->listServices();
           <h6 class="font-weight-bolder mb-0">Gestion des Services</h6>
         </nav>
         <div>
-          <a class="custom-link" href ="http://localhost/projet%20web%20(gestion%20services)/view/frontoffice/">to the front office</a>
+          <a class="custom-link" href ="http://localhost/projet%20web%20(gestion%20services)/view/frontoffice/index.php">to the front office</a>
         </div>
         <style>
         /* Style du lien */
@@ -292,247 +296,52 @@ $list =$serv->listServices();
 
     <!----------------------------------------------min hna tebda elpage taik achraf---------------------------------------------------------------------------------------------------------------->
     <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-lg-8">
-          <!----------------------------->
-          <div class="row">
-            
-            <!------------------------------------PARTIE D'AJOUT DES SERVICES-------------------------------------------------------->
-            <div class="col-md-12 mb-lg-0 mb-4">
-              <div class="card mt-4">
-                <div class="card-header pb-0 p-3">
-                  <div class="row">
-                    <div class="col-6 d-flex align-items-center">
-                        <h3 class="mb-0">Ajouter un service</h3>
-                    </div>
-                  </div>
-                  <!--formulaire taa ajout taa el service-->
-                  <form id="service" action="ajouter_service.php"  method="post" onsubmit="return validateForm()">
-                    <section align="center">
-                      <label for="titre_ser">Titre du service:</label>
-                      <input type="text" id="titre" name="titres">
-                      <br><br>
-                      <label for="titre_ser">Prix du service:</label>
-                      <input type="text" id="prix" name="prixs">
-                      <br><br>
-                      <label for="titre_ser">Durée estimée:</label>
-                      <input type="text" id="duree" name="durees">
-                      <br><br>
-                      <label for="titre_ser">Categorie du service:</label>
-                      <input type="text" id="categorie" name="categories">
-                      <br><br>
-                      <label for="titre_ser">Statut du service:</label>
-                      <input type="text" id="statut" name="statuts">
-                      <br><br>
-                      <label for="titre_ser">Description du service:</label>
-                      <textarea type="text" id="desscription" name="descriptions"></textarea>
-                    </section>
-                    <button class="btn bg-gradient-dark mb-0" type="submit"><i class="material-icons text-sm">add</i>&nbsp;&nbsp;Valider</button>
-                  </form>
-
-                  <!--   CONTROLE DE SAISIE-->
-                  <script>
-                  function validateForm() 
-                  {
-                      var titre = document.getElementById("titre").value;
-                      var prix = parseFloat(document.getElementById("prix").value);
-                      var duree= document.getElementById("duree").value;
-                      var statut = document.getElementById("statut").value.toLowerCase();
-                      var categorie = document.getElementById("categorie").value.trim().toLowerCase();
-                      var description = document.getElementById("desscription").value;
-                    /////////////////////////////////////////////////////////////////////////////
-                      //controle de saisie titre
-                      if (titre.length > 10) 
-                      {
-                          alert("Le titre ne doit pas dépasser 10 caractères");
-                          return false;
-                      }
-                      //////////////////////////////////////////////////////
-                      //controle de saisie prix
-                      if (prix <= 100 || prix >= 1000 || isNaN(prix)) 
-                      {
-                          alert("Le prix doit être compris entre 100 et 1000");
-                          return false;
-                      }
-                      ///////////////////////////////////////////////////////
-                      //controle de saisie statut
-                      if (statut !== "disponible" && statut !== "prochainement") 
-                      {
-                          alert("Le statut doit être soit 'disponible' soit 'prochainement'");
-                          return false; 
-                      }
-                      //////////////////////////////////////////////////////////
-                      // Vérification de la catégorie
-                      var categoriesAutorisees = ["dev info", "chef projet", "graphiste", "webdesigner", "formateur", "commercial"];
-                      if (!categoriesAutorisees.includes(categorie)) 
-                      {
-                          alert("La catégorie n'est pas valide.Categorie doit ètre 'dev info' ou 'chef projet' ou 'graphiste' ou 'webdesigner' ou 'formateur' ou 'commercial'!");
-                          return false;
-                      }
-                      ///////////////////////////////////////////////////////////
-                      //verification duree
-                      if (duree==="")
-                      {
-                        alert("donner une duree pour le service");
-                        return false;
-                      }
-                      /////////////////////////////////////////////////////////////
-                      //verification description
-                      if (description === "") 
-                      {
-                          alert("La description ne peut pas être vide");
-                          return false; 
-                      }
-
-                    //////////////////////////////////////////////
-                      return true;
-                  }
-                  </script>
-                  <!--   CONTROLE DE SAISIE-->
-
-
-                  <!--formulaire taa ajout taa el service-->
-                  </div>
-                
-              </div>
-            </div>
-            <!---------------------------------------------------------------------------------------------------------->
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="col-md-7 mt-4">
-            <!------------------------------------------ partie affichage------------------------------------------------>
-            <form >
-              <div class="card">
-              <div class="card-header pb-0 px-3">
-                <h3 class="mb-0">La liste des services</h3>
-              </div>
-              <div class="card">
-        <div class="card-body pt-4 p-3" style="height: 733px; overflow-y: auto;">
+    <div class="row">
+    <div class="col-lg-5">
+        <div class="card-header pb-0 px-3">
+            <h3 class="mb-0" align="center">La liste des services</h3>
             <ul class="list-group">
                 <?php foreach ($list as $service){ ?>
-                    <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                    <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-200 border-radius-lg">
                         <div class="d-flex flex-column">
                             <h2 class="mb-3 text-sm font-weight-bold"><?= $service['titre_s'];?></h2>
                             <span class="mb-2 text-xs">Prix: <span class="text-dark ms-sm-2"><?= $service['prix_s'];?></span></span>
                             <span class="mb-2 text-xs">Catégorie: <span class="text-dark ms-sm-2"><?= $service['categorie_s'];?> </span></span>
                             <span class="text-xs">Statut: <span class="text-dark ms-sm-2"><?= $service['statut_s'];?></span></span>
-                            <!--<form method="POST" action="updateservice.php">
-                             <input type="hidden" name="idservice" value=<?//php echo $service['titre_s']; ?> > 
-                             <button type="submit" name="update">Update</button>
-                            </form>-->
-                            <a class="btn bg-gradient-dark mb-0" href="updateservice.php">Update</a>
-                            <a class="btn bg-gradient-dark mb-0" href="deleteservice.php?id=<?php echo $service['titre_s']; ?>">Delete</a>
+                            <span class="text-xs">Description: <span class="text-dark ms-sm-2"><?= $service['desc_s'];?></span></span>
+                            <span class="text-xs">Durée: <span class="text-dark ms-sm-2"><?= $service['duree_s'];?></span></span>
+                            <a class="btn bg-gradient-dark mb-0" href="../../frontoffice/deleteservice.php?id=<?php echo $service['titre_s']; ?>">Delete</a>
                         </div>
                     </li>
                 <?php }// endforeach; ?>
             </ul>
         </div>
     </div>
-            </div>
-            </form>
-            
-               </div>
-      </div>
-            <!------------------------------------------ partie affichage------------------------------------------------>
-        <!----------------------------------------------------------------------->
-        <div class="col-md-5 mt-4">
-          <div class="card h-100 mb-4">
-            <div class="card-header pb-0 px-3">
-              <div class="row">
-                <div class="col-md-6">
-                  <h6 class="mb-0">Your Transaction's</h6>
-                </div>
-                <div class="col-md-6 d-flex justify-content-start justify-content-md-end align-items-center">
-                  <i class="material-icons me-2 text-lg">date_range</i>
-                  <small>23 - 30 March 2020</small>
-                </div>
-              </div>
-            </div>
-            <div class="card-body pt-4 p-3">
-              <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3">Newest</h6>
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-3 p-3 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-lg">expand_more</i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Netflix</h6>
-                      <span class="text-xs">27 March 2020, at 12:30 PM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-danger text-gradient text-sm font-weight-bold">
-                    - $ 2,500
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 p-3 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-lg">expand_less</i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Apple</h6>
-                      <span class="text-xs">27 March 2020, at 04:30 AM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                    + $ 2,000
-                  </div>
-                </li>
-              </ul>
-              <h6 class="text-uppercase text-body text-xs font-weight-bolder my-3">Yesterday</h6>
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 p-3 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-lg">expand_less</i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Stripe</h6>
-                      <span class="text-xs">26 March 2020, at 13:45 PM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                    + $ 750
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 p-3 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-lg">expand_less</i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">HubSpot</h6>
-                      <span class="text-xs">26 March 2020, at 12:30 PM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                    + $ 1,000
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 p-3 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-lg">expand_less</i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Creative Tim</h6>
-                      <span class="text-xs">26 March 2020, at 08:30 AM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                    + $ 2,500
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 me-3 p-3 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-lg">priority_high</i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Webflow</h6>
-                      <span class="text-xs">26 March 2020, at 05:00 AM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-dark text-sm font-weight-bold">
-                    Pending
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
+    
+    <div class="col-lg-5">
+        <div class="card-header pb-0 px-3">
+            <h3 class="mb-0" align="center">la liste des commandes</h3>
+            <ul class="list-group">
+                <?php foreach ($listaa as $commande){ ?>
+                    <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-200 border-radius-lg">
+                        <div class="d-flex flex-column">
+                            <h2 class="mb-3 text-sm font-weight-bold">id du commande:  <?= $commande['idc'];?></h2>
+                            <h2><span class="mb-2 text-xs">idservice: <span class="text-dark ms-sm-2" name="idsse"><?= $commande['idservice'];?></span></span></h2>
+                            <span class="mb-2 text-xs">date d'ajout de la commande: <span class="text-dark ms-sm-2" name="da"><?= $commande['date_c'];?> </span></span>
+                            <span class="text-xs">statut: <span class="text-dark ms-sm-2" name="st"><?= $commande['statut_c'];?></span></span>
+                            <span class="text-xs">montant: <span class="text-dark ms-sm-2" name="mo"><?= $commande['montant_c'];?></span></span>
+                            <form method="POST" action="updatecommande.php">
+                              <input type="submit" name="updatee" value="Update">
+                              <input type="hidden" value=<?php echo $commande['idc']; ?> name="idup">
+                            </form>
+                            <a class="btn bg-gradient-dark mb-0" href="deletecommande.php?id=<?php echo $commande['idc']; ?>">Delete</a>
+                        </div>
+                    </li>
+                <?php }// endforeach; ?>
+            </ul>
         </div>
-        <!-------------------------------------------------------------------------------->
-      </div>
+    </div>
+</div>
       
 
 

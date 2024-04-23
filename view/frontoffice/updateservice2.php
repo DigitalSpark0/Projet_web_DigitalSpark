@@ -1,5 +1,6 @@
 <?php 
 include "C:/xampp/htdocs/projet web (gestion services)/controller/ServiceController.php";
+include "C:/xampp/htdocs/projet web (gestion services)/config.php";
 $titre_s2 = isset($_POST["titres2"]) ?$_POST["titres2"]:'erreur';
 $desc_s2 = isset($_POST["descriptions2"])?$_POST["descriptions2"]:'erreur';
 $prix_s2 = isset($_POST["prixs2"])?$_POST["prixs2"]:'erreur';

@@ -1,30 +1,28 @@
 <?php
 class commande
 {
-    private $idc;
-    /*
-    private $idu(id user);
-    private $ids(id table service);
-    */
+    private $idservice;
     private $date_c;
-    private $heure_c;
     private $statut_c;
-    private $montant
+    private $montant_c;
+
+    public function __construct($f,$a,$b,$c)
+    {
+        $this->idservice="$f";
+        $this->date_c="$a";
+        $this->statut_c="$b";
+        $this->montant_c="$c";
+    }
 
     //Getters:
-    public function getidc()
+    public function getidservice()
     {
-        return $this->idc;
+        return $this->idservice;
     }
 
     public function getdate_c()
     {
         return $this->date_c;
-    }
-
-    public function getheure_c()
-    {
-        return $this->heure_c;
     }
 
     public function getstatut_c()
@@ -38,9 +36,9 @@ class commande
     }
 
     //Setters:
-    public function setidc($a)
+    public function setidservice($a)
     {
-        $this->idc=$a
+        $this->idservice=$a;
     }
 
     public function setdate_c($b)
@@ -48,17 +46,12 @@ class commande
         $this->date_c=$b;
     }
 
-    public function getheure_c($c)
-    {
-        $this->heure_c=$c;
-    }
-
-    public function getstatut_c($d)
+    public function setstatut_c($d)
     {
         $this->statut_c=$d;
     }
 
-    public function getmontant_c($e)
+    public function setmontant_c($e)
     {
         $this->montant_c=$e;
     }

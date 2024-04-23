@@ -1,5 +1,6 @@
 <?php
 include "C:/xampp/htdocs/projet web (gestion services)/controller/ServiceController.php";
+include "C:/xampp/htdocs/projet web (gestion services)/config.php";
 
 // Récupérer les données du formulaire
 $titre = isset($_POST["titres"]) ?$_POST["titres"]:'erreur';
@@ -14,5 +15,5 @@ $ser=new service($titre,$description,$prix,$duree,$categorie,$statut);
 $serviceC = new ServiceController();
 $serviceC->ajouterService($ser);
 
-header('Location:gestion_des_services.php'); 
+header('Location:../../frontoffice/index.php'); 
 ?>

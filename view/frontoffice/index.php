@@ -1,3 +1,17 @@
+<?php
+if (!class_exists('config')) {
+    include "C:/xampp/htdocs/projet web (gestion services)/config.php";
+ }
+include "C:/xampp/htdocs/projet web (gestion services)/controller/ServiceController.php";
+include "C:/xampp/htdocs/projet web (gestion services)/controller/CommandeController.php";
+
+
+$db=config::getConnexion(); 
+$serv = new ServiceController(); 
+$com = new CommandeController();
+$list =$serv->listServices();
+$lista =$com->listcommande();
+?>
 <!doctype html>
 <html class="no-js" lang="zxx">
     <head>
@@ -56,7 +70,7 @@
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="index.php">Home</a></li>
                                             <li><a href="job_listing.html">Find a Jobs </a></li>
                                             <li><a href="about.html">About</a></li>
                                             <li><a href="#">Page</a>
@@ -64,7 +78,7 @@
                                                     <li><a href="blog.html">Blog</a></li>
                                                     <li><a href="single-blog.html">Blog Details</a></li>
                                                     <li><a href="elements.html">Elements</a></li>
-                                                    <li><a href="commandes.html">Les commandes</a></li>
+                                                    <li><a href="commandes.php">Les services</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="contact.html">Contact</a></li>
@@ -303,93 +317,43 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-tittle text-center">
-                            <span>Recent Job</span>
-                            <h2>Featured Jobs</h2>
+                            <span>gawk gawk</span>
+                            <h2>Les services</h2>
                         </div>
                     </div>
+                    <form  action="pageajout.php"  >
+                        <button  class="btn bg-gradient-dark mb-0" type="submit">ajouter un service</button>
+                    </form>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-xl-10">
                         <!-- single-job-content -->
+                        <?php foreach ($list as $service){ ?>
                         <div class="single-job-items mb-30">
                             <div class="job-items">
                                 <div class="company-img">
                                     <a href="commandes.html"><img src="assets/img/icon/job-list1.png" alt=""></a>
                                 </div>
                                 <div class="job-tittle">
-                                    <a href="commandes.html"><h4>Digital Marketer</h4></a>
+                                    <a href="commandes.html"><h4><?= $service['titre_s'];?></h4></a>
                                     <ul>
-                                        <li>Creative Agency</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        <li>$3500 - $4000</li>
+                                        <li><?= $service['statut_s'];?></li>
+                                        <li><?= $service['categorie_s'];?> </li>
+                                        <li><?= $service['prix_s'];?>DT</li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="items-link f-right">
-                                <a href="commandes.html">Full Time</a>
-                                <span>7 hours ago</span>
+                                <a href="commandes.php">afficher tous les informations</a>
+                                <a class="" href="updateservice.php">Update</a>
+                                <a class="" href="deleteservice.php?id=<?php echo $service['titre_s']; ?>">Delete</a>
+                                 
                             </div>
                         </div>
-                        <!-- single-job-content -->
-                        <div class="single-job-items mb-30">
-                            <div class="job-items">
-                                <div class="company-img">
-                                    <a href="commandes.html"><img src="assets/img/icon/job-list2.png" alt=""></a>
-                                </div>
-                                <div class="job-tittle">
-                                    <a href="commandes.html"><h4>Digital Marketer</h4></a>
-                                    <ul>
-                                        <li>Creative Agency</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        <li>$3500 - $4000</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="items-link f-right">
-                                <a href="commandes.html">Full Time</a>
-                                <span>7 hours ago</span>
-                            </div>
+                        <?php } ?>
+                        
                         </div>
-                         <!-- single-job-content -->
-                        <div class="single-job-items mb-30">
-                            <div class="job-items">
-                                <div class="company-img">
-                                    <a href="commandes.html"><img src="assets/img/icon/job-list3.png" alt=""></a>
-                                </div>
-                                <div class="job-tittle">
-                                    <a href="commandes.html"><h4>Digital Marketer</h4></a>
-                                    <ul>
-                                        <li>Creative Agency</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        <li>$3500 - $4000</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="items-link f-right">
-                                <a href="commandes.html">Full Time</a>
-                                <span>7 hours ago</span>
-                            </div>
-                        </div>
-                         <!-- single-job-content -->
-                        <div class="single-job-items mb-30">
-                            <div class="job-items">
-                                <div class="company-img">
-                                    <a href="commandes.html"><img src="assets/img/icon/job-list4.png" alt=""></a>
-                                </div>
-                                <div class="job-tittle">
-                                    <a href="commandes.html"><h4>Digital Marketer</h4></a>
-                                    <ul>
-                                        <li>Creative Agency</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        <li>$3500 - $4000</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="items-link f-right">
-                                <a href="commandes.html">Full Time</a>
-                                <span>7 hours ago</span>
-                            </div>
-                        </div>
+                         
                     </div>
                 </div>
             </div>
