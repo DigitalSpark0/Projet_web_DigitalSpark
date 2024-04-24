@@ -6,10 +6,12 @@ class Article
     private $contenu_a;
     private $auteur_a;
     private $date_p;
+    private $image_a;
    
 
     //Getters:
     
+
 
     public function gettitre_a()
     {
@@ -29,6 +31,11 @@ class Article
     public function getdate_p()
     {
         return $this->date_p;
+    }
+
+    public function getimage_a()
+    {
+        return $this->image_a;
     }
 
 
@@ -55,12 +62,18 @@ class Article
         $this->date_p=$d;
     }
 
-    public function __construct($a,$b,$c,$d)
+    public function setimage_a($e)
+    {
+        $this->image_a=$e;
+    }
+
+    public function __construct($a,$b,$c,$d,$e)
     {
         $this->titre_a="$a";
         $this->contenu_a="$b";
         $this->auteur_a="$c";
         $this->date_p="$d";
+        $this->image_a="$e";
        
     }
 

@@ -8,6 +8,10 @@ $auteur = isset($_POST["auteurs"]) ? $_POST["auteurs"] : 'erreur';
 $date = date("Y-m-d H:i:s"); 
 
 
+
+
+
+
 function validerTitre($titre) {
     return (strlen($titre) >= 10 && ctype_upper(substr($titre, 0, 1)));
 }
@@ -20,6 +24,17 @@ function validerContenu($contenu) {
 
 function validerAuteur($auteur) {
     return ctype_alpha($auteur) && ctype_upper(substr($auteur, 0, 1));
+}
+
+$imageData = null;
+$image = isset($_FILES["image"]) ? $_FILES["image"] : null;
+
+if ($image && $image['error'] === UPLOAD_ERR_OK) {
+    $imageData = file_get_contents($image['tmp_name']);
+    $imageData = base64_encode($imageData); 
+} else {
+   
+    $imageData = null;
 }
 
 
@@ -42,7 +57,7 @@ if (!empty($erreurs)) {
     }
 } else {
     
-    $article = new Article($titre, $contenu, $auteur, $date);
+    $article = new Article($titre, $contenu, $auteur, $date, $imageData);
     $articleC = new ArticleController();
     $articleC->addarticle($article);
 

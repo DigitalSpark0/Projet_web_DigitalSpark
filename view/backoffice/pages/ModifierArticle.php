@@ -23,6 +23,17 @@ function validerAuteur($auteur) {
     return ctype_alpha($auteur) && ctype_upper(substr($auteur, 0, 1));
 }
 
+$imageData1 = null;
+$image1 = isset($_FILES["image2"]) ? $_FILES["image2"] : null;
+
+if ($image1 && $image1['error'] === UPLOAD_ERR_OK) {
+    $imageData1 = file_get_contents($image1['tmp_name']);
+    $imageData1 = base64_encode($imageData1); 
+} else {
+   
+    $imageData1 = null;
+}
+
 
 $erreurs = [];
 if (!validerTitre($titre2)) {
@@ -43,7 +54,7 @@ if (!empty($erreurs)) {
     }
 } else {
     $articleC1 = new ArticleController();
-    $articleC1->updatearticle($id2, $titre2, $contenu2, $auteur2, $datep2);
+    $articleC1->updatearticle($id2, $titre2, $contenu2, $auteur2, $datep2, $imageData1);
 
     
     header('Location: gestion_des_articles.php');

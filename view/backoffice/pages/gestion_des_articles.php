@@ -8,6 +8,23 @@ $ArticleC = new ArticleController();
 $list = $ArticleC->listArticles();
 $comC = new CommentaireController();
 $list1 = $comC->listCommentaires1();
+
+//*****************************************************************************//
+
+$searchTerm = isset($_POST['search']) ? $_POST['search'] : '';
+$searchTerm1 = isset($_POST['search1']) ? $_POST['search1'] : '';
+
+
+$listArray = $list->fetchAll(PDO::FETCH_ASSOC);
+
+
+// Filtrer la liste d'articles en fonction du terme de recherche
+$filteredArticles = array_filter($listArray, function($Article) use ($searchTerm) {
+    // Vérifiez si le titre de l'article contient le terme de recherche
+    return stripos($Article['titre_a'], $searchTerm) !== false;
+});
+
+$filteredComments = [];
 /////////////////////////////////////////////////////////////////////////
 ?>
 
@@ -27,6 +44,18 @@ $list1 = $comC->listCommentaires1();
     margin-left: auto; 
 }
 
+.custom-form {
+    max-height: 100%;
+    overflow-y: auto; 
+  }
+
+  .modification-form {
+  display: none;
+}
+
+.modification-form:target {
+  display: block;
+}
 
   </style>
 <head>
@@ -51,6 +80,181 @@ $list1 = $comC->listCommentaires1();
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  const articleLinks = document.querySelectorAll('.article .delete-btn');
+  const modifyLinks = document.querySelectorAll('.article .modify-link');
+
+  // Pour les liens '+' affichant les informations supplémentaires
+  articleLinks.forEach(link => {
+    if (link.textContent === '+') {
+      link.addEventListener('click', function(event) {
+        event.preventDefault();
+        const articleId = this.getAttribute('href').split('#')[1];
+        const articleInfo = document.getElementById(articleId);
+
+        toggleDisplay(articleInfo);
+      });
+    }
+  });
+
+  // Pour les liens 'modifier' affichant le formulaire de modification
+  modifyLinks.forEach(link => {
+    link.addEventListener('click', function(event) {
+      event.preventDefault();
+      const modifyId = this.getAttribute('href').split('#')[1];
+      const modifyForm = document.getElementById(modifyId);
+
+      toggleDisplay(modifyForm);
+    });
+  });
+
+  // Fonction pour afficher ou masquer un élément
+  function toggleDisplay(element) {
+    if (element.style.display === 'none' || element.style.display === '') {
+      element.style.display = 'block';
+    } else {
+      element.style.display = 'none';
+    }
+  }
+});
+
+function validateTitre() {
+        var titre = document.getElementById("titre").value;
+        var titreMessage = document.getElementById("titreMessage");
+        if (titre.length >= 10 && titre[0] === titre[0].toUpperCase()) {
+            titreMessage.innerHTML = "Données valides";
+            titreMessage.style.color = "green";
+        } else {
+            titreMessage.innerHTML = "Le titre doit commencer par une majuscule et contenir au moins 10 caractères.";
+            titreMessage.style.color = "red";
+        }
+    }
+
+    function validateContenu() {
+        var contenu = document.getElementById("contenu").value;
+        var contenuMessage = document.getElementById("contenuMessage");
+        if (contenu.length >= 20 && contenu[0] === contenu[0].toUpperCase() && contenu.includes(" ") && contenu.trim().endsWith(".")) {
+            contenuMessage.innerHTML = "Données valides";
+            contenuMessage.style.color = "green";
+        } else {
+            contenuMessage.innerHTML = "Le contenu doit avoir au minimum 20 caractères, commencer par une majuscule, contenir au moins un espace et se terminer par un point.";
+            contenuMessage.style.color = "red";
+        }
+    }
+
+    function validateAuteur() {
+        var auteur = document.getElementById("auteur").value;
+        var auteurMessage = document.getElementById("auteurMessage");
+        if (/^[A-Z][a-z]*$/.test(auteur)) {
+            auteurMessage.innerHTML = "Données valides";
+            auteurMessage.style.color = "green";
+        } else {
+            auteurMessage.innerHTML = "L'auteur doit contenir seulement des caractères alphabétiques et commencer par une majuscule.";
+            auteurMessage.style.color = "red";
+        }
+    }
+
+    function validateForm() {
+        validateTitre();
+        validateContenu();
+        validateAuteur();
+
+        // Renvoie true si toutes les validations sont réussies, sinon false
+        return document.querySelectorAll('span[style="color:red;"]').length === 0;
+    }
+
+            // *************************************pour le formulaire de modification ************************************************************************
+            function validateTitre1() {
+        var titre = document.getElementById("titre1").value;
+        var titreMessage = document.getElementById("titreMessage1");
+        if (titre.length >= 10 && titre[0] === titre[0].toUpperCase()) {
+            titreMessage.innerHTML = "Données valides";
+            titreMessage.style.color = "green";
+        } else {
+            titreMessage.innerHTML = "Le titre doit commencer par une majuscule et contenir au moins 10 caractères.";
+            titreMessage.style.color = "red";
+        }
+    }
+
+    function validateContenu1() {
+        var contenu = document.getElementById("contenu1").value;
+        var contenuMessage = document.getElementById("contenuMessage1");
+        if (contenu.length >= 20 && contenu[0] === contenu[0].toUpperCase() && contenu.includes(" ") && contenu.trim().endsWith(".")) {
+            contenuMessage.innerHTML = "Données valides";
+            contenuMessage.style.color = "green";
+        } else {
+            contenuMessage.innerHTML = "Le contenu doit avoir au minimum 20 caractères, commencer par une majuscule, contenir au moins un espace et se terminer par un point.";
+            contenuMessage.style.color = "red";
+        }
+    }
+
+    function validateAuteur1() {
+        var auteur = document.getElementById("auteur1").value;
+        var auteurMessage = document.getElementById("auteurMessage1");
+        if (/^[A-Z][a-z]*$/.test(auteur)) {
+            auteurMessage.innerHTML = "Données valides";
+            auteurMessage.style.color = "green";
+        } else {
+            auteurMessage.innerHTML = "L'auteur doit contenir seulement des caractères alphabétiques et commencer par une majuscule.";
+            auteurMessage.style.color = "red";
+        }
+    }
+
+    function validateForm1() {
+        validateTitre1();
+        validateContenu1();
+        validateAuteur1();
+
+        // Renvoie true si toutes les validations sont réussies, sinon false
+        return document.querySelectorAll('span[style="color:red;"]').length === 0;
+    }
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ function validateTitre2() {
+        var titre = document.getElementById("titre2").value;
+        var titreMessage = document.getElementById("titreMessage2");
+        if (titre.length >= 10 && titre[0] === titre[0].toUpperCase()) {
+            titreMessage.innerHTML = "Données valides";
+            titreMessage.style.color = "green";
+        } else {
+            titreMessage.innerHTML = "Le titre doit commencer par une majuscule et contenir au moins 10 caractères.";
+            titreMessage.style.color = "red";
+        }
+    }
+
+    function validateContenu2() {
+        var contenu = document.getElementById("contenu2").value;
+        var contenuMessage = document.getElementById("contenuMessage2");
+        if (contenu.length >= 20 && contenu[0] === contenu[0].toUpperCase() && contenu.includes(" ") && contenu.trim().endsWith(".")) {
+            contenuMessage.innerHTML = "Données valides";
+            contenuMessage.style.color = "green";
+        } else {
+            contenuMessage.innerHTML = "Le contenu doit avoir au minimum 20 caractères, commencer par une majuscule, contenir au moins un espace et se terminer par un point.";
+            contenuMessage.style.color = "red";
+        }
+    }
+
+    function validateAuteur2() {
+        var auteur = document.getElementById("auteur2").value;
+        var auteurMessage = document.getElementById("auteurMessage2");
+        if (/^[A-Z][a-z]*$/.test(auteur)) {
+            auteurMessage.innerHTML = "Données valides";
+            auteurMessage.style.color = "green";
+        } else {
+            auteurMessage.innerHTML = "L'auteur doit contenir seulement des caractères alphabétiques et commencer par une majuscule.";
+            auteurMessage.style.color = "red";
+        }
+    }
+
+    function validateForm2() {
+        validateTitre2();
+        validateContenu2();
+        validateAuteur2();
+
+        // Renvoie true si toutes les validations sont réussies, sinon false
+        return document.querySelectorAll('span[style="color:red;"]').length === 0;
+    }
+</script>
 <div class="page-header align-items-start min-vh-100" style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');">
 <span class="mask bg-gradient-dark opacity-6"></span>
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
@@ -267,132 +471,226 @@ $list1 = $comC->listCommentaires1();
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-        <div>
-              <center><h2 class="mb-0" style="color:#0dcaf0;">Ajouter un article</h2></center>
-            </div>
-          <div class="card mt-4">
-            <br>
-            <!------------------------------------------FORM-------------------------------------------------------------->
-            
-            <div>
-            <form  id="service" action="AjouterArticle.php" method="post">
-              <section align="center">
-                <label for="titre_ser">Titre de l'article:</label>
-                <input type="text" id="titre" name="titres">
-                <br><br>
-                <label for="titre_ser">contenu de l'article:</label>
-                <textarea type="text" id="contenu" name="contenus"></textarea>
-                <br><br>
-                <label for="titre_ser">auteur de l'article:</label>
-                <input type="text" id="auteur" name="auteurs">
-                <br><br>
-                
-              </section>
-              <button class="btn bg-gradient-dark mb-0" type="submit"><i class="material-icons text-sm">add</i>&nbsp;&nbsp;Ajouter</button>
-
-            </form>
-</div>
-<br>
-            <!------------------------------------------------------------------------------------------------------------->
-            
-          </div>
-          <br>
-          
-          <div>
-              <center><h2 class="mb-0" style="color:#0dcaf0;">Modifier un article</h2></center>
-            </div>
-
-            <div class="card mt-4">
-            
-              
-              <p class="text-sm mb-0" align="center" style="margin-left:25px;margin-right:25px;"><br>
-                veuillez remplir le formulaire ci-dessous , saisir l'identifiant de l'article a modifier et taper sur modifier (pour cela vous pouvez consulter la liste des articles figurant juste en dessous)
-              </p>
-            
-            <form id="service" action="ModifierArticle.php" method="post">
-            <section align="center">
-                <label for="titre_ser">Titre de l'article:</label>
-                <input type="text" id="titre" name="titres1">
-                <br><br>
-                <label for="titre_ser">contenu de l'article:</label>
-                <textarea type="text" id="contenu" name="contenus1"></textarea>
-                <br><br>
-                <label for="titre_ser">auteur de l'article:</label>
-                <input type="text" id="auteur" name="auteurs1">
-                <br><br>
-                
-                
-              </section>
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-lg-3 col-sm-6 col-12">
-                  
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12 mt-sm-0 mt-2">
-                  <input class="btn bg-gradient-info w-100 mb-0 toast-btn" type="text" id="id1" name="id1s" placeholder="id">
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12 mt-lg-0 mt-2">
-                  <button class="btn bg-gradient-success w-100 mb-0 toast-btn" type="submit" data-target="warningToast">Modifier</button>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12 mt-lg-0 mt-2">
-                  
-                </div>
-              </div>
-            </div>
-</form>
-          </div>
-
-          <br>
-          <div>
-              <center><h2 class="mb-0" style="color:#0dcaf0;">Liste des articles</h2></center>    
-            </div>
-          <div class="card mt-4">
-          <?php
-        foreach ($list as $Article) {
-        ?>
-            <div class="card-body p-3 pb-0">
-              <div class="alert alert-primary alert-dismissible text-white" role="alert">
-                
-                <div class="article">
-                <b><span class="text-sm"><?= $Article['id_a']; ?>.</span></b>
-    <span class="text-sm"><?= $Article['titre_a']; ?></span>
-    <a href="../../frontoffice/single-blog.php?id0=<?php echo urlencode($Article['id_a']); ?>" class="alert-link text-white"> -------(Cliquez-ici pour afficher)</a>
-    <a href="ModifierArticle1.php?id11=<?php echo $Article['id_a']; ?>" class="delete-btn">modifier</a>
-    <a href="SupprimerArticle.php?id=<?php echo $Article['id_a']; ?>" class="delete-btn">x</a>
-            </div>
-              </div>
-              
-            </div>
-            <?php } ?>
-        </div>
-
-        <br>
-          <div>
-              <center><h2 class="mb-0" style="color:#0dcaf0;">Liste des commentaires</h2></center>    
-            </div>
-          <div class="card mt-4">
-          <?php
-        foreach ($list1 as $Commentaire) {
-        ?>
-            <div class="card-body p-3 pb-0">
-              <div class="alert alert-success alert-dismissible text-white" role="alert">
-                
-                <div class="article">
-                <b><span class="text-sm"><?= $Commentaire['id_ut']; ?>.</span></b>
-    <span class="text-sm"><?= $Commentaire['contenu_c']; ?></span>
-    <a href="../../frontoffice/single-blog.php?id0=<?php echo urlencode($Commentaire['id_ar']); ?>" class="alert-link text-white"> -------(Cliquez-ici pour afficher)</a>
-    <a href="SupprimerCommentaire1.php?idcom1=<?php echo $Commentaire['id_c']; ?>" class="delete-btn">x</a>
-            </div>
-              </div>
-              
-            </div>
-            <?php } ?>
-        </div>
-         
-        </div>
+       <div class="row justify-content-center">
+    <div  class="col-lg-8"> <!-- Utilisez une colonne de 6 colonnes pour chaque formulaire -->
+      <div>
+        <center><h2 class="mb-0" style="color:#0dcaf0;">Ajouter un article</h2></center>
       </div>
+      <div class="card mt-4 custom-form"> <!-- Ajoutez la classe custom-form au premier formulaire -->
+        <br>
+        <p class="text-sm mb-0" align="center" style="margin-left:25px;margin-right:25px;"><br>
+          veuillez remplir le formulaire ci-dessous et taper sur Ajouter pour effectuer l'ajout.
+          <br>
+        </p>
+        
+        <form id="service" action="AjouterArticle.php" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
+          <section align="center">
+            <label for="titre_ser">Titre de l'article:</label>
+            <input type="text" id="titre" name="titres" onblur="validateTitre()">
+            <span id="titreMessage" style="color:green;"></span>
+            <br><br>
+            <label for="titre_ser">contenu de l'article:</label>
+            <textarea type="text" id="contenu" name="contenus" onblur="validateContenu()"></textarea>
+            <span id="contenuMessage" style="color:green;"></span>
+            <br><br>
+            <label for="titre_ser">auteur de l'article:</label>
+            <input type="text" id="auteur" name="auteurs" onblur="validateAuteur()">
+            <span id="auteurMessage" style="color:green;"></span>
+            <br><br>
+            
+      <label for="image">Sélectionner une image :</label>
+     <input type="file" id="image" name="image">
+          </section>
+          <br><br>
+          <button class="btn bg-gradient-dark mb-0" type="submit"><i class="material-icons text-sm">add</i>&nbsp;&nbsp;Ajouter</button>
+          <br><br>
+        </form>
+        
+      </div>
+      <br>
+    </div>
+   <!-- <div class="col-lg-6"> -->
+      <!--<div>
+        <center><h2 class="mb-0" style="color:#0dcaf0;">Modifier un article</h2></center>
+      </div>-->
+      <!--<div class="card mt-4 custom-form"> 
+        <p class="text-sm mb-0" align="center" style="margin-left:25px;margin-right:25px;"><br>
+          veuillez remplir le formulaire ci-dessous , saisir l'identifiant de l'article a modifier et taper sur modifier (pour cela vous pouvez consulter la liste des articles figurant juste en dessous)
+        </p>
+        <form id="service" action="ModifierArticle.php" method="post" onsubmit="return validateForm2()" enctype="multipart/form-data">
+          <section align="center">
+            <label for="titre_ser">Titre de l'article:</label>
+            <input type="text" id="titre2" name="titres1" onblur="validateTitre2()">
+            <span id="titreMessage2" style="color:green;"></span>
+            <br><br>
+            <label for="titre_ser">contenu de l'article:</label>
+            <textarea type="text" id="contenu2" name="contenus1" onblur="validateContenu2()"></textarea>
+            <span id="contenuMessage2" style="color:green;"></span>
+            <br><br>
+            <label for="titre_ser">auteur de l'article:</label>
+            <input type="text" id="auteur2" name="auteurs1" onblur="validateAuteur2()">
+            <span id="auteurMessage2" style="color:green;"></span>
+            <br><br>
+            <label for="image">Sélectionner une image :</label>
+     <input type="file" id="image" name="image2">
+          </section>
+          <br>
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-lg-3 col-sm-6 col-12">
+              </div>
+              <div class="col-lg-3 col-sm-6 col-12 mt-sm-0 mt-2">
+                <input class="btn bg-gradient-info w-100 mb-0 toast-btn" type="text" id="id1" name="id1s" placeholder="id">
+              </div>
+              <div class="col-lg-3 col-sm-6 col-12 mt-lg-0 mt-2">
+                <button class="btn bg-gradient-success w-100 mb-0 toast-btn" type="submit" data-target="warningToast" >Modif</button>
+              </div>
+              <div class="col-lg-3 col-sm-6 col-12 mt-lg-0 mt-2">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>-->
+</div>
+
+
+
+          
+<div class="container-fluid py-4">
+  <div class="row">
+    <!-- Partie gauche : Recherche + Liste des articles -->
+    <div class="col-lg-6">
+      <div>
+        <center><h2 class="mb-0" style="color:#0dcaf0;">Liste des articles</h2></center>    
+      </div>
+      <br>
+      <div class="input-group input-group-outline">
+        <form id="form_search" class="input-group input-group-outline" action="gestion_des_articles.php" method="post">
+          <label class="form-label">Rechercher</label>
+          <input type="text" class="form-control" name="search">
+          <button class="btn bg-gradient-success mb-0 toast-btn" type="submit">Chercher</button>
+        </form>
+      </div>
+      <div class="card mt-4">
+        <!-- Liste des articles -->
+        <?php foreach ($filteredArticles as $Article) { 
+          $com1C = new CommentaireController();
+          $list2 = $com1C->listCommentaires($Article['id_a']);
+          
+          ?>
+          <div class="card-body p-3 pb-0">
+            <div class="alert alert-primary alert-dismissible text-white" role="alert">
+              <div class="article">
+                <b><span class="text-sm"><?= $Article['id_a']; ?>.</span></b>
+                <span class="text-sm"><?= $Article['titre_a']; ?></span>
+                <a href="../../frontoffice/single-blog.php?id0=<?php echo urlencode($Article['id_a']); ?>" class="alert-link text-white"> -------(Cliquez-ici pour afficher)</a>
+                <a href="#modifyArticle<?php echo $Article['id_a']; ?>" class="delete-btn modify-link">modifier</a>
+                <a href="SupprimerArticle.php?id=<?php echo $Article['id_a']; ?>" class="delete-btn">x</a>
+                <a href="#articleInfo<?php echo $Article['id_a']; ?>" class="delete-btn">+</a>
+              </div>
+            </div>
+            <div id="articleInfo<?php echo $Article['id_a']; ?>" class="article-info" style="display: none;">
+              <b> Détails de l'article :</b><br><br>
+              <b>ID: </b> <?php echo $Article['id_a']; ?><br>
+              <b>Titre: </b> <?php echo $Article['titre_a']; ?><br>
+              <b>Contenu: </b> <?php echo $Article['contenu_a']; ?><br>
+              <b>Auteur: </b> <?php echo $Article['auteur_a']; ?><br><br>
+              <b>Commentaires :</b><br><br>
+              <?php foreach ($list2 as $Commentaire) { ?>
+                <div class="card-body p-3 pb-0">
+                  <div class="alert alert-success alert-dismissible text-white" role="alert">
+                    <div class="article">
+                      <b><span class="text-sm"><?= $Commentaire['id_ut']; ?>.</span></b>
+                      <span class="text-sm"><?= $Commentaire['contenu_c']; ?></span>
+                      <a href="../../frontoffice/single-blog.php?id0=<?php echo urlencode($Commentaire['id_ar']); ?>" class="alert-link text-white"> -------(Cliquez-ici pour afficher)</a>
+                      <a href="SupprimerCommentaire1.php?idcom1=<?php echo $Commentaire['id_c']; ?>" class="delete-btn">x</a>
+                    </div>
+                  </div>
+                </div>
+              <?php } ?>
+            </div>
+            <div id="modifyArticle<?php echo $Article['id_a']; ?>" class="modification-form">
+              <!-- Formulaire de modification -->
+              <form id="service" action="ModifierArticle.php" method="post" onsubmit="return validateForm1()" enctype="multipart/form-data">
+                <!-- Votre formulaire de modification ici -->
+                <section align="center">
+                  <label for="titre_ser">Titre de l'article:</label>
+                  <input type="text" id="titre1" name="titres1" onblur="validateTitre1()" value=<?php echo $Article['titre_a']; ?>>
+                  <span id="titreMessage1" style="color:green;"></span>
+                  <br><br>
+                  <label for="titre_ser">contenu de l'article:</label>
+                  <textarea id="contenu1" onblur="validateContenu1()" name="contenus1"><?php echo $Article['contenu_a']; ?></textarea>
+                  <span id="contenuMessage1" style="color:green;"></span>
+                  <br><br>
+                  <label for="titre_ser">auteur de l'article:</label>
+                  <input type="text" id="auteur1" onblur="validateAuteur1()" name="auteurs1" value=<?php echo $Article['auteur_a']; ?>>
+                  <span id="auteurMessage1" style="color:green;"></span>
+                  <br><br>
+                  <label for="image2">Sélectionner une image :</label>
+     <input type="file" id="image2" name="image2">
+                  <input type="hidden" id="ida1" name="id1s" value=<?php echo $Article['id_a'];?>>
+                </section>
+                <br>
+                <div class="card-body p-3">
+                  <div class="row">
+                    <div class="col-lg-3 col-sm-6 col-12">
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-12 mt-lg-0 mt-2">
+                      <button class="btn bg-gradient-success w-100 mb-0 toast-btn" type="submit" data-target="warningToast">Modif</button>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-12 mt-lg-0 mt-2">
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        <?php } ?>
+      </div>
+    </div>
+
+    
+    <!-- Partie droite : Commentaires récents -->
+    <div class="col-lg-6">
+      <div>
+        <center><h2 class="mb-0" style="color:#0dcaf0;">Commentaires récents</h2></center>    
+      </div>
+      <br>
+      <div class="input-group input-group-outline">
+        <form id="form_search" class="input-group input-group-outline" action="gestion_des_articles.php" method="post">
+          <label class="form-label">Rechercher</label>
+          <input type="text" class="form-control" name="search1">
+          <button class="btn bg-gradient-success mb-0 toast-btn" type="submit">Chercher</button>
+        </form>
+      </div>
+
+
+      <div class="card mt-4">
+        <!-- Liste des commentaires récents -->
+        <?php foreach ($list1 as $Commentaire) {
+          if (stripos($Commentaire['id_ut'], $searchTerm1) !== false) {
+            $filteredComments[] = $Commentaire;
+         ?>
+          <div class="card-body p-3 pb-0">
+            <div class="alert alert-success alert-dismissible text-white" role="alert">
+              <div class="article">
+                <b><span class="text-sm"><?= $Commentaire['id_ut']; ?>.</span></b>
+                <span class="text-sm"><?= $Commentaire['contenu_c']; ?></span>
+                <a href="../../frontoffice/single-blog.php?id0=<?php echo urlencode($Commentaire['id_ar']); ?>" class="alert-link text-white"> -------(Cliquez-ici pour afficher)</a>
+                <a href="SupprimerCommentaire1.php?idcom1=<?php echo $Commentaire['id_c']; ?>" class="delete-btn">x</a>
+              </div>
+            </div>
+          </div>
+        <?php } }?>
+      </div>
+    </div>
+  </div>
+</div>
+
+        
+
       <div class="position-fixed bottom-1 end-1 z-index-2">
         <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="successToast" aria-atomic="true">
           <div class="toast-header border-0">

@@ -45,6 +45,66 @@ $list1 = $CommentaireC->listCommentaires($id00);
 </head>
 
 <body>
+<script>
+    function validateForm() {
+        var commentValid = validateComment();
+        var auteurValid = validateAuteur();
+
+        // Renvoie true si toutes les validations sont réussies, sinon false
+        return commentValid && auteurValid;
+    }
+
+    function validateComment() {
+        var comment = document.getElementById("comment").value;
+        var commentMessage = document.getElementById("commentMessage");
+        if (comment.trim() !== "") {
+            commentMessage.innerHTML = "Données valides";
+            commentMessage.style.color = "green";
+            return true;
+        } else {
+            commentMessage.innerHTML = "Veuillez saisir un commentaire commencant par une majuscule et contenant au moins un espace";
+            commentMessage.style.color = "red";
+            return false;
+        }
+    }
+
+    function validateAuteur() {
+        var auteur = document.getElementById("name").value;
+        var auteurMessage = document.getElementById("auteurMessage");
+        if (!isNaN(auteur) && auteur >= 1 && auteur <= 999) {
+            auteurMessage.innerHTML = "Données valides";
+            auteurMessage.style.color = "green";
+            return true;
+        } else {
+            auteurMessage.innerHTML = "L'identifiant doit être un nombre non nul et entre 1 et 999.";
+            auteurMessage.style.color = "red";
+            return false;
+        }
+    }
+
+    function validateComment1() {
+        var comment = document.getElementById("comment1").value;
+        var commentMessage = document.getElementById("commentMessage1");
+        if (comment.trim() !== "") {
+            commentMessage.innerHTML = "Données valides";
+            commentMessage.style.color = "green";
+            return true;
+        } else {
+            commentMessage.innerHTML = "Veuillez saisir un commentaire commencant par une majuscule et contenant au moins un espace";
+            commentMessage.style.color = "red";
+            return false;
+        }
+    }
+
+    function validateForm1() {
+        var commentValid = validateComment1();
+        
+
+        // Renvoie true si toutes les validations sont réussies, sinon false
+        return commentValid;
+    }
+
+</script>
    <!-- Preloader Start -->
    <div id="preloader-active">
       <div class="preloader d-flex align-items-center justify-content-center">
@@ -133,7 +193,7 @@ $list1 = $CommentaireC->listCommentaires($id00);
             <div class="col-lg-8 posts-list">
                <div class="single-post">
                   <div class="feature-img">
-                     <img class="img-fluid" src="assets/img/blog/single_blog_1.png" alt="">
+                     <img class="img-fluid" src="data:image/jpeg;base64,<?= $Article['image_a']; ?>" alt="">
                   </div>
                   <div class="blog_details">
                      <h2><?= $Article['titre_a']; ?>
@@ -250,16 +310,20 @@ $list1 = $CommentaireC->listCommentaires($id00);
                                  <a href="SupprimerCommentaire.php?idcom=<?php echo $Commentaire['id_c']; ?>&id011=<?php echo $id00; ?>" class="btn-reply text-uppercase">supprimer</a>
                                </div>
                               </div>
-                              <form id="formmodcom" action="ModifierCommentaire.php" method="post">
+                              <form id="formmodcom" action="ModifierCommentaire.php" method="post" onsubmit="return validateForm1()">
                               <div class="d-flex align-items-center">
-                              <input style=" height:50px;" type="text" class="form-control w-100" name="comment1" id="comment1">
+                              <input style=" height:50px;" type="text" class="form-control w-100" name="comment1" id="comment1" onblur="validateComment1()">
+                                 
                               <input type="hidden" class="form-control w-100" name="idh" id="idh" value=<?php echo $Commentaire['id_c']; ?>>
                               <input type="hidden" value=<?php echo $id00; ?> name="id010">
                                  
                                  <div class="reply-btn">
                                  <button style="width:100px; height:50px;" type="submit" class="btn bg-gradient-success w-100 mb-0 toast-btn">modifier</button>
+                                 
         </div>
+        
         </div>
+        <span id="commentMessage1" style="color:green;"></span>
         </form>
                            </div>
                         </div>
@@ -271,17 +335,19 @@ $list1 = $CommentaireC->listCommentaires($id00);
                </div>
                <div class="comment-form">
                   <h4>Leave a Reply</h4>
-                  <form class="form-contact comment_form" action="AjouterCommentaire.php" id="commentForm" method="post">
+                  <form class="form-contact comment_form" action="AjouterCommentaire.php" id="commentForm" method="post" onsubmit="return validateForm()">
                      <div class="row">
                         <div class="col-12">
                            <div class="form-group">
                               <input type="text" class="form-control w-100" name="comment" id="comment"
-                                 placeholder="Write Comment">
+                                 placeholder="Write Comment" onblur="validateComment()">
+                                 <span id="commentMessage" style="color:green;"></span>
                            </div>
                         </div>
                         <div class="col-sm-6">
                            <div class="form-group">
-                              <input class="form-control" name="name" id="name" type="text" placeholder="ID">
+                              <input class="form-control" name="name" id="name" type="text" placeholder="ID" onblur="validateAuteur()">
+                              <span id="auteurMessage" style="color:green;"></span>
                            </div>
                         </div>
 

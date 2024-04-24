@@ -1,3 +1,6 @@
+<?php
+$id111 = isset($_GET["id11"])?$_GET["id11"]:'error';
+?>
 <!DOCTYPE HTML>
 <html>
 <head>

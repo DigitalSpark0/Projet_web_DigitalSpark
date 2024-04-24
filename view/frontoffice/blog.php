@@ -129,7 +129,7 @@ $list = $ArticleC->listArticles();
         ?>
         <article class="blog_item">
                             <div class="blog_item_img">
-                                <img class="card-img rounded-0" src="assets/img/blog/single_blog_1.png" alt="">
+                                <img class="card-img rounded-0" src="data:image/jpeg;base64,<?= $Article['image_a']; ?>" alt="">
                                 <a href="#" class="blog_item_date">
                                     <h3><?= date("Y-m-d", strtotime($Article['date_p'])); ?></h3>
                                     <p><?= date("H:i:s", strtotime($Article['date_p'])); ?></p>
