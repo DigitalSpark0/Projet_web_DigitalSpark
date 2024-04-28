@@ -4,7 +4,7 @@
         private $IDt;
         private $IDp;
         private $NomTache;
-        private $Description;
+        private $DescriptionT;
         private $Deadline;
         private $Priority;
         private $Notes;
@@ -14,7 +14,7 @@
         $this->IDt=$a;
         $this->IDp=$b;
         $this->NomTache=$c;
-        $this->Description=$d;
+        $this->DescriptionT=$d;
         $this->Deadline=$e;
         $this->Priority=$f;
         $this->Notes=$g;
@@ -39,7 +39,7 @@
 
     public function getdescription()
     {
-        return $this->Description;
+        return $this->DescriptionT;
     }
 
     public function getdeadline()
@@ -76,7 +76,7 @@
  
      public function setdescription($d)
      {
-         $this->Description=$d;
+         $this->DescriptionT=$d;
      }
  
      public function setdeadline($e)

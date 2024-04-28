@@ -3,8 +3,8 @@
 
     $IDt = isset($_POST["idt"]) ?$_POST["idt"]:'erreur';
     $IDp = isset($_POST["idp"]) ?$_POST["idp"]:'erreur';
-    $NomTache = isset($_POST["tachename"])?$_POST["tachename"]:'erreur';
-    $Description = isset($_POST["description"])?$_POST["description"]:'erreur';
+    $Nomtache = isset($_POST["tachename"])?$_POST["tachename"]:'erreur';
+    $DescriptionT = isset($_POST["description"])?$_POST["description"]:'erreur';
     $Deadline = isset($_POST["deadline"])?$_POST["deadline"]:'erreur';
     $Priority = isset($_POST["priority"])?$_POST["priority"]:'erreur';
     $Notes = isset($_POST["notes"])?$_POST["notes"]:'erreur';
