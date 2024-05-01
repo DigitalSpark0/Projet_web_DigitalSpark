@@ -40,6 +40,25 @@ class CommandeController
         }
     } 
     //////////////////////////////////////////////////////////////////////////////////////
+    public function listcommandechercher($idservice)
+    {
+        $sql = "SELECT * FROM commande WHERE idservice = :idservice";
+        $db = config::getConnexion();
+        try
+        {
+            $query = $db->prepare($sql);
+            $query->bindValue(':idservice', $idservice);
+            $query->execute();
+            $liste = $query->fetchAll();
+            return $liste;
+        }
+        catch(Exception $e)
+        {
+            die('Error: ' . $e->getMessage());
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////
     public function deletecommande($idc)
     {
         $sql="DELETE FROM commande WHERE idc = :idc";
@@ -87,6 +106,22 @@ class CommandeController
             die('Error:' .$e->getMessage());
         }
     }
+    ////////////////////////////////////////////////////////////////////////////
+    public function rechercherCommandeParIdService($idservice)
+    {
+        $sql = "SELECT * FROM commande WHERE idservice = :idservice";
+        $db = config::getConnexion();
+        try {
+            $query = $db->prepare($sql);
+            $query->bindValue(':idservice', $idservice);
+            $query->execute();
+            $result = $query->fetchAll();
+            return $result;
+        } catch (Exception $e) {
+            die('Error: ' . $e->getMessage());
+        }
+    }
+
 
 
 }

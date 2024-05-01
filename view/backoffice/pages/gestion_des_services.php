@@ -297,51 +297,118 @@ $listaa=$cum->listcommande();
     <!----------------------------------------------min hna tebda elpage taik achraf---------------------------------------------------------------------------------------------------------------->
     <div class="container-fluid py-4">
     <div class="row">
-    <div class="col-lg-5">
+    <div class="col-lg-6">
         <div class="card-header pb-0 px-3">
             <h3 class="mb-0" align="center">La liste des services</h3>
+            <div class="overflow-auto" style="max-height: 450px;">
             <ul class="list-group">
                 <?php foreach ($list as $service){ ?>
-                    <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-200 border-radius-lg">
-                        <div class="d-flex flex-column">
-                            <h2 class="mb-3 text-sm font-weight-bold"><?= $service['titre_s'];?></h2>
+                    <li class="list-group-item border-5 d-flex p-4 mb-2 bg-gray-200 border-radius-lg">
+                        <div class="d-flex flex-column" >
+                            <h2 class="mb-3 text-sm font-weight-bold" ><?= $service['titre_s'];?></h2>
+                            <span class="mb-2 text-xs">id du service: <span class="text-dark ms-sm-2"><?= $service['ids'];?></span></span>
                             <span class="mb-2 text-xs">Prix: <span class="text-dark ms-sm-2"><?= $service['prix_s'];?></span></span>
                             <span class="mb-2 text-xs">Catégorie: <span class="text-dark ms-sm-2"><?= $service['categorie_s'];?> </span></span>
                             <span class="text-xs">Statut: <span class="text-dark ms-sm-2"><?= $service['statut_s'];?></span></span>
                             <span class="text-xs">Description: <span class="text-dark ms-sm-2"><?= $service['desc_s'];?></span></span>
                             <span class="text-xs">Durée: <span class="text-dark ms-sm-2"><?= $service['duree_s'];?></span></span>
+                            <div class="d-flex justify-content-between">
                             <a class="btn bg-gradient-dark mb-0" href="../../frontoffice/deleteservice.php?id=<?php echo $service['titre_s']; ?>">Delete</a>
+                            <a class="btn bg-gradient-dark mb-0 ms-2" href="#nouvelle_partie">chercher les commandes</a>
+                            
+                        </div>
                         </div>
                     </li>
                 <?php }// endforeach; ?>
             </ul>
+                </div>
         </div>
     </div>
     
-    <div class="col-lg-5">
+    <div class="col-lg-6">
         <div class="card-header pb-0 px-3">
-            <h3 class="mb-0" align="center">la liste des commandes</h3>
+          <div class="d-flex justify-content-between align-items-center">
+              <h3 class="mb-0">la liste des commandes</h3>
+              <form action="genpdf.php">
+                  <button type="submit" class="btn btn-primary" name="genpdf">Télécharger PDF</button>
+              </form>
+          </div>
+            <div class="overflow-auto" style="max-height: 450px;">
             <ul class="list-group">
                 <?php foreach ($listaa as $commande){ ?>
-                    <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-200 border-radius-lg">
-                        <div class="d-flex flex-column">
-                            <h2 class="mb-3 text-sm font-weight-bold">id du commande:  <?= $commande['idc'];?></h2>
-                            <h2><span class="mb-2 text-xs">idservice: <span class="text-dark ms-sm-2" name="idsse"><?= $commande['idservice'];?></span></span></h2>
-                            <span class="mb-2 text-xs">date d'ajout de la commande: <span class="text-dark ms-sm-2" name="da"><?= $commande['date_c'];?> </span></span>
-                            <span class="text-xs">statut: <span class="text-dark ms-sm-2" name="st"><?= $commande['statut_c'];?></span></span>
-                            <span class="text-xs">montant: <span class="text-dark ms-sm-2" name="mo"><?= $commande['montant_c'];?></span></span>
-                            <form method="POST" action="updatecommande.php">
-                              <input type="submit" name="updatee" value="Update">
+                    <li class="list-group-item border-5 d-flex p-4 mb-2 bg-gray-200 border-radius-lg">
+                    <div class="d-flex flex-column">
+                      <h2 class="mb-3 text-sm font-weight-bold">id du commande:  <?= $commande['idc'];?></h2>
+                      <span class="mb-2 text-xs">idservice: <span class="text-dark ms-sm-2" name="idsse"><?= $commande['idservice'];?></span></span>
+                      <span class="mb-2 text-xs">date d'ajout de la commande: <span class="text-dark ms-sm-2" name="da"><?= $commande['date_c'];?> </span></span>
+                      <span class="text-xs">statut: <span class="text-dark ms-sm-2" name="st"><?= $commande['statut_c'];?></span></span>
+                      <span class="text-xs">montant: <span class="text-dark ms-sm-2" name="mo"><?= $commande['montant_c'];?></span></span>
+                      
+                      <div class="d-flex justify-content-between mt-3">
+                          <form method="POST" action="updatecommande.php">
+                              <input type="submit" class="btn btn-primary" name="updatee" value="Update">
                               <input type="hidden" value=<?php echo $commande['idc']; ?> name="idup">
-                            </form>
-                            <a class="btn bg-gradient-dark mb-0" href="deletecommande.php?id=<?php echo $commande['idc']; ?>">Delete</a>
-                        </div>
+                              <input type="hidden" value=<?php echo $commande['idservice']; ?> name="idsse">
+                              <input type="hidden" value=<?php echo $commande['date_c']; ?> name="da">
+                              <input type="hidden" value=<?php echo $commande['statut_c']; ?> name="st">
+                              <input type="hidden" value=<?php echo $commande['montant_c']; ?> name="mo">
+                          </form>
+                          <a class="btn btn-danger" href="deletecommande.php?id=<?php echo $commande['idc']; ?>">Delete</a>
+                      </div>
+                  </div>
+
                     </li>
                 <?php }// endforeach; ?>
             </ul>
+            </div>
         </div>
     </div>
 </div>
+<!-- Nouvelle partie -->
+<div class="row mt-4">
+    <div class="col-lg-10 mx-auto">
+        <div class="card-header pb-0 px-3">
+            <h3 class="mb-0" align="center" id="nouvelle_partie">chercher une commande</h3>
+            <div class="d-flex justify-content-center mt-3">
+            <form method="post" action="gestion_des_services.php">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control me-3" name="idService" placeholder="Donnez l'ID du service" aria-label="Recherche" aria-describedby="button-addon2">
+                <button class="btn btn-primary " type="submit" id="button-addon2">chercher</button>  
+              </div>
+            </form>
+            </div>
+            <?php $idserchercher = isset($_POST["idService"]) ?$_POST["idService"]:'erreur'; 
+            $cherchercommande = new CommandeController();
+            $listchercher = $cherchercommande->listcommandechercher($idserchercher);
+            ?>
+            <?php foreach ($listchercher as $commande){ ?>
+                    <li class="list-group-item border-5 d-flex p-4 mb-2 bg-gray-200 border-radius-lg">
+                    <div class="d-flex flex-column">
+                      <h2 class="mb-3 text-sm font-weight-bold">id du commande:  <?= $commande['idc'];?></h2>
+                      <span class="mb-2 text-xs">idservice: <span class="text-dark ms-sm-2" name="idsse"><?= $commande['idservice'];?></span></span>
+                      <span class="mb-2 text-xs">date d'ajout de la commande: <span class="text-dark ms-sm-2" name="da"><?= $commande['date_c'];?> </span></span>
+                      <span class="text-xs">statut: <span class="text-dark ms-sm-2" name="st"><?= $commande['statut_c'];?></span></span>
+                      <span class="text-xs">montant: <span class="text-dark ms-sm-2" name="mo"><?= $commande['montant_c'];?></span></span>
+                  </div>
+                    </li>
+                <?php } ?>
+            <!-- Contenu de la nouvelle partie -->
+        </div>
+    </div>
+</div>         
+</div>
+
+<style>
+                .btn-primary {
+                  border-radius: 0; /* Bordures carrées */
+              }
+
+              /* Style pour l'input de recherche */
+              .form-control {
+                  border-radius: 0; /* Bordures carrées */
+              }
+                </style>
+
       
 
 

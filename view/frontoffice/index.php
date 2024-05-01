@@ -18,6 +18,7 @@ $lista =$com->listcommande();
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
          <title>Job board HTML-5 Template </title>
+         
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="manifest" href="site.webmanifest">
@@ -82,6 +83,8 @@ $lista =$com->listcommande();
                                                 </ul>
                                             </li>
                                             <li><a href="contact.html">Contact</a></li>
+                                            <!-- Header-btn -->
+                               
                                             <div>
                                                 <a class="custom-link" href ="http://localhost/projet%20web%20(gestion%20services)/view/backoffice/pages/gestion_des_services.php">to the back office</a>
                                               </div>
@@ -107,6 +110,7 @@ $lista =$com->listcommande();
                                               }
                                           </style>
                                         </ul>
+                                        
                                     </nav>
                                 </div>          
                                 <!-- Header-btn -->
@@ -137,7 +141,7 @@ $lista =$com->listcommande();
                         <div class="row">
                             <div class="col-xl-6 col-lg-9 col-md-10">
                                 <div class="hero__caption">
-                                    <h1>Find the most exciting startup jobs</h1>
+                                    <h1>WELCOME TO QUICKHIRE</h1>
                                 </div>
                             </div>
                         </div>
@@ -317,8 +321,40 @@ $lista =$com->listcommande();
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-tittle text-center">
-                            <span>gawk gawk</span>
+                            <span>QUICKHIRE</span>
                             <h2>Les services</h2>
+                            <a href="chatbot.php" class="lien">Talk to QuickBot</a>
+                            <style>
+                               .lien {
+    color: blue; /* Couleur du texte */
+    text-decoration: none; /* Supprime le soulignement par défaut */
+    position: relative; /* Position relative pour les animations absolues */
+}
+
+.lien::after {
+    content: ''; /* Ajoute un contenu après le lien */
+    position: absolute; /* Position absolue pour permettre le positionnement */
+    top: -5px; /* Ajustement pour que la bordure soit à l'extérieur du lien */
+    left: -5px; /* Ajustement pour que la bordure soit à l'extérieur du lien */
+    width: calc(100% + 10px); /* Largeur avec ajustement pour que la bordure soit plus grande */
+    height: calc(100% + 10px); /* Hauteur avec ajustement pour que la bordure soit plus grande */
+    border: 4px solid transparent; /* Bordure initialement transparente */
+    border-radius: 8px; /* Coins arrondis */
+    animation: bordureClignotante 1s infinite alternate; /* Animation de la bordure */
+}
+
+@keyframes bordureClignotante {
+    from {
+        border-color: transparent; /* Couleur de la bordure transparente */
+    }
+    to {
+        border-color: blue; /* Couleur de la bordure bleue */
+    }
+}
+
+
+
+                            </style>
                         </div>
                     </div>
                     <form  action="pageajout.php"  >

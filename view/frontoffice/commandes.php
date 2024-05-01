@@ -1,11 +1,12 @@
 <?php
+
 include "C:/xampp/htdocs/projet web (gestion services)/controller/ServiceController.php";
 include "C:/xampp/htdocs/projet web (gestion services)/controller/CommandeController.php";
 include "C:/xampp/htdocs/projet web (gestion services)/config.php";
-
 $db=config::getConnexion(); 
 $serv = new ServiceController(); 
 $list =$serv->listServices();
+
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -13,6 +14,7 @@ $list =$serv->listServices();
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
          <title>Job board HTML-5 Template </title>
+         
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="manifest" href="site.webmanifest">
@@ -105,7 +107,8 @@ $list =$serv->listServices();
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="hero-cap text-center">
-                            <h2>LES SERVICES</h2>
+                            <h2>LES SERVICES</h2> 
+                            <a href="historique.php">voir l'historique des achats</a>        
                         </div>
                     </div>
                 </div>
@@ -163,19 +166,18 @@ $list =$serv->listServices();
                           <ul>
                               <li>Categorie : <span><?= $service['categorie_s'];?></span></li>
                               <li>Prix :  <span><?= $service['prix_s'];?>DT</span></li>
-                              <li>Application date : <span>12 Sep 2020</span></li>
+                              <li>Application date : <span><?= date("Y-m-d");?></span></li>
                           </ul>
+                          
                           <form action="ajoutercommande.php" method="post">
                           <input type="hidden" value=<?php echo $service['prix_s'];?> name="mont">
                           <input type="hidden" value=<?php echo $service['ids'];?> name="idsc">
                           <input type="hidden" value="en attente" name="t3agrib">
                           <input type="hidden" value=<?php echo date("Y-m-d");?> name="onichan">
                          <div class="apply-btn2">
-                            <button type="submit" class="btn">Apply Now</Button>
+                            <button type="submit" class="btn" >Apply Now</Button>
                          </div>
                          </form>
-                         
-                         <!-- Notification container -->
                        </div>
                     </div>
                     
@@ -184,8 +186,10 @@ $list =$serv->listServices();
                 </div>  
                
             </div>
+            
         </div>
         
+
         <!-- job post company End -->
 
     </main>
