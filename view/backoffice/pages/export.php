@@ -8,7 +8,26 @@
 <body>
     <h1>Listes des projects</h1>
     <table>
-        
+        <thead>
+            <th>IDp</th>
+            <th>ProjectName</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>ProjectCost</th>
+            <th>TacheDemande</th>
+        </thead>
+        <tbody>
+            <?php foreach($project as $prj): ?>
+                <tr>
+                    <td><?= $prj['idp'] ?></td>
+                    <td><?= $prj['projectname'] ?></td>
+                    <td><?= $prj['category'] ?></td>
+                    <td><?= $prj['description'] ?></td>
+                    <td><?= $prj['projectcost'] ?></td>
+                    <td><?= $prj['tache'] ?></td>
+                </tr>
+            <?php endforeach; ?> 
+        </tbody>
     </table>
 </body>
 </html>

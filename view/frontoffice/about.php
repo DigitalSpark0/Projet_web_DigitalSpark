@@ -158,8 +158,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-tittle white-text text-center">
-                            <span>Apply process</span>
-                            <h2> How it works</h2>
+                            <h2> Project</h2>
                         </div>
                     </div>
                 </div>
@@ -348,8 +347,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-tittle white-text text-center">
-                            <span>Apply process</span>
-                            <h2> How it works</h2>
+                            <h2> Taches</h2>
                         </div>
                     </div>
                 </div>
