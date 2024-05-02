@@ -9,9 +9,9 @@
         private $Priority;
         private $Notes;
 
-        public function __construct($a,$b,$c,$d,$e,$f,$g)
+        public function __construct($b,$c,$d,$e,$f,$g)
     {
-        $this->IDt=$a;
+        //$this->IDt=$a;
         $this->IDp=$b;
         $this->NomTache=$c;
         $this->DescriptionT=$d;
@@ -21,7 +21,7 @@
     }
 
     //Getters:
-
+    
     public function getid_tache()
     {
         return $this->IDt;

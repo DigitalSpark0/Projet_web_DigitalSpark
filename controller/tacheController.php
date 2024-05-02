@@ -1,6 +1,5 @@
 <?php
-    include "C:/xampp/htdocs/projet web (gestion services)/model/tache.php";
-    include "C:/xampp/htdocs/projet web (gestion services)/config.php";
+    include "C:/xampp/htdocs/project web (gestion services)/model/tache.php";
     class tacheController
     {
         public function Affichertache($offre)
@@ -20,7 +19,7 @@
                         <th>Notes</th>
                     </tr>
                     <tr>
-                        <td><?php echo $offre->getid_tache(); ?></td>
+                        <td><?php echo $tache->getid_tache(); ?></td>
                         <td><?php echo $offre->getid_project(); ?></td>
                         <td><?php echo $offre->getNomTache(); ?></td>
                         <td><?php echo $offre->getdescription(); ?></td>
@@ -36,22 +35,22 @@
     
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    public function ajoutertache($offre)
+    public function ajoutertache($tache)
     {
         $pdo = config::getConnexion();
         try {
-            $query = "INSERT INTO tache ( IDt, IDp, NomTache, Description, Deadline, Priority, Notes) 
-                      VALUES ( :IDt, :IDp, :NomTache, :Description, :Deadline, :Priority, :Notes)";
+            $query = "INSERT INTO tache (IDp, Nomtache, DescriptionT, Deadline, Priority, Notes) 
+                      VALUES (:IDp, :Nomtache, :DescriptionT, :Deadline, :Priority, :Notes)";
             $stmt = $pdo->prepare($query);
             $stmt->execute([
                 //'id_offre' => $offre->getid_offre(),
-                'IDt' => $offre->getid_tache(),
-                'IDp'=> $offre->getid_project(),
-                'NomTache' => $offre->getNomTache(),
-                'Description' => $offre->getdescription(),
-                'Deadline' => $offre->getdeadline(),
-                'Priority' => $offre->getpriority(),
-                'Notes'=>$offre->getnotes(),
+                //'IDt' => $tache->getid_tache(),
+                'IDp'=> $tache->getid_project(),
+                'Nomtache' => $tache->getNomTache(),
+                'DescriptionT' => $tache->getdescription(),
+                'Deadline' => $tache->getdeadline(),
+                'Priority' => $tache->getpriority(),
+                'Notes'=>$tache->getnotes(),
             ]);
             
         } 
@@ -65,7 +64,7 @@
 
     
     ///////////////////////////////////////////////////////////////////////////////////////////
-    public function listproject()
+    public function listtache()
     {
         $sql = "SELECT  * FROM tache";
         $db = config::getConnexion();
@@ -79,5 +78,49 @@
             die('Error: ' . $e->getMessage());
         }
     }
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
+        public function Supprimertache($IDt)
+        {
+            $sql_delete_tache = "DELETE FROM tache WHERE IDt = :IDt";
+            $db = config::getConnexion();
+            try {
+                // Delete the record from the 'tache' table
+                $query_delete_tache = $db->prepare($sql_delete_tache);
+                $query_delete_tache->bindValue(':IDt', $IDt);
+                $query_delete_tache->execute();
+        
+                $rowCount = $query_delete_tache->rowCount();
+                if ($rowCount > 0) {
+                    echo "Suppression réussie. $rowCount lignes affectées.";
+                } else {
+                    echo "Aucune ligne supprimée.";
+                }
+            } catch(Exception $e) {
+                if ($e->getCode() == '23000') {
+                    echo "Impossible de supprimer le projet car il existe des tâches associées.";
+                } else {
+                    die('Erreur: ' . $e->getMessage());
+                }
+            }
+        }
+        //////////////////////////////////////////////////////////////////////////////////////
+public function listcommandechercher($Priority)
+{
+    $sql = "SELECT * FROM tache WHERE Priority = :Priority";
+    $db = config::getConnexion();
+    try
+    {
+        $query = $db->prepare($sql);
+        $query->bindValue(':Priority', $Priority);
+        $query->execute();
+        $liste = $query->fetchAll();
+        return $liste;
+    }
+    catch(Exception $e)
+    {
+        die('Error: ' . $e->getMessage());
+    }
+}
     }
 ?>

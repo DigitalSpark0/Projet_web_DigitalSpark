@@ -12,6 +12,6 @@
     $serviceC = new projectController();
     $serviceC->ajouterproject($ser);
 
-    header('Location:gestion_des_projects.php'); 
+    header('Location:C:/xampp/htdocs/project web (gestion services)/view/frontoffice/about.php'); 
 
 ?>
