@@ -5,6 +5,7 @@ $id2 = isset($_POST["id1s"]) ? $_POST["id1s"] : 'erreur';
 $titre2 = isset($_POST["titres1"]) ? $_POST["titres1"] : 'erreur';
 $contenu2 = isset($_POST["contenus1"]) ? $_POST["contenus1"] : 'erreur';
 $auteur2 = isset($_POST["auteurs1"]) ? $_POST["auteurs1"] : 'erreur';
+$categorie2 = isset($_POST["categories1"]) ? $_POST["categories1"] : 'erreur';
 $datep2 = date("Y-m-d H:i:s");
 
 
@@ -54,7 +55,7 @@ if (!empty($erreurs)) {
     }
 } else {
     $articleC1 = new ArticleController();
-    $articleC1->updatearticle($id2, $titre2, $contenu2, $auteur2, $datep2, $imageData1);
+    $articleC1->updatearticle($id2, $titre2, $contenu2, $auteur2, $datep2, $imageData1, $categorie2);
 
     
     header('Location: gestion_des_articles.php');

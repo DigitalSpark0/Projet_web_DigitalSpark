@@ -5,23 +5,77 @@ if (!class_exists('config')) {
  }
 
 include "C:/xampp/htdocs/ProjetWebQH/controller/ArticleController.php";
+include "C:/xampp/htdocs/ProjetWebQH/controller/CommentaireController.php";
 
 $db = config::getConnexion();
 $ArticleC = new ArticleController();
 $list = $ArticleC->listArticles();
+$CommentaireC = new CommentaireController();
+
+$searchTerm2 = isset($_POST['search2']) ? $_POST['search2'] : '';
+
+
+$listArray1 = $list->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+$filteredArticles = array_filter($listArray1, function($Article) use ($searchTerm2) {
+    
+    return stripos($Article['titre_a'], $searchTerm2) !== false;
+});
+
+$categories = array_unique(array_column($listArray1, 'categorie_a'));
+
+
+if (isset($_GET['category']) && in_array($_GET['category'], $categories)) {
+    $selectedCategory = $_GET['category'];
+    $filteredArticles = array_filter($filteredArticles, function($Article) use ($selectedCategory) {
+        return $Article['categorie_a'] === $selectedCategory;
+    });
+}
+
+$totalArticles = count($filteredArticles);
+
+
+$articlesPerPage = 3;
+
+
+$totalPages = ceil($totalArticles / $articlesPerPage);
+
+
+$pageNumber = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+
+$startIndex = ($pageNumber - 1) * $articlesPerPage;
+
+
+$articlesToShow = array_slice($filteredArticles, $startIndex, $articlesPerPage);
+
 ////////////////////////////////////////////////////
 ?>
 
 <!doctype html>
 <html class="no-js" lang="zxx">
+<style>
 
+.recent-post-image {
+    max-width: 100px; 
+    height: 100px; 
+}
+
+.post-image {
+    max-width: 300px; 
+    height: auto; 
+}
+
+</style>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-     <title>Job board HTML-5 Template </title>
+     <title>Articles</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/image_2024-03-10_171426764-removebg-preview.png">
     
     <!-- CSS here -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -46,7 +100,7 @@ $list = $ArticleC->listArticles();
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/logo.png" alt="">
+                <img src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt="">
                 </div>
             </div>
         </div>
@@ -61,7 +115,7 @@ $list = $ArticleC->listArticles();
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                            <a  href="index.html"><img width="200" height="150" src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt=""></a>
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -70,18 +124,18 @@ $list = $ArticleC->listArticles();
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="job_listing.html">Find a Jobs </a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="#">Page</a>
-                                                <ul class="submenu">
+                                            <li><a href="index.html">Accueil</a></li>
+                                            <li><a href="job_listing.html">Services</a></li>
+                                            <li><a href="about.html">Réclamations</a></li>
+                                            <li><a href="blog.php">Articles</a>
+                                                <!--<ul class="submenu">
                                                     <li><a href="blog.php">Articles</a></li>
                                                     <li><a href="single-blog.php">Blog Details</a></li>
                                                     <li><a href="elements.html">Elements</a></li>
                                                     <li><a href="commandes.html">Les commandes</a></li>
-                                                </ul>
+                                                </ul>-->
                                             </li>
-                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><a href="contact.php">QuickChat</a></li>
                                         </ul>
                                     </nav>
                                 </div>          
@@ -125,7 +179,7 @@ $list = $ArticleC->listArticles();
                     <div class="blog_left_sidebar">
                         
                                 <?php
-        foreach ($list as $Article) {
+        foreach ($articlesToShow as $Article) {
         ?>
         <article class="blog_item">
                             <div class="blog_item_img">
@@ -142,7 +196,7 @@ $list = $ArticleC->listArticles();
                                 <!--<p><?php// echo $Article['contenu_a']; ?></p>-->
                                 <ul class="blog-info-link">
                                     <li><a href="#"><i class="fa fa-user"></i><?= $Article['auteur_a']; ?></a></li>
-                                    <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
+                                    <li><a href="#"><i class="fa fa-comments"></i><?= $CommentaireC->countCommentaires($Article['id_a']) ?> Commentaires</a></li>
                                 </ul>
                                 
                             </div>
@@ -151,128 +205,91 @@ $list = $ArticleC->listArticles();
                         <?php } ?>
 
                         <nav class="blog-pagination justify-content-center d-flex">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a href="#" class="page-link" aria-label="Previous">
-                                        <i class="ti-angle-left"></i>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">1</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a href="#" class="page-link">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link" aria-label="Next">
-                                        <i class="ti-angle-right"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
+    <ul class="pagination">
+        <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
+            <li class="page-item <?= $i == $pageNumber ? 'active' : '' ?>">
+                <a href="?page=<?= $i ?>" class="page-link"><?= $i ?></a>
+            </li>
+        <?php } ?>
+    </ul>
+</nav>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="blog_right_sidebar">
                         <aside class="single_sidebar_widget search_widget">
-                            <form action="#">
+                            <form action="blog.php" method="post">
                                 <div class="form-group">
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder='Search Keyword'
+                                        <input type="text" class="form-control" placeholder='Mot clé de recherche'
                                             onfocus="this.placeholder = ''"
-                                            onblur="this.placeholder = 'Search Keyword'">
+                                            onblur="this.placeholder = 'Mot clé de recherche'" name="search2">
                                         <div class="input-group-append">
                                             <button class="btns" type="button"><i class="ti-search"></i></button>
                                         </div>
                                     </div>
                                 </div>
                                 <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                                    type="submit">Search</button>
+                                    type="submit">Chercher</button>
                             </form>
                         </aside>
 
                         <aside class="single_sidebar_widget post_category_widget">
-                            <h4 class="widget_title">Category</h4>
+                            <h4 class="widget_title">Catégories</h4>
                             <ul class="list cat-list">
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>Resaurant food</p>
-                                        <p>(37)</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>Travel news</p>
-                                        <p>(10)</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>Modern technology</p>
-                                        <p>(03)</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>Product</p>
-                                        <p>(11)</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>Inspiration</p>
-                                        <p>21</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>Health Care (21)</p>
-                                        <p>09</p>
-                                    </a>
-                                </li>
+                            <?php foreach ($categories as $category): ?>
+        <li>
+            <a href="blog.php?category=<?= urlencode($category) ?>" class="d-flex">
+                <p><?= $category ?></p>
+                <p>(<?= count(array_filter($listArray1, function($Article) use ($category) {
+                    return $Article['categorie_a'] === $category;
+                })) ?>)</p>
+            </a>
+        </li>
+    <?php endforeach; ?>
                             </ul>
                         </aside>
 
                         <aside class="single_sidebar_widget popular_post_widget">
-                            <h3 class="widget_title">Recent Post</h3>
-                            <div class="media post_item">
-                                <img src="assets/img/post/post_1.png" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.php">
-                                        <h3>From life was you fish...</h3>
-                                    </a>
-                                    <p>January 12, 2019</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img src="assets/img/post/post_2.png" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.php">
-                                        <h3>The Amazing Hubble</h3>
-                                    </a>
-                                    <p>02 Hours ago</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img src="assets/img/post/post_3.png" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.php">
-                                        <h3>Astronomy Or Astrology</h3>
-                                    </a>
-                                    <p>03 Hours ago</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img src="assets/img/post/post_4.png" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.php">
-                                        <h3>Asteroids telescope</h3>
-                                    </a>
-                                    <p>01 Hours ago</p>
-                                </div>
-                            </div>
-                        </aside>
-                        <aside class="single_sidebar_widget tag_cloud_widget">
+    <h3 class="widget_title">Articles récents</h3>
+    <?php
+    $articleController = new ArticleController();
+    $recentArticles = $articleController->listRecentArticles();
+
+    foreach ($recentArticles as $Article) {
+        // Calcul du temps écoulé
+        $dateAdded = new DateTime($Article['date_p']);
+        $now = new DateTime();
+        $interval = $now->diff($dateAdded);
+        $timeElapsed = '';
+
+        if ($interval->y > 0) {
+            $timeElapsed = $interval->format('%y years ago');
+        } elseif ($interval->m > 0) {
+            $timeElapsed = $interval->format('%m months ago');
+        } elseif ($interval->d > 0) {
+            $timeElapsed = $interval->format('%d days ago');
+        } elseif ($interval->h > 0) {
+            $timeElapsed = $interval->format('%h hours ago');
+        } elseif ($interval->i > 0) {
+            $timeElapsed = $interval->format('%i minutes ago');
+        } else {
+            $timeElapsed = 'Just now';
+        }
+    ?>
+        <div class="media post_item">
+            <img class="recent-post-image" src="data:image/jpeg;base64,<?= $Article['image_a']; ?>" alt="post">
+            <div class="media-body">
+                <a href="single-blog.php?id0=<?php echo $Article['id_a']; ?>">
+                    <h3><?= $Article['titre_a']; ?></h3>
+                </a>
+                <p><?= $timeElapsed; ?></p>
+            </div>
+        </div>
+    <?php } ?>
+</aside>
+
+                        <!--<aside class="single_sidebar_widget tag_cloud_widget">
                             <h4 class="widget_title">Tag Clouds</h4>
                             <ul class="list">
                                 <li>
@@ -337,20 +354,30 @@ $list = $ArticleC->listArticles();
                                     </a>
                                 </li>
                             </ul>
-                        </aside>
+                        </aside>-->
 
 
                         <aside class="single_sidebar_widget newsletter_widget">
                             <h4 class="widget_title">Newsletter</h4>
 
-                            <form action="#">
+                            <form action="newsletter.php" method="post">
                                 <div class="form-group">
-                                    <input type="email" class="form-control" onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
+                                    <input type="email" name="email" class="form-control" onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter email'" placeholder='Tapez votre email !' required>
                                 </div>
                                 <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                                    type="submit">Subscribe</button>
+                                    type="submit">S'abonner</button>
                             </form>
+                             <br>
+                            <form action="deletesub.php" method="post">
+                                <div class="form-group">
+                                    <input type="email" name="email1" class="form-control" onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter email'" placeholder='Tapez votre email !' required>
+                                </div>
+                                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                    type="submit">Se désabonner</button>
+                            </form>
+
                         </aside>
                     </div>
                 </div>

@@ -7,6 +7,7 @@ class Article
     private $auteur_a;
     private $date_p;
     private $image_a;
+    private $categorie_a;
    
 
     //Getters:
@@ -38,6 +39,11 @@ class Article
         return $this->image_a;
     }
 
+    public function getcategorie_a()
+    {
+        return $this->categorie_a;
+    }
+
 
     //Setters:
     
@@ -67,13 +73,19 @@ class Article
         $this->image_a=$e;
     }
 
-    public function __construct($a,$b,$c,$d,$e)
+    public function setcategorie_a($f)
+    {
+        $this->categorie_a=$f;
+    }
+
+    public function __construct($a,$b,$c,$d,$e,$f)
     {
         $this->titre_a="$a";
         $this->contenu_a="$b";
         $this->auteur_a="$c";
         $this->date_p="$d";
         $this->image_a="$e";
+        $this->categorie_a="$f";
        
     }
 

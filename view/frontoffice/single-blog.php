@@ -1,3 +1,5 @@
+
+
 <?php
 ////////////////////////////////////////////////////////////////////////
 if (!class_exists('config')) {
@@ -20,14 +22,79 @@ $list1 = $CommentaireC->listCommentaires($id00);
 
 <!doctype html>
 <html class="no-js" lang="zxx">
+<style>
 
+.highlight {
+    background-color: pink;
+}
+
+.recent-post-image {
+    max-width: 100px; 
+    height: 100px; 
+}
+
+.post-image {
+    max-width: 300px; 
+    height: auto; 
+}
+
+.like-dislike-buttons {
+    text-align: center;
+}
+
+.like-dislike-buttons button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.like-dislike-buttons button i {
+    margin-right: 5px;
+}
+
+/* Styles pour le bouton de like */
+#like-button {
+    background-color: #5cb85c; /* Vert */
+    color: white;
+}
+
+/* Styles pour le bouton de dislike */
+#dislike-button {
+    background-color: #d9534f; /* Rouge */
+    color: white;
+}
+
+.like-button {
+    background-color: green; /* Couleur verte pour le bouton "Like" */
+    color: white; /* Couleur du texte en blanc */
+    border: none; /* Supprime les bordures */
+    padding: 5px 10px; /* Ajoute un peu d'espacement autour du texte */
+    cursor: pointer; /* Transforme le curseur en main au survol */
+    border-radius: 5px; /* Ajoute des coins arrondis */
+}
+
+.dislike-button {
+    background-color: red; /* Couleur rouge pour le bouton "Dislike" */
+    color: white; /* Couleur du texte en blanc */
+    border: none; /* Supprime les bordures */
+    padding: 5px 10px; /* Ajoute un peu d'espacement autour du texte */
+    cursor: pointer; /* Transforme le curseur en main au survol */
+    border-radius: 5px; /* Ajoute des coins arrondis */
+}
+
+</style>
 <head>
    <meta charset="utf-8">
    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Job board HTML-5 Template </title>
+    <title>Détails de l'article</title>
    <meta name="description" content="">
    <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+   <link rel="shortcut icon" type="image/x-icon" href="assets/img/image_2024-03-10_171426764-removebg-preview.png">
   
    <!-- CSS here -->
       <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -50,23 +117,26 @@ $list1 = $CommentaireC->listCommentaires($id00);
         var commentValid = validateComment();
         var auteurValid = validateAuteur();
 
-        // Renvoie true si toutes les validations sont réussies, sinon false
+        
         return commentValid && auteurValid;
     }
 
     function validateComment() {
-        var comment = document.getElementById("comment").value;
-        var commentMessage = document.getElementById("commentMessage");
-        if (comment.trim() !== "") {
-            commentMessage.innerHTML = "Données valides";
-            commentMessage.style.color = "green";
-            return true;
-        } else {
-            commentMessage.innerHTML = "Veuillez saisir un commentaire commencant par une majuscule et contenant au moins un espace";
-            commentMessage.style.color = "red";
-            return false;
-        }
+    var comment = document.getElementById("comment").value;
+    var commentMessage = document.getElementById("commentMessage");
+    var firstChar = comment.charAt(0);
+
+    
+    if (firstChar === firstChar.toUpperCase() && comment.includes(' ')) {
+        commentMessage.innerHTML = "Données valides";
+        commentMessage.style.color = "green";
+        return true;
+    } else {
+        commentMessage.innerHTML = "Veuillez saisir un commentaire commençant par une majuscule et contenant au moins un espace";
+        commentMessage.style.color = "red";
+        return false;
     }
+}
 
     function validateAuteur() {
         var auteur = document.getElementById("name").value;
@@ -104,6 +174,7 @@ $list1 = $CommentaireC->listCommentaires($id00);
         return commentValid;
     }
 
+    
 </script>
    <!-- Preloader Start -->
    <div id="preloader-active">
@@ -111,7 +182,7 @@ $list1 = $CommentaireC->listCommentaires($id00);
             <div class="preloader-inner position-relative">
                <div class="preloader-circle"></div>
                <div class="preloader-img pere-text">
-                  <img src="assets/img/logo/logo.png" alt="">
+               <img src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt="">
                </div>
             </div>
       </div>
@@ -126,7 +197,7 @@ $list1 = $CommentaireC->listCommentaires($id00);
                       <div class="col-lg-3 col-md-2">
                           <!-- Logo -->
                           <div class="logo">
-                              <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                          <a  href="index.html"><img width="200" height="150" src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt=""></a>
                           </div>  
                       </div>
                       <div class="col-lg-9 col-md-9">
@@ -135,18 +206,18 @@ $list1 = $CommentaireC->listCommentaires($id00);
                               <div class="main-menu">
                                   <nav class="d-none d-lg-block">
                                       <ul id="navigation">
-                                          <li><a href="index.html">Abassi Fedi 2A24</a></li>
-                                          <li><a href="job_listing.html">Find a Jobs </a></li>
-                                          <li><a href="about.html">About</a></li>
-                                          <li><a href="#">Page</a>
-                                              <ul class="submenu">
+                                          <li><a href="index.html">Accueil</a></li>
+                                          <li><a href="job_listing.html">services</a></li>
+                                          <li><a href="about.html">Réclamations</a></li>
+                                          <li><a href="blog.php">Articles</a>
+                                              <!--<ul class="submenu">
                                                   <li><a href="blog.php">Articles</a></li>
                                                   <li><a href="single-blog.php">Blog Details</a></li>
                                                   <li><a href="elements.html">Elements</a></li>
                                                   <li><a href="commandes.html">Les commandes</a></li>
-                                              </ul>
+                                              </ul>-->
                                           </li>
-                                          <li><a href="contact.html">Contact</a></li>
+                                          <li><a href="contact.php">QuickChat</a></li>
                                       </ul>
                                   </nav>
                               </div>          
@@ -186,7 +257,13 @@ $list1 = $CommentaireC->listCommentaires($id00);
    <?php
 
         foreach ($list as $Article) {
-        ?>
+         $currentArticleId = $Article['id_a'];
+$previousArticleId = $ArticleC->getPreviousArticleId($currentArticleId);
+$nextArticleId = $ArticleC->getNextArticleId($currentArticleId);
+$list2 = ($previousArticleId !== false) ? $ArticleC->listArticles1($previousArticleId) : [];
+    $list3 = ($nextArticleId !== false) ? $ArticleC->listArticles1($nextArticleId) : [];
+?>
+        
    <section class="blog_area single-post-area section-padding">
       <div class="container">
          <div class="row">
@@ -212,60 +289,121 @@ $list1 = $CommentaireC->listCommentaires($id00);
                
                <div class="navigation-top">
                   <div class="d-sm-flex justify-content-between text-center">
-                     <p class="like-info"><span class="align-middle"><i class="fa fa-heart"></i></span> Lily and 4
-                        people like this</p>
+                  <p class="like-info">
+    <span class="align-middle">
+        <button class="like-button" data-action="like"><i class="far fa-thumbs-up"></i> Like</button>
+        <!--<button class="dislike-button" data-action="dislike"><i class="far fa-thumbs-down"></i> Dislike</button>-->
+    </span>
+    <span id="num-likes">0</span> personnes aiment ça
+</p>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Vérifie si le nombre de likes est déjà stocké localement
+        var numLikes = localStorage.getItem('numLikes');
+        if (numLikes !== null) {
+            $('#num-likes').text(numLikes);
+        }
+
+        $('.like-button').click(function() {
+            var currentLikesText = $('#num-likes').text().trim();
+            var currentLikes = parseInt(currentLikesText);
+            var newLikes = currentLikes === 1 ? 0 : 1; // Basculer entre 0 et 1
+
+            // Enregistrer le nouveau nombre de likes localement
+            localStorage.setItem('numLikes', newLikes);
+
+            $.ajax({
+                type: 'POST',
+                url: 'update_likes.php',
+                data: { action: 'like', likes: newLikes },
+                success: function(data) {
+                    $('#num-likes').text(newLikes);
+                }
+            });
+        });
+    });
+</script>
+
+
+<meta property="og:title" content="<?= htmlspecialchars($Article['titre_a']) ?>" />
+    <meta property="og:description" content="<?= htmlspecialchars($Article['contenu_a']) ?>" />
+    <meta property="og:type" content="article" />
+    <!-- Ajoutez une image si vous en avez une -->
+    <!--<meta property="og:image" content="URL_DE_L_IMAGE" />-->
+    <!-- Indiquez l'URL de l'article -->
+    <meta property="og:url" content="http://google.com" />
+
+    
+
+
+
                      <div class="col-sm-4 text-center my-2 my-sm-0">
                         <!-- <p class="comment-count"><span class="align-middle"><i class="fa fa-comment"></i></span> 06 Comments</p> -->
                      </div>
                      <ul class="social-icons">
-                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
-                        <li><a href="#"><i class="fab fa-behance"></i></a></li>
-                     </ul>
+                     <li><a href="https://www.facebook.com/sharer/sharer.php?u=http://google.com" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+
+                         <li><a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+    <li><a href="https://twitter.com/intent/tweet?url=http://localhost/ProjetWebQH/view/frontoffice/single-blog.php?id0=<?= $Article['id_a'] ?>&text=<?= $Article['titre_a'] ?> par <?= $Article['auteur_a'] ?>" target="_blank"><i class="fab fa-twitter"></i></a></li>
+    <li><a href="https://www.linkedin.com/sharing/share-offsite/?url=http://localhost/ProjetWebQH/view/frontoffice/single-blog.php?id0=<?= $Article['id_a'] ?>&title=<?= urlencode($Article['titre_a']) ?>&summary=<?= urlencode($Article['contenu_a']) ?>" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+</ul>
+
+
+
+
                   </div>
                   <div class="navigation-area">
-                     <div class="row">
-                        <div
-                           class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
-                           <div class="thumb">
-                              <a href="#">
-                                 <img class="img-fluid" src="assets/img/post/preview.png" alt="">
-                              </a>
-                           </div>
-                           <div class="arrow">
-                              <a href="#">
-                                 <span class="lnr text-white ti-arrow-left"></span>
-                              </a>
-                           </div>
-                           <div class="detials">
-                              <p>Prev Post</p>
-                              <a href="#">
-                                 <h4>Space The Final Frontier</h4>
-                              </a>
-                           </div>
-                        </div>
-                        <div
-                           class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
-                           <div class="detials">
-                              <p>Next Post</p>
-                              <a href="#">
-                                 <h4>Telescopes 101</h4>
-                              </a>
-                           </div>
-                           <div class="arrow">
-                              <a href="#">
-                                 <span class="lnr text-white ti-arrow-right"></span>
-                              </a>
-                           </div>
-                           <div class="thumb">
-                              <a href="#">
-                                 <img class="img-fluid" src="assets/img/post/next.png" alt="">
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+            
+                <?php foreach ($list2 as $prevArticle): ?>
+                    <div class="thumb">
+                        <a href="single-blog.php?id0=<?= $previousArticleId ?>">
+                            <img class="recent-post-image" src="data:image/jpeg;base64,<?= $prevArticle['image_a']; ?>" alt="">
+                        </a>
+                    </div>
+                    <div class="arrow">
+                        <a href="single-blog.php?id0=<?= $previousArticleId ?>">
+                            <span class="lnr text-white ti-arrow-left"></span>
+                        </a>
+                    </div>
+                    <div class="detials">
+                        <p>Article précédent</p>
+                        <a href="single-blog.php?id0=<?= $previousArticleId ?>">
+                            <h4><?= $prevArticle['titre_a']; ?></h4>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+            
+                <?php foreach ($list3 as $nextArticle): ?>
+                    <div class="detials">
+                        <p>Article suivant</p>
+                        <a href="single-blog.php?id0=<?= $nextArticleId ?>">
+                            <h4><?= $nextArticle['titre_a']; ?></h4>
+                        </a>
+                    </div>
+                    <div class="arrow">
+                        <a href="single-blog.php?id0=<?= $nextArticleId ?>">
+                            <span class="lnr text-white ti-arrow-right"></span>
+                        </a>
+                    </div>
+                    <div class="thumb">
+                        <a href="single-blog.php?id0=<?= $nextArticleId ?>">
+                            <img class="recent-post-image" src="data:image/jpeg;base64,<?= $nextArticle['image_a']; ?>" alt="">
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            
+        </div>
+    </div>
+</div>
+
+
                </div>
                <div class="blog-author">
                   <div class="media align-items-center">
@@ -274,15 +412,15 @@ $list1 = $CommentaireC->listCommentaires($id00);
                         <a href="#">
                            <h4><?= $Article['auteur_a']; ?></h4>
                         </a>
-                        <p>Second divided from form fish beast made. Every of seas all gathered use saying you're, he
-                           our dominion twon Second divided from</p>
+                        <p>membre doué de l'équipe administrative, toujours a la recherche d'aventure et du savoir</p>
                      </div>
                   </div>
                </div>
-               <?php } ?>
+               
                <div class="comments-area">
-                  <h4>05 Comments</h4>
+                  <h4><?= $CommentaireC->countCommentaires($Article['id_a']) ?> Commentaires</h4>
                   <div class="comment-list">
+                  <?php } ?>
                   <?php
         foreach ($list1 as $Commentaire) {
         ?>
@@ -334,13 +472,13 @@ $list1 = $CommentaireC->listCommentaires($id00);
                   
                </div>
                <div class="comment-form">
-                  <h4>Leave a Reply</h4>
+                  <h4>Laissez un commentaire</h4>
                   <form class="form-contact comment_form" action="AjouterCommentaire.php" id="commentForm" method="post" onsubmit="return validateForm()">
                      <div class="row">
                         <div class="col-12">
                            <div class="form-group">
                               <input type="text" class="form-control w-100" name="comment" id="comment"
-                                 placeholder="Write Comment" onblur="validateComment()">
+                                 placeholder="votre commentaire ici" onblur="validateComment()">
                                  <span id="commentMessage" style="color:green;"></span>
                            </div>
                         </div>
@@ -362,29 +500,16 @@ $list1 = $CommentaireC->listCommentaires($id00);
                      
 
                      <div class="form-group">
-                        <button type="submit" class="button button-contactForm btn_1 boxed-btn">Send Message</button>
+                        <button type="submit" class="button button-contactForm btn_1 boxed-btn">Publier</button>
                      </div>
                   </form>
                </div>
             </div>
             <div class="col-lg-4">
                <div class="blog_right_sidebar">
-                  <aside class="single_sidebar_widget search_widget">
-                     <form action="#">
-                        <div class="form-group">
-                           <div class="input-group mb-3">
-                              <input type="text" class="form-control" placeholder='Search Keyword'
-                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
-                              <div class="input-group-append">
-                                 <button class="btns" type="button"><i class="ti-search"></i></button>
-                              </div>
-                           </div>
-                        </div>
-                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                           type="submit">Search</button>
-                     </form>
-                  </aside>
-                  <aside class="single_sidebar_widget post_category_widget">
+               
+
+                  <!--<aside class="single_sidebar_widget post_category_widget">
                      <h4 class="widget_title">Category</h4>
                      <ul class="list cat-list">
                         <li>
@@ -424,47 +549,60 @@ $list1 = $CommentaireC->listCommentaires($id00);
                            </a>
                         </li>
                      </ul>
-                  </aside>
+                  </aside>-->
                   <aside class="single_sidebar_widget popular_post_widget">
-                     <h3 class="widget_title">Recent Post</h3>
-                     <div class="media post_item">
-                        <img src="assets/img/post/post_1.png" alt="post">
-                        <div class="media-body">
-                           <a href="single-blog.php">
-                              <h3>From life was you fish...</h3>
-                           </a>
-                           <p>January 12, 2019</p>
-                        </div>
-                     </div>
-                     <div class="media post_item">
-                        <img src="assets/img/post/post_2.png" alt="post">
-                        <div class="media-body">
-                           <a href="single-blog.php">
-                              <h3>The Amazing Hubble</h3>
-                           </a>
-                           <p>02 Hours ago</p>
-                        </div>
-                     </div>
-                     <div class="media post_item">
-                        <img src="assets/img/post/post_3.png" alt="post">
-                        <div class="media-body">
-                           <a href="single-blog.php">
-                              <h3>Astronomy Or Astrology</h3>
-                           </a>
-                           <p>03 Hours ago</p>
-                        </div>
-                     </div>
-                     <div class="media post_item">
-                        <img src="assets/img/post/post_4.png" alt="post">
-                        <div class="media-body">
-                           <a href="single-blog.php">
-                              <h3>Asteroids telescope</h3>
-                           </a>
-                           <p>01 Hours ago</p>
-                        </div>
-                     </div>
+                  <h3 class="widget_title">Articles récents</h3>
+    <?php
+    $articleController = new ArticleController();
+    $recentArticles = $articleController->listRecentArticles();
+
+    foreach ($recentArticles as $Article) {
+        // Calcul du temps écoulé
+        $dateAdded = new DateTime($Article['date_p']);
+        $now = new DateTime();
+        $interval = $now->diff($dateAdded);
+        $timeElapsed = '';
+
+        if ($interval->y > 0) {
+            $timeElapsed = $interval->format('%y years ago');
+        } elseif ($interval->m > 0) {
+            $timeElapsed = $interval->format('%m months ago');
+        } elseif ($interval->d > 0) {
+            $timeElapsed = $interval->format('%d days ago');
+        } elseif ($interval->h > 0) {
+            $timeElapsed = $interval->format('%h hours ago');
+        } elseif ($interval->i > 0) {
+            $timeElapsed = $interval->format('%i minutes ago');
+        } else {
+            $timeElapsed = 'Just now';
+        }
+    ?>
+        <div class="media post_item">
+            <img class="recent-post-image" src="data:image/jpeg;base64,<?= $Article['image_a']; ?>" alt="post">
+            <div class="media-body">
+                <a href="single-blog.php?id0=<?php echo $Article['id_a']; ?>">
+                    <h3><?= $Article['titre_a']; ?></h3>
+                </a>
+                <p><?= $timeElapsed; ?></p>
+            </div>
+        </div>
+    <?php } ?>
                   </aside>
-                  <aside class="single_sidebar_widget tag_cloud_widget">
+                  <aside class="single_sidebar_widget search_widget">
+    <form id="search-form">
+        <div class="form-group">
+            <div class="input-group mb-3">
+                <input id="search-input" type="text" class="form-control" placeholder='chercher mot clé'
+                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'chercher mot clé'">
+                <div class="input-group-append">
+                    <button class="btns" type="button"><i class="ti-search"></i></button>
+                </div>
+            </div>
+        </div>
+        <!--<button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Search</button>-->
+    </form>
+</aside>
+                  <!--<aside class="single_sidebar_widget tag_cloud_widget">
                      <h4 class="widget_title">Tag Clouds</h4>
                      <ul class="list">
                         <li>
@@ -528,6 +666,7 @@ $list1 = $CommentaireC->listCommentaires($id00);
                         </li>
                      </ul>
                   </aside>
+                  
                   <aside class="single_sidebar_widget newsletter_widget">
                      <h4 class="widget_title">Newsletter</h4>
                      <form action="#">
@@ -538,7 +677,7 @@ $list1 = $CommentaireC->listCommentaires($id00);
                         <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
                            type="submit">Subscribe</button>
                      </form>
-                  </aside>
+                  </aside>-->
                </div>
             </div>
          </div>
@@ -714,6 +853,20 @@ $list1 = $CommentaireC->listCommentaires($id00);
 		<!-- Jquery Plugins, main Jquery -->	
       <script src="./assets/js/plugins.js"></script>
       <script src="./assets/js/main.js"></script>
-        
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Votre code JavaScript -->
+<script>
+    $(document).ready(function() {
+        $('#search-input').on('input', function() {
+            var searchTerm = $(this).val().trim().toLowerCase();
+            var content = $('.blog_details p').text();
+            var highlightedContent = content.replace(new RegExp(searchTerm, 'gi'), function(match) {
+                return '<span class="highlight">' + match + '</span>';
+            });
+            $('.blog_details p').html(highlightedContent);
+        });
+    });
+</script>
 </body>
 </html>

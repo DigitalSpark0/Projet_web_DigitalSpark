@@ -5,6 +5,7 @@ include "C:/xampp/htdocs/ProjetWebQH/controller/ArticleController.php";
 $titre = isset($_POST["titres"]) ? $_POST["titres"] : 'erreur';
 $contenu = isset($_POST["contenus"]) ? $_POST["contenus"] : 'erreur';
 $auteur = isset($_POST["auteurs"]) ? $_POST["auteurs"] : 'erreur';
+$categorie = isset($_POST["categories"]) ? $_POST["categories"] : 'erreur';
 $date = date("Y-m-d H:i:s"); 
 
 
@@ -57,7 +58,7 @@ if (!empty($erreurs)) {
     }
 } else {
     
-    $article = new Article($titre, $contenu, $auteur, $date, $imageData);
+    $article = new Article($titre, $contenu, $auteur, $date, $imageData, $categorie);
     $articleC = new ArticleController();
     $articleC->addarticle($article);
 
