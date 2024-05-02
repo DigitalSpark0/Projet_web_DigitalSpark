@@ -9,6 +9,7 @@ $cum = new CommandeController();
 $list =$serv->listServices();
 $listaa=$cum->listcommande();
 ?>
+
  <!--
 =========================================================
 * Material Dashboard 2 - v3.0.0
@@ -353,13 +354,104 @@ $listaa=$cum->listcommande();
                               <input type="hidden" value=<?php echo $commande['statut_c']; ?> name="st">
                               <input type="hidden" value=<?php echo $commande['montant_c']; ?> name="mo">
                           </form>
-                          <a class="btn btn-danger" href="deletecommande.php?id=<?php echo $commande['idc']; ?>">Delete</a>
+                
+                          <a class="btn btn-danger" href="deletecommande.php?id=<?php echo $commande['idc']; ?>">Delete</a><br><br>
+                          <script>
+                            function toggleContent(button) {
+                            var hiddenContent = button.nextElementSibling;
+                            if (hiddenContent.style.display === "none") {
+                                hiddenContent.style.display = "block";
+                            } else {
+                                hiddenContent.style.display = "none";
+                            }
+                        }
+                        </script>
+                        
                       </div>
                   </div>
 
                     </li>
+                    <li>
+                <button class="btn btn-success mt-3" onclick="toggleContent(this)">Update 2.0</button>
+                <div class="hidden-content" style="display: none;">
+                    <!-- Contenu caché -->
+                    <form method="POST" action="gestion_des_services.php" align="center">
+                    <input type="hidden" value=<?php echo $commande['idc']; ?> name="idcupdate" >
+                    <input type="hidden" value=<?php echo $commande['idservice']; ?> name="idsupdate" >
+                    <label for="upsta">statut:</label>
+                    <input type="text" id="statutInput" value=<?php echo $commande['statut_c']; ?> name="statupdate"><br><br>
+                    <span id="statutError" style="color: red;"></span>
+                    <input type="hidden" value=<?php echo $commande['date_c']; ?> name="dateupdate">
+                    <label for="upmont">montant:</label>
+                    <input type="text" value=<?php echo $commande['montant_c']; ?> name="montupdate"><span id="montspan"></span><br><br>
+                    <input type="submit" class="btn btn-primary" value="valider">
+                    </form>
+                    <script>
+                        function validateForm() {
+                          var statutInput = document.getElementById("statutInput").value;
+                          var statutError = document.getElementById("statutError");
+                          var isValid = true;
+
+                          // Vérifier si le statut est "en_cours"
+                          if (statutInput.trim() !== "en_cours") {
+                              statutError.textContent = "Le statut doit être 'en_cours'";
+                              isValid = false;
+                          } else {
+                              statutError.textContent = ""; // Efface le message d'erreur s'il est valide
+                          }
+
+                          // Si tout est valide, soumettre le formulaire
+                          return isValid;
+                      }
+                    </script>
+                    <style>
+                      /* Style de la div cachée */
+                      .hidden-content {
+                          display: none; /* Par défaut, la div est cachée */
+                          position: fixed; /* Positionnement fixe pour rester à l'écran même lors du défilement */
+                          top: 50%; /* Positionne le haut de la div au centre vertical */
+                          left: 50%; /* Positionne la gauche de la div au centre horizontal */
+                          transform: translate(-50%, -50%); /* Centre la div horizontalement et verticalement */
+                          background-color: white; /* Couleur de fond de la div */
+                          padding: 20px; /* Espacement intérieur de la div */
+                          border: 2px solid #ccc; /* Bordure de la div */
+                          border-radius: 5px; /* Bordure arrondie */
+                          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre portée */
+                      }
+
+                      /* Style des éléments à l'intérieur de la div cachée */
+                      .hidden-content label {
+                          display: block; /* Affiche chaque label sur une nouvelle ligne */
+                          margin-bottom: 10px; /* Espacement entre chaque label et input */
+                      }
+
+                      .hidden-content input[type="text"] {
+                          width: 100%; /* Largeur des champs texte à 100% de la largeur de la div */
+                          padding: 5px; /* Espacement intérieur des champs texte */
+                          margin-bottom: 10px; /* Espacement entre chaque champ texte */
+                      }
+
+                      .hidden-content input[type="submit"] {
+                          display: block; /* Affiche le bouton de soumission sur une nouvelle ligne */
+                          width: 100%; /* Largeur du bouton à 100% de la largeur de la div */
+                      }
+
+                    </style>
+                </div>
+            </li>
                 <?php }// endforeach; ?>
             </ul>
+            <?php 
+                      $idserviceee = isset($_POST["idsupdate"]) ?$_POST["idsupdate"]:'erreur';
+                      $date_ccc = isset($_POST["dateupdate"])?$_POST["dateupdate"]:'erreur';
+                      $statut_ccc = isset($_POST["statupdate"])?$_POST["statupdate"]:'erreur';
+                      $montant_ccc = isset($_POST["montupdate"])?$_POST["montupdate"]:'erreur';
+                        
+                      $comoo=new CommandeController();
+                      $comoo->updatecommande($_POST["idcupdate"],$idserviceee,$date_ccc,$statut_ccc,$montant_ccc);
+
+                      header('Location:gestion_des_services.php');
+                      ?>
             </div>
         </div>
     </div>

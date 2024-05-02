@@ -172,7 +172,7 @@ $list =$serv->listServices();
                           <form action="ajoutercommande.php" method="post">
                           <input type="hidden" value=<?php echo $service['prix_s'];?> name="mont">
                           <input type="hidden" value=<?php echo $service['ids'];?> name="idsc">
-                          <input type="hidden" value="en attente" name="t3agrib">
+                          <input type="hidden" value="en_attente" name="t3agrib">
                           <input type="hidden" value=<?php echo date("Y-m-d");?> name="onichan">
                          <div class="apply-btn2">
                             <button type="submit" class="btn" >Apply Now</Button>

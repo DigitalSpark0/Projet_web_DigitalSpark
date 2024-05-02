@@ -143,7 +143,7 @@ $lista =$com->listcommande();
                                 <div class="hero__caption">
                                     <h1>WELCOME TO QUICKHIRE</h1>
                                 </div>
-                                <a href="index2.php">en tant que etudiant</a>
+                                <a href="index.php">en tant que freelancer</a>
                             </div>
                         </div>
                         <!-- Search Box -->
@@ -381,10 +381,7 @@ $lista =$com->listcommande();
                                 </div>
                             </div>
                             <div class="items-link f-right">
-                                <a href="commandes.php">afficher tous les informations</a>
-                                <a class="" href="updateservice.php">Update</a>
-                                <a class="" href="deleteservice.php?id=<?php echo $service['titre_s']; ?>">Delete</a>
-                                 
+                                <a href="commandes.php">afficher tous les informations</a>  
                             </div>
                         </div>
                         <?php } ?>

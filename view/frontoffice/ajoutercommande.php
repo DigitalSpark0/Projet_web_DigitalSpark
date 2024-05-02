@@ -25,16 +25,27 @@ include "C:/xampp/htdocs/projet web (gestion services)/config.php";
 </html>
 <style>
         .custom-alert {
-            background-color: #f2f2f2;
-            border: 1px solid #ccc;
-            color: #333;
-            padding: 10px 20px;
-            border-radius: 5px;
+            background-color: #4CAF50; /* Couleur de fond verte */
+            color: white; /* Texte en blanc */
+            padding: 20px; /* Espace de remplissage */
             position: fixed;
-            top: 50%;
-            left: 50%;
+            top: 40%;
+            left: 35%;
             transform: translate(-50%, -50%);
+            border-radius: 10px; /* Coins arrondis */
+            font-size: 24px; /* Taille de police augmentée */
+            animation: pulse 1s infinite alternate; /* Animation pulsée */
             z-index: 9999;
+        }
+
+        /* Animation pulsée */
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.1);
+            }
         }
     </style>
 <script>
