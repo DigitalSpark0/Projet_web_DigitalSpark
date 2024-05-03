@@ -49,7 +49,7 @@
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">receipt_long</i>
             </div>
-            <span class="nav-link-text ms-1">Gestion des Services</span>
+            <span class="nav-link-text ms-1">Liste Des Offres</span>
           </a>
         </li>
         <li class="nav-item">
@@ -57,7 +57,7 @@
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">receipt_long</i>
             </div>
-            <span class="nav-link-text ms-1">Gestion des Services</span>
+            <span class="nav-link-text ms-1">Ajouter Une Offre</span>
           </a>
         </li>
         <li class="nav-item">
@@ -77,7 +77,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/notifications.html">
+          <a class="nav-link text-white " href="../pages/notifications.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">notifications</i>
             </div>
@@ -125,7 +125,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">offres</li>
+                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">offres,candidatures</li>
                     </ol>
                     <h6 class="font-weight-bolder mb-0">Offres</h6>
                 </nav>
@@ -193,6 +193,8 @@ foreach ($tab as $offre) {
     echo "<td>" . htmlspecialchars($offre['statut']) . "</td>";
     echo "<td><a href='delete_offre.php?id_offre=" . $offre['id_offre'] . "' class='btn'>Delete</a></td>";
     echo "<td><a href='Formupdate.php?id_offre=" . $offre['id_offre'] . "' class='btn'>Modifier</a></td>";
+    echo "<td><a href='details_offre.php?id_offre=" . $offre['id_offre'] . "' class='btn'>Voir Détails</a></td>"; // Nouveau bouton pour les détails
+
     echo "</tr>";
 }
 ?>
@@ -219,5 +221,7 @@ foreach ($tab as $offre) {
     <script src="../assets/js/material-dashboard.min.js?v=3.0.0"></script>
     
 </body>
+
+
 
 </html>

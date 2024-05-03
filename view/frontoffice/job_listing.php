@@ -68,7 +68,7 @@
                                                     <li><a href="commandes.html">Les commandes</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><a href="contact.php">Contact</a></li>
                                         </ul>
                                     </nav>
                                 </div>          
@@ -98,259 +98,18 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="hero-cap text-center">
-                                <h2>Get your job</h2>
+                                <h2>Obtenez votre emploi</h2>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Hero Area End -->
-        <!-- Job List Area Start -->
-        <div class="job-listing-area pt-120 pb-120">
-            <div class="container">
-                <div class="row">
-                    <!-- Left content -->
-                    <div class="col-xl-3 col-lg-3 col-md-4">
-                        <div class="row">
-                            <div class="col-12">
-                                    <div class="small-section-tittle2 mb-45">
-                                    <div class="ion"> <svg 
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        width="20px" height="12px">
-                                    <path fill-rule="evenodd"  fill="rgb(27, 207, 107)"
-                                        d="M7.778,12.000 L12.222,12.000 L12.222,10.000 L7.778,10.000 L7.778,12.000 ZM-0.000,-0.000 L-0.000,2.000 L20.000,2.000 L20.000,-0.000 L-0.000,-0.000 ZM3.333,7.000 L16.667,7.000 L16.667,5.000 L3.333,5.000 L3.333,7.000 Z"/>
-                                    </svg>
-                                    </div>
-                                    <h4>Filter Jobs</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Job Category Listing start -->
-                        <div class="job-category-listing mb-50">
-                            <!-- single one -->
-                            <div class="single-listing">
-                               <div class="small-section-tittle2">
-                                     <h4>Job Category</h4>
-                               </div>
-                                <!-- Select job items start -->
-                                <div class="select-job-items2">
-                                    <select name="select">
-                                        <option value="">All Category</option>
-                                        <option value="">Category 1</option>
-                                        <option value="">Category 2</option>
-                                        <option value="">Category 3</option>
-                                        <option value="">Category 4</option>
-                                    </select>
-                                </div>
-                                <!--  Select job items End-->
-                                <!-- select-Categories start -->
-                                <div class="select-Categories pt-80 pb-50">
-                                    <div class="small-section-tittle2">
-                                        <h4>Job Type</h4>
-                                    </div>
-                                    <label class="container">Full Time
-                                        <input type="checkbox" >
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">Part Time
-                                        <input type="checkbox" checked="checked active">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">Remote
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">Freelance
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <!-- select-Categories End -->
-                            </div>
-                            <!-- single two -->
-                            <div class="single-listing">
-                               <div class="small-section-tittle2">
-                                     <h4>Job Location</h4>
-                               </div>
-                                <!-- Select job items start -->
-                                <div class="select-job-items2">
-                                    <select name="select">
-                                        <option value="">Anywhere</option>
-                                        <option value="">Category 1</option>
-                                        <option value="">Category 2</option>
-                                        <option value="">Category 3</option>
-                                        <option value="">Category 4</option>
-                                    </select>
-                                </div>
-                                <!--  Select job items End-->
-                                <!-- select-Categories start -->
-                                <div class="select-Categories pt-80 pb-50">
-                                    <div class="small-section-tittle2">
-                                        <h4>Experience</h4>
-                                    </div>
-                                    <label class="container">1-2 Years
-                                        <input type="checkbox" >
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">2-3 Years
-                                        <input type="checkbox" checked="checked active">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">3-6 Years
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">6-more..
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <!-- select-Categories End -->
-                            </div>
-                            <!-- single three -->
-                            <div class="single-listing">
-                                <!-- select-Categories start -->
-                                <div class="select-Categories pb-50">
-                                    <div class="small-section-tittle2">
-                                        <h4>Posted Within</h4>
-                                    </div>
-                                    <label class="container">Any
-                                        <input type="checkbox" >
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">Today
-                                        <input type="checkbox" checked="checked active">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">Last 2 days
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">Last 3 days
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">Last 5 days
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">Last 10 days
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <!-- select-Categories End -->
-                            </div>
-                            <div class="single-listing">
-                                <!-- Range Slider Start -->
-                                <aside class="left_widgets p_filter_widgets price_rangs_aside sidebar_box_shadow">
-                                    <div class="small-section-tittle2">
-                                        <h4>Filter Jobs</h4>
-                                    </div>
-                                    <div class="widgets_inner">
-                                        <div class="range_item">
-                                            <!-- <div id="slider-range"></div> -->
-                                            <input type="text" class="js-range-slider" value="" />
-                                            <div class="d-flex align-items-center">
-                                                <div class="price_text">
-                                                    <p>Price :</p>
-                                                </div>
-                                                <div class="price_value d-flex justify-content-center">
-                                                    <input type="text" class="js-input-from" id="amount" readonly />
-                                                    <span>to</span>
-                                                    <input type="text" class="js-input-to" id="amount" readonly />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </aside>
-                              <!-- Range Slider End -->
-                            </div>
-                        </div>
-                        <!-- Job Category Listing End -->
-                    </div>
-                    <!-- Right content -->
-                    <div class="col-xl-9 col-lg-9 col-md-8">
-                        <!-- Featured_job_start -->
-                        <section class="featured-job-area">
-                            <div class="container">
-                                <!-- Count of Job list Start -->
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <?php
 
-require_once "C:/wamp64/www/Projet_web_DigitalSpark-gestion_des_offres/controller/offreController.php";
+        
+                                
+ <?php
 
-$offreController = new offreController();
-$listeOffres = $offreController->listOffres(); 
-?>
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Liste des Offres</title>
-    <style>
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
-</head>
-
-        <?php if (!empty($listOffres)): ?>
-    <?php foreach ($listOffres as $offre): ?>
-        <tr>
-            <td><?= $offre['id_offre']; ?></td>
-            <td><?= $offre['titre']; ?></td>
-            <td><?= $offre['statut']; ?></td>
-            <td><?= $offre['entreprise']; ?></td>
-            <td><?= $offre['date_pub']; ?></td>
-            <td><?= $offre['description']; ?></td>
-            <td><a href="delete_offre.php?id_offre=<?= $offre['id_offre']; ?>" class="btn">Delete</a></td>
-        </tr>
-    <?php endforeach; ?>
-<?php else: ?>
-    <tr><td colspan="7"></td></tr>
-<?php endif; ?>
-<div class="container-fluid py-4">
-            <div class="card">
-            
-                <div class="card-header">
-                    <h4 class="card-title">Liste des offres </h4>
-                </div>
-                
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>id_offre</th>
-                                    <th>titre</th>
-                                    <th>description</th>
-                                    <th>entreprise</th>
-                                    <th>date_pub</th>
-                                    <th>statut</th>
-                                </tr>
-
-                            </thead>
-                            
-    <!-- tri&recherche -->
-<form class="d-none d-md-flex ms-4" method="POST">
-    <input type="search" name="search" id="search" class="form-control bg-dark border-0" placeholder="Search">
-    <input type="hidden" name="type" value="search">
-</form>
-
-                
-
-                            <tbody>
-                            <?php
 require_once "C:\wamp64\www\Projet_web_DigitalSpark-gestion_des_offres\controller\offreController.php";
 $controller = new offreController();
 
@@ -363,41 +122,52 @@ if(isset($_POST["type"])) {
     } else {
         $tab = $controller->listOffres();
     }
-} else {
+} else 
+{
     $tab = $controller->listOffres();
 }
 
-foreach ($tab as $offre) {
-    echo "<tr>";
-    echo "<td>" . htmlspecialchars($offre['id_offre']) . "</td>";
-    echo "<td>" . htmlspecialchars($offre['titre']) . "</td>";
-    echo "<td>" . htmlspecialchars($offre['description']) . "</td>";
-    echo "<td>" . htmlspecialchars($offre['entreprise']) . "</td>";
-    echo "<td>" . htmlspecialchars($offre['date_pub']) . "</td>";
-    echo "<td>" . htmlspecialchars($offre['statut']) . "</td>";
-    echo "</tr>";
-}
 ?>
 
-                            </tbody>
-                        </table>
-                        
-                    </div>
+<section class="featured-job-area feature-padding">
+    <div class="container">
+        <!-- Section Tittle -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-tittle text-center">
+                    <span>Bonjour</span>
+                    <h2>Nos Offres :</h2>
                 </div>
             </div>
         </div>
-
-        </tbody>
-    </table>
-</body>
-</html>
-
-                                    </div>
-                                </div>
-                        
-               
+        <div class="row justify-content-center">
+            <div class="col-xl-10">
+                <?php foreach ($tab as $offre) : ?>
+                    <div class="single-job-items mb-30">
+                        <div class="job-items">
+                            <div class="company-img">
+                                <!-- Vous pouvez ajouter une image ici si vous avez une URL d'image -->
+                            </div>
+                            <div class="job-tittle">
+                                <a href="#"><h4>Titre: <?php echo htmlspecialchars($offre['titre']); ?></h4></a>
+                                <p>Description: <?php echo htmlspecialchars($offre['description']); ?></p>
+                                <ul>
+                                    <li>Entreprise: <?php echo htmlspecialchars($offre['entreprise']); ?></li>
+                                    <li>Date: <?php echo htmlspecialchars($offre['date_pub']); ?></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="items-link f-right">
+                            <span>Statut: <?php echo htmlspecialchars($offre['statut']); ?></span>
+                            <!-- Vous pouvez ajouter d'autres informations ici si nécessaire -->
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
+    </div>
+</section>
+
         <!-- footer-bottom area -->
         <div class="footer-bottom-area footer-bg">
             <div class="container">

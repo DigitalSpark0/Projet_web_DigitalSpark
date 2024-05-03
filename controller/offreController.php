@@ -97,7 +97,7 @@ class offreController
                     $offreObject = $offre['offre'];
                 } else {
                     // If the "offre" key is not present, throw an exception
-                    throw new Exception("Offre array is missing the 'offre' key.");
+                    throw new Exception("offre array is missing the 'offre' key.");
                 }
             } else {
                 // If $offre is an object, assume it's the offre object
@@ -174,5 +174,30 @@ class offreController
             die('Erreur: '.$e->getMessage());
         }	
     }
+    public function listOffresPaginated($start, $limit)
+{
+    $sql = "SELECT * FROM offre LIMIT $start, $limit";
+    $db = config::getConnexion();
+    try {
+        $liste = $db->query($sql);
+        return $liste;
+    } catch(Exception $e) {
+        die('Error: ' . $e->getMessage());
+    }
+}
+
+public function getTotalOffres()
+{
+    $sql = "SELECT COUNT(*) as total FROM offre";
+    $db = config::getConnexion();
+    try {
+        $stmt = $db->query($sql);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'];
+    } catch(Exception $e) {
+        die('Error: ' . $e->getMessage());
+    }
+}
+
 }
 ?>
