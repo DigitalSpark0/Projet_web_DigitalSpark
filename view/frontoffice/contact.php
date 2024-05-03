@@ -136,10 +136,10 @@ function callOpenAI($message){
     $question = $_POST['subject'];*/
 
     // Appeler l'API de ChatGPT pour obtenir une réponse
-    $apiKey = ''; // Remplacez cela par votre propre clé API de ChatGPT
+    $apiKey = 'LL-teiXZMs5cK8QmPMy2scT5cszUAJV7ph8eCAXCLpgruVCqJ7gSqkHiqJu7ZgoinOM'; 
     $endpoint = 'https://api.llama-api.com/chat/completions';
     $data = array(
-        'model' => 'codellama-7b-instruct', // Modèle ChatGPT à utiliser
+        'model' => 'codellama-7b-instruct', 
         'messages' => array(
             array('role' => 'system', 'content' => 'You:'),
             array('role' => 'user', 'content' => $message),
