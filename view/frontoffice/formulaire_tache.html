@@ -116,16 +116,16 @@
                     <section align="center">
                      
                       <label for="titre_ser">ID du project:</label>
-                      <input type="text" id="idp" name="idp" onblur="verift()">
+                      <input type="text" id="idp" name="idp" onblur="verifIDp()">
                       <br><br>
                       <label for="titre_ser">Nom du tache:</label>
-                      <input type="text" id="nom" name="tachename" onblur="verift()">
+                      <input type="text" id="nom" name="tachename" onblur="verifNom()">
                       <br><br>
                       <label for="titre_ser">Description:</label>
-                      <input type="text" id="des" name="description" onblur="verift()">
+                      <input type="text" id="des" name="description" onblur="verifDes()">
                       <br><br>
                       <label for="titre_ser">Deadline:</label>
-                      <input type="date" id="pcost" name="deadline" onblur="verift()">
+                      <input type="date" id="deadline" name="deadline">
                       <br><br>
                       <label for="titre_ser">Priority</label>
                       <select name="category" id="priority">
@@ -135,9 +135,9 @@
                       </select>
                       <!--<input type= id="statut" name="statuts">-->
                       <label for="titre_ser">Notes:</label>
-                      <textarea type="text" id="notes" name="notes" onblur="verift()"></textarea>
+                      <textarea type="text" id="notes" name="notes" onblur="verifNotes()"></textarea>
                     </section>
-                    <button class="btn bg-gradient-dark mb-0" type="submit" onclick="verift()" ><i class="material-icons text-sm">add</i>&nbsp;&nbsp;Valider</button>
+                    <button class="btn bg-gradient-dark mb-0" type="submit"><i class="material-icons text-sm">add</i>&nbsp;&nbsp;Valider</button>
                   </form>
                   <!--formulaire taa ajout taa el service-->
             </div>

@@ -116,7 +116,7 @@
                   <section align="center">
                    
                     <label for="titre_ser">Nom du project:</label>
-                    <input type="text" id="nom" name="projectname" onblur="verif()">
+                    <input type="text" id="nom" name="projectname" onblur="verifNom()">
                     <br><br>
                     <label for="titre_ser">Category du Project:</label>
                     <select name="category" id="category">
@@ -126,16 +126,16 @@
                     </select>
                     <br><br>
                     <label for="titre_ser">Description:</label>
-                    <input type="text" id="des" name="description" onblur="verif()">
+                    <input type="text" id="des" name="description" onblur="verifDes()">
                     <br><br>
                     <label for="titre_ser">Project Cost:</label>
-                    <input type="text" id="pcost" name="projectcost" onblur="verif()">
+                    <input type="text" id="pcost" name="projectcost" onblur="verifPcost()">
                     <br><br>
                     <!--<input type= id="statut" name="statuts">-->
                     <label for="titre_ser">Tache demande:</label>
-                    <textarea type="text" id="tache" name="tachedemande" onblur="verif()"></textarea>
+                    <textarea type="text" id="tache" name="tachedemande" onblur="verifTache()"></textarea>
                   </section>
-                  <button class="btn bg-gradient-dark mb-0" type="submit" onclick="verif()"><i class="material-icons text-sm" >add</i>&nbsp;&nbsp;Valider</button>
+                  <button class="btn bg-gradient-dark mb-0" type="submit"><i class="material-icons text-sm" >add</i>&nbsp;&nbsp;Valider</button>
                 </form>
                 <!--formulaire taa ajout taa el service-->
                 </div>
