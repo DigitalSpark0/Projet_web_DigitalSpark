@@ -134,7 +134,7 @@
                             <div class="support-caption">
                                 <p class="pera-top">Mollit anim laborum duis au dolor in voluptate velit ess cillum dolore eu lore dsu quality mollit anim laborumuis au dolor in voluptate velit cillum.</p>
                                 <p>Mollit anim laborum.Duis aute irufg dhjkolohr in re voluptate velit esscillumlore eu quife nrulla parihatur. Excghcepteur signjnt occa cupidatat non inulpadeserunt mollit aboru. temnthp incididbnt ut labore mollit anim laborum suis aute.</p>
-                                <a href="formulaire_tache.html" class="btn post-btn">Post une tache</a>
+                                <a href="formulaire_tache.php" class="btn post-btn">Post une tache</a>
                             </div>
                         </div>
                     </div>
@@ -246,6 +246,7 @@
                         <forum>
                           <a class="btn bg-gradient-dark mb-0" type="delete" href="supprimer_projects.php?id=<?php echo $project['IDp']; ?>"><i class="material-icons text-sm">remove</i>Delete</a>
                           <a class="btn bg-gradient-dark mb-0" type="update" href="modifier_project.php?id=<?php echo $project['IDp']; ?>"><i class="material-icons text-sm">add</i>Update</a>
+                          <a class="btn bg-gradient-dark mb-0 add-task-btn" href="formulaire_tache.php?id=<?php echo $project['IDp']; ?>"><i class="material-icons text-sm">add</i> Add Tache</a>
                         </forum>
                         <?php }
                         ?>

@@ -49,7 +49,15 @@
 
     public function getpriority()
     {
-        return $this->Priority;
+        $valideValues = ['low','medium','high'];
+        if(in_array($this->Priority,$valideValues))
+        {
+            return $this->Priority;
+        }
+        else {
+            return $valideValues[0];
+        }
+        
     }
 
     public function getnotes()

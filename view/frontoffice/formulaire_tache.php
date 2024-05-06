@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+    $test = $_GET['id'];
+?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -116,7 +119,7 @@
                     <section align="center">
                      
                       <label for="titre_ser">ID du project:</label>
-                      <input type="text" id="idp" name="idp" onblur="verifIDp()">
+                      <input type="text" id="idp" name="idp" onblur="verifIDp()" value=<?php echo $test;?> >
                       <span id="idspan"></span>
                       <br><br>
                       <label for="titre_ser">Nom du tache:</label>
@@ -128,7 +131,7 @@
                       <label for="titre_ser">Deadline:</label>
                       <input type="date" id="deadline" name="deadline">
                       <br><br>
-                      <label for="titre_ser">Priority</label>
+                      <label for="titre_ser">Priority:</label>
                       <select name="category" id="priority">
                         <option value="low">low</option>
                         <option value="medium">medium</option>
