@@ -2,15 +2,28 @@
 <?php
 include "../../../controller/reponsesC.php";
 include "../../../controller/reclamationsC.php";
-$reclamationC = new reclamationsC();
-$list = $reclamationC->listereclamation();
 
-$reponseC = new reponsesC();
-$listReponses= $reponseC->listereponses();
+// Initialisez la variable $listReponses en tant que tableau vide
+$listReponses = [];
 
-$reclamationController = new reclamationsC();
-$notifications = $reclamationController->getNotifications();
+// Vérifiez si la clé 'idr' existe dans le tableau $_GET
+if(isset($_GET['idr'])) {
+    // Récupération de l'ID de la réclamation depuis l'URL
+    $id_reclamation = $_GET['idr'];
+
+    // Instanciation des contrôleurs
+    $reponseController = new reponsesC();
+    $reclamationController = new reclamationsC();
+
+    // Récupération de la liste des réponses pour cette réclamation spécifique
+    $listReponses = $reponseController->getReponsesByReclamation($id_reclamation);
+
+    // Récupération des notifications
+    $notifications = $reclamationController->getNotifications();
+}
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -136,19 +149,17 @@ $notifications = $reclamationController->getNotifications();
 
 
     <!-- Navbar -->
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+ <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
     <div class="container-fluid py-1 px-3">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tables</li>
-        </ol>
-    </nav>
-    <div style="margin-right: 100px;">
-        <a class="custom-link" href="http://localhost/GestionDesReclamation/view/Frontoffice/contact.php"> Front office → </a>
-    </div>
-</div>
-
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+                <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tables</li>
+            </ol>
+        </nav>
+            <div>
+                <a class="custom-link" href="http://localhost/GestionDesReclamation/view/Frontoffice/contact.php"> Front office → </a>
+            </div>
         <style>
 a.custom-link {
     position: relative; /* Définir la position relative pour pouvoir utiliser top et left */
@@ -172,8 +183,8 @@ a.custom-link:hover {
     color: #FB246A; /* Changement de couleur de texte au survol */
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7); /* Ombre plus prononcée au survol */
 }
-      </style>
-            
+
+</style>    
 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
         <div class="input-group input-group-outline">
@@ -182,6 +193,7 @@ a.custom-link:hover {
         </div>
     </div>  
 </div>
+
 
 
 <ul class="navbar-nav justify-content-end">
@@ -236,79 +248,75 @@ a.custom-link:hover {
 </nav>
 
     <!-- End Navbar -->
-    <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-12">
-          <div class="card my-4">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-              <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Tableau des reclamations</h6>
-              </div>
-            </div>
-            <div class="card-body px-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                <thead>
-    <tr>
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">id reclamation</th>
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">sujet</th>
-        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">discription</th>
-        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
-        <th class="text-secondary opacity-7"></th>
-        <th class="text-secondary opacity-7"></th>
-    </tr>
-</thead>
-<tbody>
-    <?php foreach ($list as $reclamationC) { ?>
-        <tr>
-            <td class="text-center">
-                <div class="d-flex px-2 py-1">
-                    <div></div>
-                    <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm"><?= $reclamationC['idr']; ?></h6>
+    <div class="row">
+            <div class="col-12">
+                <div class="card my-4">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                        <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                            <h6 class="text-white text-capitalize ps-3">Tableau des reponses </h6>
+                        </div>
                     </div>
-                </div>
-            </td>
-            <td class="text-center">
-                <p class="text-xs font-weight-bold mb-0"><?= $reclamationC['sujet']; ?></p>
-            </td>
-            <td class="align-middle text-center text-sm">
-                <span class="text-xs font-weight-bold mb-0"><?= $reclamationC['description']; ?></span>
-            </td>
-            <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold"><?= $reclamationC['dater']; ?></span>
-            </td>
-            <td class="text-center">
-                <!-- Bouton "Répondre" -->
-                <form method="POST" action="repondre.php">
-                    <input type="hidden" name="id_reclamation" value="<?= $reclamationC['idr']; ?>">
-                    <button type="submit" class="btn btn-primary">Répondre</button>
-                </form>
-            </td>
-            <!-- Bouton "Consulter les réponses" -->
-            <td class="text-center">
-                <a href="tables1.php?idr=<?= $reclamationC['idr']; ?>" class="btn btn-primary">Consulter les réponses</a>
-            </td>
-        </tr>
-    <?php } ?>
+                    <div class="card-body px-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <!-- Deuxième tableau pour les réponses -->
+                            <table class="table align-items-center mb-0 mt-4">
+                                <thead>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">id réponse</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">Contenu</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date de réponse</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Réclamation</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+    <?php
+    // Parcours des réponses
+    foreach ($listReponses as $reponseC) {
+    ?>
+<tr>
+    <td class="text-center"><?= $reponseC['idrep']; ?></td>
+    <td class="text-center"><?= $reponseC['contenu']; ?></td>
+    <td class="align-middle text-center">
+        <span class="text-secondary text-xs font-weight-bold"><?= $reponseC['daterep']; ?></span>
+    </td>
+    <td class="text-center"><?= $reponseC['idr']; ?></td>
+    <td class="text-center">
+        <!-- Formulaire pour la suppression -->
+        <form method="POST" action="deletereponse.php" class="d-inline">
+            <input type="hidden" name="idrep" value="<?= $reponseC['idrep']; ?>">
+            <button type="submit" class="btn btn-primary mr-2">Supprimer</button>
+        </form>
+    </td>
+    <td class="text-center">
+        <!-- Formulaire pour la mise à jour -->
+        <form method="POST" action="updatereponse.php?idrep=<?= $reponseC['idrep']; ?>&idr=<?= $reponseC['idr']; ?>" class="d-inline">
+            <input type="hidden" value="<?= $reponseC['idr']; ?>" name="idr">
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </td>
+</tr> 
 
+
+
+
+    <?php } ?>
 </tbody>
 
-
-       
-
-                </table>
-              </div>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+        <!-- Fin Tableau des réponses -->
       <footer class="footer py-4  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
             <div class="col-lg-6 mb-lg-0 mb-4">
               <div class="copyright text-center text-sm text-muted text-lg-start">
-               
+    
               </ul>
             </div>
           </div>
@@ -408,13 +416,12 @@ a.custom-link:hover {
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/material-dashboard.min.js?v=3.0.0"></script>
 
-
-  <script>
+ <script>
     // Sélection de l'élément de saisie
     const input = document.querySelector('.form-control');
 
     // Sélection de tous les éléments de ligne du tableau
-    const rows = document.querySelectorAll('tbody tr');
+    const rows = document.querySelectorAll('.table-responsive tbody tr');
 
     // Ajout d'un écouteur d'événements pour le champ de saisie
     input.addEventListener('input', function() {
@@ -422,10 +429,10 @@ a.custom-link:hover {
 
         // Parcourir toutes les lignes du tableau
         rows.forEach(row => {
-            const idReclamation = row.querySelector('.text-sm').textContent.toLowerCase();
+            const idReponse = row.querySelector('td:first-child').textContent.toLowerCase();
 
-            // Vérifier si l'ID de réclamation contient le terme de recherche
-            if (idReclamation.includes(searchTerm)) {
+            // Vérifier si l'ID de réponse contient le terme de recherche
+            if (idReponse.includes(searchTerm)) {
                 // Afficher la ligne si elle correspond à la recherche
                 row.style.display = '';
             } else {

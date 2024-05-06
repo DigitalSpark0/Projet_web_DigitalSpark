@@ -2,14 +2,18 @@
 <?php
 include "../../../controller/reponsesC.php";
 include "../../../controller/reclamationsC.php";
-$reclamationC = new reclamationsC();
-$list = $reclamationC->listereclamation();
 
-$reponseC = new reponsesC();
-$listReponses= $reponseC->listereponses();
 
 $reclamationController = new reclamationsC();
 $notifications = $reclamationController->getNotifications();
+if(isset($_POST['id_reclamation'])) {
+    $id_reclamation = $_POST['id_reclamation'];
+    // Vous pouvez utiliser $id_reclamation pour récupérer les informations de la réclamation si nécessaire
+} else {
+    // Rediriger l'utilisateur vers une autre page s'il n'y a pas d'ID de réclamation
+    header("Location: error.php"); // Remplacez "index.php" par la page vers laquelle vous souhaitez rediriger
+    exit;
+}
 ?>
 
 
@@ -35,6 +39,30 @@ $notifications = $reclamationController->getNotifications();
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+  <style>
+      /* Style pour centrer le titre et mettre en forme la boîte de réponse */
+      .reply-container {
+        text-align: center; /* Centrage horizontal */
+        margin-top: 50px; /* Marge en haut pour décaler vers le bas */
+      }
+      .reply-box {
+        width: 70%; /* Largeur de la boîte de réponse */
+        margin: 0 auto; /* Centrage horizontal */
+        background-color: pink; /* Fond rose */
+        border: 2px solid black; /* Bordure noire */
+        border-radius: 10px; /* Bordure arrondie */
+        padding: 20px; /* Espacement intérieur */
+        font-family: Arial, sans-serif; /* Police de caractères */
+        font-size: 16px; /* Taille de la police */
+      }
+      .reply-box textarea {
+        width: 100%; /* Largeur de la zone de texte */
+        margin-bottom: 10px; /* Marge en bas pour l'espace entre la zone de texte et le bouton */
+      }
+      .reply-box button {
+        float: right; /* Alignement à droite */
+      }
+    </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -136,8 +164,33 @@ $notifications = $reclamationController->getNotifications();
 
 
     <!-- Navbar -->
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
-    <div class="container-fluid py-1 px-3">
+    <style>
+    a.custom-link {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: black;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 20px;
+        border: 2px #FB246A;
+        border-radius: 10px;
+        background-color: whitesmoke;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease;
+    }
+
+    /* Style du lien lorsqu'il est survolé */
+    a.custom-link:hover {
+        background-color: whitesmoke;
+        color: #FB246A;
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7);
+    }
+</style>
+
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+<div class="container-fluid py-1 px-3">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
@@ -149,153 +202,92 @@ $notifications = $reclamationController->getNotifications();
     </div>
 </div>
 
-        <style>
-a.custom-link {
-    position: relative; /* Définir la position relative pour pouvoir utiliser top et left */
-    top: 50%; /* Déplacer le lien vers le bas de 50% de la hauteur de son conteneur */
-    left: 50%; /* Déplacer le lien vers la droite de 50% de la largeur de son conteneur */
-    transform: translate(-50%, -50%); /* Déplacer le lien de moitié de sa propre largeur et hauteur vers le haut et la gauche pour le centrer */
-    color: black; /* Couleur du texte */
-    text-decoration: none; /* Supprimer le soulignement par défaut */
-    font-weight: bold; /* Gras */
-    padding: 10px 20px; /* Ajouter de l'espace autour du texte */
-    border: 2px #FB246A; /* Bordure noire */
-    border-radius: 10px; /* Bordure arrondie */
-    background-color: whitesmoke; /* Fond rose */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Ombre */
-    transition: all 0.3s ease; /* Transition fluide pour l'effet hover */
-}
-
-/* Style du lien lorsqu'il est survolé */
-a.custom-link:hover {
-    background-color: whitesmoke; /* Changement de couleur de fond au survol */
-    color: #FB246A; /* Changement de couleur de texte au survol */
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7); /* Ombre plus prononcée au survol */
-}
-      </style>
-            
-<div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-    <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-        <div class="input-group input-group-outline">
-            <label class="form-label">Recherche par ID</label>
-            <input type="text" id="searchInput" class="form-control">
-        </div>
-    </div>  
-</div>
 
 
-<ul class="navbar-nav justify-content-end">
-  <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                        <div class="sidenav-toggler-inner">
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
-                        </div>
-                    </a>
-                </li>
-                <li class="nav-item px-3 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-body p-0">
-                        <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
-                    </a>
-                </li>
-                <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-bell cursor-pointer"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                        <!-- Affichage des notifications -->
-                        <?php
-                        // Parcours des notifications et affichage
-                        foreach ($notifications as $notification) {
-                            ?>
-                            <li class="mb-2">
-                                <a class="dropdown-item border-radius-md" href="javascript:;">
-                                    <div class="d-flex py-1">
-                                    
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="text-sm font-weight-normal mb-1">
-                                                <span class="font-weight-bold">Nouvelle réclamation</span> de ID: <?php echo $notification['id_reclamation']; ?>
-                                            </h6>
-                                            <p class="text-xs text-secondary mb-0">
-                                                <i class="fa fa-clock me-1"></i>
-                                                <?php echo $notification['time_elapsed']; ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <?php
-                        }
-                        ?>
-                        <!-- Fin de l'affichage des notifications -->
-                    </ul>
-                </li>
+
+    <ul class="navbar-nav justify-content-end">
+        <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                <div class="sidenav-toggler-inner">
+                    <i class="sidenav-toggler-line"></i>
+                    <i class="sidenav-toggler-line"></i>
+                    <i class="sidenav-toggler-line"></i>
+                </div>
+            </a>
+        </li>
+        <li class="nav-item px-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-body p-0">
+                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+            </a>
+        </li>
+        <li class="nav-item dropdown pe-2 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-bell cursor-pointer"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                <!-- Affichage des notifications -->
+                <?php
+                // Parcours des notifications et affichage
+                foreach ($notifications as $notification) {
+                    ?>
+                    <li class="mb-2">
+                        <a class="dropdown-item border-radius-md" href="javascript:;">
+                            <div class="d-flex py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                    <h6 class="text-sm font-weight-normal mb-1">
+                                        <span class="font-weight-bold">Nouvelle réclamation</span> de ID: <?php echo $notification['id_reclamation']; ?>
+                                    </h6>
+                                    <p class="text-xs text-secondary mb-0">
+                                        <i class="fa fa-clock me-1"></i>
+                                        <?php echo $notification['time_elapsed']; ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <?php
+                }
+                ?>
+                <!-- Fin de l'affichage des notifications -->
             </ul>
-      
+        </li>
+    </ul>
 </nav>
 
+
+
     <!-- End Navbar -->
+    <body class="g-sidenav-show bg-gray-200">
+
+<!-- Navbar -->
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+  <!-- Votre barre de navigation ici -->
+</nav>
+<!-- End Navbar -->
+
+<!-- Contenu de la page -->
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
     <div class="container-fluid py-4">
+      <!-- Répondre à la réclamation -->
       <div class="row">
-        <div class="col-12">
-          <div class="card my-4">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-              <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Tableau des reclamations</h6>
-              </div>
+        <div class="col-lg-12">
+          <div class="reply-container">
+            <div class="reply-box" style="background-color: #353935; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 0;">
+              <h2 style="color: #FFF5EE; font-weight: bold; font-family: 'Muli', sans-serif;">Répondre à la réclamation <span style="font-size: 0.8em; color: white; opacity: 0.7;"><?= $id_reclamation ?></span></h2>
+              <form method="POST" id="POST" action="traiter_reponse.php">
+              <input type="hidden" name="id_reclamation" id="id_reclamation" value="<?= $id_reclamation ?>">
+                <textarea name="contenu" id="contenu" rows="8" cols="80" style="border: none; padding: 10px; font-family: Arial, sans-serif; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); border-radius: 10px;"></textarea>
+                <br>
+                <button type="submit" style="background-color: #FB246A; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-family: Arial, sans-serif; font-weight: bold; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); transition: all 0.3s ease;">Envoyer la réponse</button>
+              </form>
             </div>
-            <div class="card-body px-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                <thead>
-    <tr>
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">id reclamation</th>
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">sujet</th>
-        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">discription</th>
-        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
-        <th class="text-secondary opacity-7"></th>
-        <th class="text-secondary opacity-7"></th>
-    </tr>
-</thead>
-<tbody>
-    <?php foreach ($list as $reclamationC) { ?>
-        <tr>
-            <td class="text-center">
-                <div class="d-flex px-2 py-1">
-                    <div></div>
-                    <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm"><?= $reclamationC['idr']; ?></h6>
-                    </div>
-                </div>
-            </td>
-            <td class="text-center">
-                <p class="text-xs font-weight-bold mb-0"><?= $reclamationC['sujet']; ?></p>
-            </td>
-            <td class="align-middle text-center text-sm">
-                <span class="text-xs font-weight-bold mb-0"><?= $reclamationC['description']; ?></span>
-            </td>
-            <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold"><?= $reclamationC['dater']; ?></span>
-            </td>
-            <td class="text-center">
-                <!-- Bouton "Répondre" -->
-                <form method="POST" action="repondre.php">
-                    <input type="hidden" name="id_reclamation" value="<?= $reclamationC['idr']; ?>">
-                    <button type="submit" class="btn btn-primary">Répondre</button>
-                </form>
-            </td>
-            <!-- Bouton "Consulter les réponses" -->
-            <td class="text-center">
-                <a href="tables1.php?idr=<?= $reclamationC['idr']; ?>" class="btn btn-primary">Consulter les réponses</a>
-            </td>
-        </tr>
-    <?php } ?>
+          </div>
+        </div>
+</main>
 
-</tbody>
+<!-- Vos scripts JS et autres éléments body ici -->
+</body>
 
-
-       
 
                 </table>
               </div>
@@ -407,35 +399,6 @@ a.custom-link:hover {
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/material-dashboard.min.js?v=3.0.0"></script>
-
-
-  <script>
-    // Sélection de l'élément de saisie
-    const input = document.querySelector('.form-control');
-
-    // Sélection de tous les éléments de ligne du tableau
-    const rows = document.querySelectorAll('tbody tr');
-
-    // Ajout d'un écouteur d'événements pour le champ de saisie
-    input.addEventListener('input', function() {
-        const searchTerm = input.value.toLowerCase();
-
-        // Parcourir toutes les lignes du tableau
-        rows.forEach(row => {
-            const idReclamation = row.querySelector('.text-sm').textContent.toLowerCase();
-
-            // Vérifier si l'ID de réclamation contient le terme de recherche
-            if (idReclamation.includes(searchTerm)) {
-                // Afficher la ligne si elle correspond à la recherche
-                row.style.display = '';
-            } else {
-                // Masquer la ligne si elle ne correspond pas à la recherche
-                row.style.display = 'none';
-            }
-        });
-    });
-</script>
-
 </body>
 
 </html>

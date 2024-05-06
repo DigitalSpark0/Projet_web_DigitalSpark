@@ -1,10 +1,34 @@
+
 <?php
+include "../../controller/reponsesC.php";
 include "../../controller/reclamationsC.php";
-$idr = $_GET['idr'];
+
+
+// Initialisez la variable $listReponses en tant que tableau vide
+$listReponses = [];
+
+// Vérifiez si la clé 'idr' existe dans le tableau $_GET
+if(isset($_GET['idr'])) {
+    // Récupération de l'ID de la réclamation depuis l'URL
+    $id_reclamation = $_GET['idr'];
+
+    // Instanciation des contrôleurs
+    $reponseController = new reponsesC();
+    $reclamationController = new reclamationsC();
+
+    // Récupération de la liste des réponses pour cette réclamation spécifique
+    $listReponses = $reponseController->getReponsesByReclamation($id_reclamation);
+
+    
+}
 ?>
 
-<!doctype html>
-<html class="no-js" lang="zxx">
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+    
 
 <head>
     
@@ -42,11 +66,59 @@ $idr = $_GET['idr'];
             margin-left: 400px;
         }
     </style>
-    
-    
+    <style>
+        body {
+            background-color: white; /* Fond de la page en blanc */
+            margin: 0; /* Réinitialiser les marges */
+            padding: 0; /* Réinitialiser le rembourrage */
+            font-family: Arial, sans-serif; /* Utiliser une police générique */
+        }
+
+        .container {
+            max-width: 800px; /* Largeur maximale du contenu */
+            margin: 0 auto; /* Centrer le contenu */
+            padding: 20px; /* Ajouter un espacement autour du contenu */
+        }
+
+        .card-header {
+            background-color: #FB246A; /* Couleur de fond pour l'en-tête */
+            color: white; /* Couleur du texte pour l'en-tête */
+            padding: 10px; /* Ajouter un espacement autour du texte */
+            border-radius: 10px; /* Bords arrondis pour l'en-tête */
+            text-align: center; /* Centrer le texte */
+            border-bottom: none; /* Supprimer la bordure inférieure */
+        }
+
+        .table {
+            width: 100%; /* Largeur de la table à 100% */
+            border-collapse: collapse; /* Fusionner les bordures de cellule */
+            margin-top: 20px; /* Espacement en haut de la table */
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #FB246A; /* Bordure autour des cellules */
+            padding: 8px; /* Ajouter un espacement à l'intérieur des cellules */
+            text-align: center; /* Centrer le texte */
+        }
+
+        .no-response {
+             /* Couleur de fond pour le message */
+            color: white; /* Couleur du texte pour le message */
+            padding: 10px; /* Ajouter un espacement autour du texte */
+            border-radius: 10px; /* Bords arrondis pour le message */
+            text-align: center; /* Centrer le texte */
+        }
+
+        /* Masquer le titre lorsque le message n'a pas de réponse */
+        .no-response .card-header {
+            display: none;
+        }
+    </style>
 </head>
 
-<body >
+<body>
+
 <!-- Preloader Start -->
 <div id="preloader-active" >
         <div class="preloader d-flex align-items-center justify-content-center">
@@ -92,6 +164,7 @@ $idr = $_GET['idr'];
          <div style="margin-right: 40px;"> 
           <a class="custom-link" href ="http://localhost/GestionDesReclamation/view/Backoffice/pages/tables.php"> Back office → </a>
         </div>
+        
         <style>
 a.custom-link {
     position: relative; /* Définir la position relative pour pouvoir utiliser top et left */
@@ -117,6 +190,7 @@ a.custom-link:hover {
 }
 
       </style>
+      <header>
       
                                         </ul>
                                     </nav>
@@ -141,76 +215,54 @@ a.custom-link:hover {
         margin-top: 10px; /* Ajoute une marge entre la select box et la textarea */
     }
     </style>
-    <!-- Hero Area End -->
 
-    <!-- ================ contact section start ================= -->
 
-    <script>
-    function validateForm() {
-        var sujet = document.getElementById('sujet2').value;
-        var description = document.getElementById('description2').value;
 
-        // Expression régulière pour vérifier si le sujet contient des chiffres ou des gros mots
-        var sujetPattern = /^[a-zA-Z\s]*$/;
-
-        // Expression régulière pour vérifier si la description contient des gros mots
-        var descriptionPattern = /fuck|bitch|kill/;
-
-        if (!sujet.match(sujetPattern)) {
-            alert("Le sujet ne peut pas contenir de chiffres ou de caractères spéciaux !");
-            return false;
-        }
-
-        if (description.match(descriptionPattern)) {
-            alert("La description ne peut pas contenir de gros mots !");
-            return false;
-        }
-
-        return true;
-    }
-</script>
-
-<section class="contact-section">
     <div class="container">
-        <div class="row">
-            <div class="col-12" >
-                <h2 class="contact-title" > Contact us!</h2>
-            </div>
-            
-            <div class="col-lg-8">
-                <form action="updatereclamation1.php" method="POST" id="updatereclamation" onsubmit="return validateForm()">
-                    <!-- Form Inputs -->
-                    <div class="form-group">
-                       <select class="sujet2 form-control" name="sujet2" id="sujet2" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Subject'" required>
-                          <option value="" disabled selected>Select Subject</option>
-                          <option value="General Inquiry">General Inquiry</option>
-                          <option value="Technical Support">Technical Support</option>
-                          <option value="Billing Issue">Billing Issue</option>
-                               <!-- Ajoutez d'autres options au besoin -->
-                        </select>
+        <div class="card my-4">
+            <?php if (empty($listReponses)) { ?>
+                <div class="no-response">
+                    <div class="card-header">
+                        <h6 class="text-capitalize ">Tableau des réponses</h6>
                     </div>
-                    <!-- Other Inputs -->
-                    <div class="form-group">
-                        <textarea class="description2 w-100 form-control" name="description2" id="description2" type="text" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" placeholder="Enter Message" required></textarea>
-                        <textarea style="display: none;" class="idr3 w-100 form-control" name="idr3" id="idr3" type="text" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" placeholder="Enter Message"><?php echo isset($_GET['idr']) ? htmlspecialchars($_GET['idr']) : ''; ?></textarea>
-                        <div>
-                            <label for="currentTime">Current Time:</label>
-                            <input id="dater2" name="dater2" class="dater2 form-control" type="text" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly>
-                        </div>
+                    <p >Pas de réponse pour le moment.</p>
+                </div>
+            <?php } else { ?>
+                <div class="card-header" style="background-color: #FB246A; color: white; font-weight: bold;">
+    <h6 class="text-capitalize">Tableau des réponses</h6>
+</div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <!-- Deuxième tableau pour les réponses -->
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase">id réponse</th> <!-- Utiliser la couleur fournie pour les titres -->
+                                    <th class="text-uppercase">Contenu</th>
+                                    <th class="text-uppercase">Date de réponse</th>
+                                </tr>
+                                
+                            </thead>
+                            <tbody>
+                                <?php foreach ($listReponses as $reponseC) { ?>
+                                    <tr>
+                                        <td><?= $reponseC['idrep']; ?></td>
+                                        <td><?= $reponseC['contenu']; ?></td>
+                                        <td><?= $reponseC['daterep']; ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                     
                     </div>
-                    <!-- Buttons -->
-                    <div class="form-group mt-3">
-                        <button type="submit" class="button button-contactForm boxed-btn">Modifier</button>
-                        <a href="listereclamation.php" class="button button-contactForm boxed-btn">Annuler</a>
-                    </div>
-                </form>
-            </div>
+                </div>
+            <?php } ?>
         </div>
+        <div class="form-group mt-6">
+                        <a href="listereclamation.php" class="button button-contactForm boxed-btn" style="margin-left:560px">Retour</a>
+                    </div>
     </div>
-</section>
-
-
-    <!-- ================ contact section end ================= -->
     <footer>
         <!-- Footer Start-->
         <div class="footer-area footer-bg footer-padding">

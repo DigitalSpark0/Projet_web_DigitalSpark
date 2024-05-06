@@ -1,5 +1,6 @@
 <?php
 include "C:/xampp/htdocs/GestionDesReclamation/model/reclamationsM.php";
+
 require_once "C:/xampp/htdocs/GestionDesReclamation/view/config.php";
 
 class reclamationsC
@@ -39,30 +40,33 @@ class reclamationsC
     /////////////////////////////////////////////
     public function deletereclamation($idr)
     {
-        $sql="DELETE  FROM reclamations WHERE idr = :idr";
         $db = config::getConnexion();
-        try
-        {
-            $query = $db->prepare($sql);
-            $query->bindValue(':idr',$idr);
-
-            $query->execute();
-            $rowCount = $query->rowCount();
-
-            if($rowCount > 0)
-            {
-                echo "delete successful. $rowCount rows affected.";
-            }
-            else
-            {
+    
+        try {
+            // Supprimer les réponses liées à la réclamation
+            $sqlDeleteReponses = "DELETE FROM reponses WHERE idr = :idr";
+            $queryDeleteReponses = $db->prepare($sqlDeleteReponses);
+            $queryDeleteReponses->bindValue(':idr', $idr);
+            $queryDeleteReponses->execute();
+    
+            // Supprimer la réclamation
+            $sqlDeleteReclamation = "DELETE FROM reclamations WHERE idr = :idr";
+            $queryDeleteReclamation = $db->prepare($sqlDeleteReclamation);
+            $queryDeleteReclamation->bindValue(':idr', $idr);
+            $queryDeleteReclamation->execute();
+    
+            $rowCount = $queryDeleteReclamation->rowCount();
+    
+            if ($rowCount > 0) {
+                echo "Delete successful. $rowCount rows affected.";
+            } else {
                 echo "No rows deleted.";
             }
-        }
-        catch(Exception $e)
-        {
-            die('Error:' .$e->getMessage());
+        } catch (Exception $e) {
+            die('Error: ' . $e->getMessage());
         }
     }
+    
     /////////////////////////////////////////////
     public function addreclamation($reclamation)
     {
@@ -103,7 +107,43 @@ class reclamationsC
         {
             die('Error:' .$e->getMessage());
         }
-    }  
+    }
+    //////////////////////////////////////////////////////////////////////////////////
+    public function getNotifications() {
+        $sql = "SELECT idr, TIMESTAMPDIFF(HOUR, dater, NOW()) AS time_elapsed FROM reclamations ORDER BY dater DESC LIMIT 5";
+        $db = config::getConnexion(); 
+    
+        try {
+            $query = $db->prepare($sql);
+            $query->execute();
+            $notifications = array();
+    
+            while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+                $notification = array(
+                    'id_reclamation' => $row['idr'],
+                    'time_elapsed' => $this->formatElapsedTime($row['time_elapsed'])
+                );
+                $notifications[] = $notification;
+            }
+    
+            return $notifications;
+        } catch (PDOException $e) {
+            die('Error: ' . $e->getMessage());
+        }
+    }
+    
+    // Méthode pour formater le temps écoulé
+    private function formatElapsedTime($hours) {
+        if ($hours < 1) {
+            return "Envoyé il y a moins d'une heure";
+        } elseif ($hours < 24) {
+            return "Envoyé il y a " . $hours . " heures";
+        } else {
+            return "Envoyé il y a plus d'un jour";
+        }
+    }
+    
+  
 }
 
 ?>

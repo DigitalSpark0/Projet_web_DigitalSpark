@@ -73,6 +73,35 @@ include "../../controller/reclamationsC.php";
                                                 </ul>
                                             </li>
                                             <li><a href="contact.html">Contact</a></li>
+         <div> 
+          <a class="custom-link" href ="http://localhost/GestionDesReclamation/view/Backoffice/pages/tables.php">to the Back office</a>
+        </div>
+        <style>
+a.custom-link {
+    position: relative; /* Définir la position relative pour pouvoir utiliser top et left */
+    top: 50%; /* Déplacer le lien vers le bas de 50% de la hauteur de son conteneur */
+    left: 50%; /* Déplacer le lien vers la droite de 50% de la largeur de son conteneur */
+    transform: translate(-50%, -50%); /* Déplacer le lien de moitié de sa propre largeur et hauteur vers le haut et la gauche pour le centrer */
+    color: black; /* Couleur du texte */
+    text-decoration: none; /* Supprimer le soulignement par défaut */
+    font-weight: bold; /* Gras */
+    padding: 10px 20px; /* Ajouter de l'espace autour du texte */
+    border: 2px #FB246A; /* Bordure noire */
+    border-radius: 10px; /* Bordure arrondie */
+    background-color: whitesmoke; /* Fond rose */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Ombre */
+    transition: all 0.3s ease; /* Transition fluide pour l'effet hover */
+}
+
+/* Style du lien lorsqu'il est survolé */
+a.custom-link:hover {
+    background-color: whitesmoke; /* Changement de couleur de fond au survol */
+    color: #FB246A; /* Changement de couleur de texte au survol */
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7); /* Ombre plus prononcée au survol */
+}
+
+      </style>
+      
                                         </ul>
                                     </nav>
                                 </div>          
@@ -92,6 +121,15 @@ include "../../controller/reclamationsC.php";
            </div>
        </div>
         <!-- Header End -->
+        <style>
+    .error-message {
+        color: red;
+    }
+
+    #description {
+        margin-top: 10px; /* Ajoute une marge entre la select box et la textarea */
+    }
+</style>
     </header>
     <!-- Hero Area Start-->
     <div class="slider-area ">
@@ -109,38 +147,85 @@ include "../../controller/reclamationsC.php";
     </div>
         <!-- Hero Area End -->
     <!-- ================ contact section start ================= -->
-
-    <section class="contact-section">
     
+    <section class="contact-section text-center">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h2 class="contact-title"> Contact us! </h2>
+            <form action="contact1.php" method="POST" id="inscription" onsubmit="return validateForm()">
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="contact-title">Get in Touch</h2>
+                        <div class="form-group">
+                            <select class="description1 form-select" name="sujet1" id="sujet" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Subject'">
+                                <option value="" disabled selected>Select Subject</option>
+                                <option value="General Inquiry">General Inquiry</option>
+                                <option value="Technical Support">Technical Support</option>
+                                <option value="Billing Issue">Billing Issue</option>
+                                <!-- Ajoutez d'autres options au besoin -->
+                            </select>
+                            <div id="sujet-error" class="error-message"></div>
+                        </div>  
                     </div>
-                    <div class="col-lg-8">
-                        <form  action="contact1.php" method="POST" id="inscription" >
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <textarea class="description1 w-100" name="description1" id="description" type="text" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" placeholder=" Enter Message"></textarea>
-                                    </div>
-                                
-    
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <input class="description1" name="sujet1" id="sujet" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Subject'" placeholder="Enter Subject">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group mt-3">
-                                <button type="envoyer" type="submit" action="submit" class="button button-contactForm boxed-btn">Send</button>
-                            </div>
-                          
-                        </form>
-        
+                    <div class="col-12">
+                        <div class="form-group">
+                            <textarea class="description1 w-100" name="description1" id="description" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" placeholder="Enter Message"></textarea>
+                            <div id="description-error" class="error-message"></div>
+                        </div>
                     </div>
+                    <div class="col-12">
+                         <div class="form-group">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email Address">
+                          <div id="email-error" class="error-message"></div>
+                         </div>
+                   </div>
+
                 </div>
-            </div>
-        </section>
+                <div class="form-group mt-3">
+                    <button type="submit" class="button button-contactForm boxed-btn">Send</button>
+                    <!-- Nouveau bouton pour consulter les réclamations -->
+                    <a href="listereclamation.php" class="button button-contactForm boxed-btn">View Your Claims</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    function validateForm() {
+        var sujet = document.getElementById("sujet").value;
+        var description = document.getElementById("description").value;
+        var sujetError = document.getElementById("sujet-error");
+        var descriptionError = document.getElementById("description-error");
+
+        // Validation du sujet : vérifier s'il a sélectionné une option valide
+        if (sujet === null || sujet === "") {
+            sujetError.textContent = "Please select a subject.";
+            return false;
+        } else {
+            sujetError.textContent = ""; // Efface le message d'erreur s'il est affiché
+        }
+
+        // Validation de la description : vérifier si elle est vide
+        if (description.trim() === "") {
+            descriptionError.textContent = "Please enter a description.";
+            return false;
+        } else {
+            descriptionError.textContent = ""; // Efface le message d'erreur s'il est affiché
+        }
+
+        // Validation de la description : pas de gros mots
+        var descriptionRegex = /(fuck|bitch|kill)/i; 
+        if (description.match(descriptionRegex)) {
+            descriptionError.textContent = "The description cannot contain foul language.";
+            return false;
+        } else {
+            descriptionError.textContent = ""; // Efface le message d'erreur s'il est affiché
+        }
+
+        return true; // Soumission du formulaire si la validation réussit
+    }
+</script>
+
     <!-- ================ contact section end ================= -->
     <footer>
         <!-- Footer Start-->
