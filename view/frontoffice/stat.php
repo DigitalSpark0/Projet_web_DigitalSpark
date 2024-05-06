@@ -2,7 +2,7 @@
 
 
 require_once "C:/xampp/htdocs/project web (gestion services)/controller/projectController.php";
-
+include "C:/xampp/htdocs/project web (gestion services)/config.php";
 $projectController = new projectController();
 
 
@@ -10,23 +10,23 @@ $projectController = new projectController();
 $db = config::getConnexion();
 
 // Récupérer toutes les occurrences de lieu_commande
-$queryAllLocations = $db->query("SELECT DISTINCT Category FROM project");
-$queryAllLocations->execute();
-$allLocations = $queryAllLocations->fetchAll(PDO::FETCH_COLUMN);
+$queryAllCategory = $db->query("SELECT DISTINCT Category FROM project");
+$queryAllCategory->execute();
+$allCategory = $queryAllCategory->fetchAll(PDO::FETCH_COLUMN);
 
 // Récupérer le nombre d'occurrences pour chaque lieu_commande
-$locationCounts = [];
-foreach ($allLocations as $location) {
-    $queryCount = $db->prepare("SELECT COUNT(*) FROM project WHERE Category = :location");
+$CategoryCounts = [];
+foreach ($allCategory as $project) {
+    $queryCount = $db->prepare("SELECT COUNT(*) FROM project WHERE Category = :category");
     
-    $queryCount->bindParam(':location', $location);
+    $queryCount->bindParam(':category', $project);
     $queryCount->execute();
-    $locationCounts[$location] = $queryCount->fetchColumn();
+    $CategoryCounts[$project] = $queryCount->fetchColumn();
 }
 
 // Convertir les données en format JSON pour une utilisation dans JavaScript
-$locationCountsJSON = json_encode(array_values($locationCounts));
-$locationLabelsJSON = json_encode(array_keys($locationCounts));
+$CategoryCountsJSON = json_encode(array_values($CategoryCounts));
+$CategoryLabelsJSON = json_encode(array_keys($CategoryCounts));
 
 
 ?>
@@ -172,17 +172,17 @@ $locationLabelsJSON = json_encode(array_keys($locationCounts));
     </div>
 <div style="width: 500px; height: 500px;" > 
     <script>
-var locationCounts = <?php echo $locationCountsJSON; ?>;
-var locationLabels = <?php echo $locationLabelsJSON; ?>;
+var CategoryCounts = <?php echo $CategoryCountsJSON; ?>;
+var CategoryLabels = <?php echo $CategoryLabelsJSON; ?>;
 
 var ctx = document.getElementById('pieChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'polarArea',
     data: {
-        labels: locationLabels,
+        labels: CategoryLabels,
         datasets: [{
             label: 'Nombre de commandes par lieu',
-            data: locationCounts,
+            data: CategoryCounts,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

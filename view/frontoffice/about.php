@@ -253,6 +253,9 @@
                       <forum>
                         <a class="btn bg-gradient-dark mb-0" type="update" href="recherche_project.php?id=<?php echo $project['IDp']; ?>"><i class="material-icons text-sm"></i>Recherche</a>
                       </forum>
+                      <forum>
+                        <a class="btn bg-gradient-dark mb-0" type="update" href="stat.php?id=<?php echo $project['IDp']; ?>"><i class="material-icons text-sm"></i>Statistique</a>
+                      </forum>
                     </div>
                   </div>
                   

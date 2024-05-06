@@ -74,15 +74,16 @@ function verift() {
 }
 function verifIDp() {
     var IDp=document.getElementById('idp').value;
+    var IDspan=document.getElementById('idspan');
     var numbersOnly = /^[0-9]+$/;
     if (!IDp.match(numbersOnly) || IDp.length > 11 || IDp.value=="") {
-        titreSpan.innerText = "verifier ID.";
-        titreSpan.style.color = "red";
+        IDspan.innerText = "verifier ID.";
+        IDspan.style.color = "red";
     }
     else 
     {
-        titreSpan.innerText = "ID est valide.";
-        titreSpan.style.color = "green";
+        IDspan.innerText = "ID est valide.";
+        IDspan.style.color = "green";
         return false;
     }
 }
