@@ -70,11 +70,12 @@ class ServiceController
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////
-    public function update($titre_s,$desc_s,$prix_s,$duree_s,$categorie_s,$statut_s)
+    public function update($IDS,$titre_s,$desc_s,$prix_s,$duree_s,$categorie_s,$statut_s)
     {
-        $sql="UPDATE  SERVICE SET titre_s=:titre_ss, desc_s=:desc_ss, prix_s=:prix_ss, duree_s=:duree_ss, categorie_s=:categorie_ss, statut_s=:statut_ss";
+        $sql="UPDATE  SERVICE SET ids=:IDSS, titre_s=:titre_ss, desc_s=:desc_ss, prix_s=:prix_ss, duree_s=:duree_ss, categorie_s=:categorie_ss, statut_s=:statut_ss WHERE ids=:IDSS";
         $db = config::getConnexion();
             $query = $db->prepare($sql);
+            $query->bindValue(':IDSS',$IDS);
             $query->bindValue(':titre_ss',$titre_s);
             $query->bindValue(':desc_ss',$desc_s);
             $query->bindValue(':prix_ss',$prix_s);

@@ -5,9 +5,18 @@ include "C:/xampp/htdocs/projet web (gestion services)/config.php";
 
 $db=config::getConnexion(); 
 $serv = new ServiceController();
-$cum = new CommandeController(); 
+$cum = new CommandeController();
+$gawk= new CommandeController(); 
 $list =$serv->listServices();
 $listaa=$cum->listcommande();
+$listaaa=$gawk->listcommande();
+
+// Préparer la requête SQL pour récupérer les commandes
+$query = "SELECT * FROM commande";
+$statement = $db->query($query);
+
+// Récupérer les données des commandes
+$commandes = $statement->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
  <!--
@@ -164,6 +173,8 @@ $listaa=$cum->listcommande();
         <div>
           <a class="custom-link" href ="http://localhost/projet%20web%20(gestion%20services)/view/frontoffice/index.php">to the front office</a>
         </div>
+        <!-- Afficher le résultat total -->
+
         <style>
         /* Style du lien */
         a.custom-link {
@@ -299,8 +310,11 @@ $listaa=$cum->listcommande();
     <div class="container-fluid py-4">
     <div class="row">
     <div class="col-lg-6">
-        <div class="card-header pb-0 px-3">
+        <div class="card-header pb-0 px-3 ">
+        <div class="d-flex justify-content-between align-items-center">
             <h3 class="mb-0" align="center">La liste des services</h3>
+            
+                </div>
             <div class="overflow-auto" style="max-height: 450px;">
             <ul class="list-group">
                 <?php foreach ($list as $service){ ?>
@@ -330,16 +344,49 @@ $listaa=$cum->listcommande();
         <div class="card-header pb-0 px-3">
           <div class="d-flex justify-content-between align-items-center">
               <h3 class="mb-0">la liste des commandes</h3>
+              <div>
+            <a href="#" class="btn btn-sm btn-primary" id="notificationIcon" name="notificationIcon">
+                <i class="fas fa-bell"></i><br><br> <!-- Utilisation d'une icône de cloche, ajustez selon votre bibliothèque d'icônes -->
+                <!-- Vous pouvez également ajouter un badge avec le nombre de notifications -->
+                <span class="badge bg-danger"><?php echo count($commandes); ?></span>
+            </a>
+        </div>
+        <div class="hidden-contentservice" id="notificationContent" style="display: none; max-height: 300px; overflow-y: auto;">
+                    <?php foreach ($commandes as $commande) { ?>
+                      <div class="notification-item">
+                          <p>Il y a une commande d'id <?php echo $commande['idc']; ?> ajoutée à la date <?php echo $commande['date_c']; ?></p>
+                          <button class="hide-notification-button">Masquer cette notification</button>
+                      </div>
+                    <?php } ?>
+                    
+                </div>
               <form action="genpdf.php">
                   <button type="submit" class="btn btn-primary" name="genpdf">Télécharger PDF</button>
               </form>
           </div>
             <div class="overflow-auto" style="max-height: 450px;">
             <ul class="list-group">
-                <?php foreach ($listaa as $commande){ ?>
+                <?php
+                 $totalMontant = 0;
+                 foreach($listaaa as $commande){
+                  $totalMontant += $commande['montant_c']; }?>
+                   <div class="total-container">
+                      <p>Total des montants des commandes : <?php echo $totalMontant; ?> DT</p>
+                  </div>
+                  <form id="saveTotalMontantForm" action="save_total_montant.php" method="post">
+                    <!-- Champ caché pour stocker le montant total -->
+                      <input type="hidden" name="totalMontant" value="<?php echo $totalMontant; ?>">
+
+                    <!-- Champ caché pour stocker la date actuelle -->
+                   <input type="hidden" name="dateActuelle" value="<?php echo date('Y-m-d'); ?>">
+                    <button type="submit" name="submit">Enregistrer le montant total</button>
+                  </form>
+                  
+                 <?php
+                foreach ($listaa as $commande){ ?>
                     <li class="list-group-item border-5 d-flex p-4 mb-2 bg-gray-200 border-radius-lg">
                     <div class="d-flex flex-column">
-                      <h2 class="mb-3 text-sm font-weight-bold">id du commande:  <?= $commande['idc'];?></h2>
+                      <h2  class="mb-3 text-sm font-weight-bold" >id du commande:  <?= $commande['idc'];?></h2>
                       <span class="mb-2 text-xs">idservice: <span class="text-dark ms-sm-2" name="idsse"><?= $commande['idservice'];?></span></span>
                       <span class="mb-2 text-xs">date d'ajout de la commande: <span class="text-dark ms-sm-2" name="da"><?= $commande['date_c'];?> </span></span>
                       <span class="text-xs">statut: <span class="text-dark ms-sm-2" name="st"><?= $commande['statut_c'];?></span></span>
@@ -403,6 +450,29 @@ $listaa=$cum->listcommande();
                           // Si tout est valide, soumettre le formulaire
                           return isValid;
                       }
+                        // Récupérer l'élément de l'icône de notification et le contenu caché
+                        var notificationIcon = document.getElementById("notificationIcon");
+                        var notificationContent = document.getElementById("notificationContent");
+
+                        // Ajouter un gestionnaire d'événements pour le clic sur l'icône de notification
+                        notificationIcon.addEventListener("click", function(event) {
+                            // Empêcher le comportement par défaut du lien
+                            event.preventDefault();
+
+                            // Afficher ou masquer le contenu en fonction de son état actuel
+                            if (notificationContent.style.display === "none") {
+                                notificationContent.style.display = "block";
+                            } else {
+                                notificationContent.style.display = "none";
+                            }
+                        });
+                        document.querySelectorAll(".hide-notification-button").forEach(function(button) {
+                              button.addEventListener("click", function() {
+                                  this.parentNode.style.display = "none";
+                              });
+                          });
+
+
                     </script>
                     <style>
                       /* Style de la div cachée */
@@ -435,6 +505,109 @@ $listaa=$cum->listcommande();
                           display: block; /* Affiche le bouton de soumission sur une nouvelle ligne */
                           width: 100%; /* Largeur du bouton à 100% de la largeur de la div */
                       }
+                                                             
+                          /* Style de la fenêtre pop-up */
+.hidden-contentservice {
+    display: none;
+    position: fixed; /* Utilisation de position fixed */
+    top: 40%; /* Centrer verticalement */
+    left: 80%; /* Centrer horizontalement */
+    transform: translate(-50%, -50%); /* Centrer la fenêtre */
+    background-color: white;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 9999; /* Valeur de z-index plus élevée pour afficher devant les autres éléments */
+}
+
+/* Style de l'icône de notification */
+a[name="notificationIcon"] {
+    position: relative; /* Permettra de positionner le badge de notification */
+}
+
+/* Style du badge de notification */
+span[name="notificationBadge"] {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+}
+
+/* Style de la fenêtre modale */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Fond semi-transparent */
+}
+
+/* Contenu de la fenêtre modale */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 5px;
+}
+
+/* Bouton de fermeture de la fenêtre modale */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Style du bouton de notification */
+.btn-notification {
+    position: relative;
+}
+
+/* Style du badge de notification dans le bouton */
+.badge-notification {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+}
+.hidden-contentservice p {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #333;
+    margin: 10px 0;
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+    border: 2px solid #ddd; /* Bordure grise */
+    border-radius: 8px; /* Bordure arrondie */
+    padding: 15px; /* Espacement intérieur */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Légère ombre portée */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px); /* Décalage vers le haut */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* Retour à la position d'origine */
+    }
+}
+
+
+
 
                     </style>
                 </div>
@@ -442,13 +615,14 @@ $listaa=$cum->listcommande();
                 <?php }// endforeach; ?>
             </ul>
             <?php 
+                      $idcupdateee = isset($_POST["idcupdate"]) ?$_POST["idcupdate"]:'erreur';
                       $idserviceee = isset($_POST["idsupdate"]) ?$_POST["idsupdate"]:'erreur';
                       $date_ccc = isset($_POST["dateupdate"])?$_POST["dateupdate"]:'erreur';
                       $statut_ccc = isset($_POST["statupdate"])?$_POST["statupdate"]:'erreur';
                       $montant_ccc = isset($_POST["montupdate"])?$_POST["montupdate"]:'erreur';
                         
                       $comoo=new CommandeController();
-                      $comoo->updatecommande($_POST["idcupdate"],$idserviceee,$date_ccc,$statut_ccc,$montant_ccc);
+                      $comoo->updatecommande($idcupdateee,$idserviceee,$date_ccc,$statut_ccc,$montant_ccc);
 
                       header('Location:gestion_des_services.php');
                       ?>
@@ -487,7 +661,60 @@ $listaa=$cum->listcommande();
             <!-- Contenu de la nouvelle partie -->
         </div>
     </div>
-</div>         
+</div> 
+<!-------partie_stat--------------------------------------->    
+<div class="row mt-4">
+<div align="center" class="title"><h3><strong>statistiques des ventes</strong></h3></div>
+    <div class="col-lg-10 mx-auto">
+        <div class="card-header pb-0 px-3">
+        
+            <div class="statistics-container">
+                <?php
+                // Requête SQL pour sélectionner toutes les entrées de la table montot
+                $sql = "SELECT * FROM montot";
+                $result = $db->query($sql);
+
+                // Tableau pour stocker les montants par date
+                $montantsParDate = array();
+
+                // Parcourir les résultats de la requête
+                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                    $date = $row['dateactuellemont'];
+                    $montant = $row['montdate'];
+
+                    // Vérifier si la date existe déjà dans le tableau
+                    if (array_key_exists($date, $montantsParDate)) {
+                        // Si la date existe, ajouter le montant à la valeur existante
+                        $montantsParDate[$date] += $montant;
+                    } else {
+                        // Sinon, créer une nouvelle entrée dans le tableau
+                        $montantsParDate[$date] = $montant;
+                    }
+                }
+
+                // Calculer le montant maximum pour normaliser les données
+                $maxMontant = max($montantsParDate);
+
+                // Définir l'échelle maximale souhaitée
+                $echelleMax = 100;
+
+                // Calculer le facteur d'échelle en divisant le montant maximum par l'échelle maximale
+                $facteurEchelle = $maxMontant / $echelleMax;
+                
+                // Afficher les montants par date en utilisant l'échelle
+                foreach ($montantsParDate as $date => $montantTotal) {
+                    // Diviser chaque montant par le facteur d'échelle pour réduire la hauteur des barres
+                    $hauteurBarre = $montantTotal / $facteurEchelle;
+                    echo "<div class=\"bar\" style=\"height: $hauteurBarre%;\"></div><br><br>";
+                    echo "<p>Date : $date, Montant total : $montantTotal</p>";
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
 </div>
 
 <style>
@@ -499,7 +726,70 @@ $listaa=$cum->listcommande();
               .form-control {
                   border-radius: 0; /* Bordures carrées */
               }
+              .statistics-container p {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+        /* Ajoutez d'autres styles selon vos besoins */
+    }
+
+    /* Style pour le container des statistiques */
+    .statistics-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-end;
+        height: 300px; /* Hauteur fixe du container */
+    }
+     
+
+    .bar {
+    width: 20px; /* Largeur des barres */
+    background-color: #007bff; /* Couleur des barres */
+    margin: 0 5px; /* Marge entre les barres */
+    opacity: 0.7; /* Opacité par défaut */
+    transition: opacity 0.5s ease; /* Transition pour l'opacité */
+}
+
+/* Lorsque vous survolez les barres, elles deviennent plus opaques */
+.bar:hover {
+    opacity: 1; /* Opacité complète au survol */
+}
+.title {
+        opacity: 0;
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        margin-bottom: 20px; /* Espace sous le titre */
+    }
+
+    .statistics-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-end;
+        height: 300px; /* Hauteur fixe du container */
+    }
+
+    .bar {
+        width: 20px; /* Largeur des barres */
+        background-color: #007bff; /* Couleur des barres */
+        margin: 0 5px; /* Marge entre les barres */
+        opacity: 0.7; /* Opacité par défaut */
+        transition: opacity 0.5s ease; /* Transition pour l'opacité */
+    }
+
+    /* Lorsque vous survolez les barres, elles deviennent plus opaques */
+    .bar:hover {
+        opacity: 1; /* Opacité complète au survol */
+    }
+
+
                 </style>
+                <script>
+    // Ajouter un événement lorsque la page est chargée pour afficher le titre avec un effet de fondu et de glissement
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('.title').style.opacity = '1';
+        document.querySelector('.title').style.transform = 'translateY(0)';
+    });
+</script>
 
       
 

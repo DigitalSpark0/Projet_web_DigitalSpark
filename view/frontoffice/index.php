@@ -46,7 +46,7 @@ $lista =$com->listcommande();
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/logo.png" alt="">
+                    <img src="assets/img/logoquickhire.png" alt="">
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@ $lista =$com->listcommande();
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a href="index.html"><img width="200" height="150" src="assets/img/logoquickhire.png" alt=""></a>
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -382,7 +382,7 @@ $lista =$com->listcommande();
                             </div>
                             <div class="items-link f-right">
                                 <a href="commandes.php">afficher tous les informations</a>
-                                <a class="" href="updateservice.php">Update</a>
+                                <a class="" href="updateservice.php?idd=<?php echo $service['ids']; ?>">Update</a>
                                 <a class="" href="deleteservice.php?id=<?php echo $service['titre_s']; ?>">Delete</a>
                                  
                             </div>

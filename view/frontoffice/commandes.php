@@ -42,7 +42,7 @@ $list =$serv->listServices();
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/logo.png" alt="">
+                    <img src="assets/img/logoquickhire.png" alt="">
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@ $list =$serv->listServices();
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="index.php"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a href="index.php"><img width="200" height="150" src="assets/img/logoquickhire.png" alt=""></a>
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">
