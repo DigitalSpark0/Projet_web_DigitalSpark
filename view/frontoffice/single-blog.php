@@ -1,5 +1,3 @@
-
-
 <?php
 ////////////////////////////////////////////////////////////////////////
 if (!class_exists('config')) {
@@ -8,7 +6,8 @@ if (!class_exists('config')) {
 
 include "C:/xampp/htdocs/ProjetWebQH/controller/ArticleController.php";
 include "C:/xampp/htdocs/ProjetWebQH/controller/CommentaireController.php";
-
+session_start();
+    $IDU = isset($_SESSION["id_utilisateur"])?$_SESSION["id_utilisateur"]:'erreur';
 $id00 = isset($_GET["id0"])?$_GET["id0"]:'error';
 $db = config::getConnexion();
 $ArticleC = new ArticleController();
@@ -115,10 +114,10 @@ $list1 = $CommentaireC->listCommentaires($id00);
 <script>
     function validateForm() {
         var commentValid = validateComment();
-        var auteurValid = validateAuteur();
+        //var auteurValid = validateAuteur();
 
         
-        return commentValid && auteurValid;
+        return commentValid;
     }
 
     function validateComment() {
@@ -197,7 +196,7 @@ $list1 = $CommentaireC->listCommentaires($id00);
                       <div class="col-lg-3 col-md-2">
                           <!-- Logo -->
                           <div class="logo">
-                          <a  href="index.html"><img width="200" height="150" src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt=""></a>
+                          <a  href="index.php"><img width="200" height="150" src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt=""></a>
                           </div>  
                       </div>
                       <div class="col-lg-9 col-md-9">
@@ -206,7 +205,7 @@ $list1 = $CommentaireC->listCommentaires($id00);
                               <div class="main-menu">
                                   <nav class="d-none d-lg-block">
                                       <ul id="navigation">
-                                          <li><a href="index.html">Accueil</a></li>
+                                          <li><a href="index.php">Accueil</a></li>
                                           <li><a href="job_listing.html">services</a></li>
                                           <li><a href="about.html">Réclamations</a></li>
                                           <li><a href="blog.php">Articles</a>
@@ -282,7 +281,11 @@ $list2 = ($previousArticleId !== false) ? $ArticleC->listArticles1($previousArti
                      <p class="excert">
                         <?= $Article['contenu_a']; ?>
                      </p>
-                     
+                     <?php if (!empty($Article['video_a'])) : ?>
+                                <div class="video-container">
+                                    <iframe width="760" height="415" src="<?= $Article['video_a']; ?>" frameborder="0" allowfullscreen></iframe>
+                                </div>
+                            <?php endif; ?>
                   </div>
                </div>
                <!-- -->
@@ -291,7 +294,7 @@ $list2 = ($previousArticleId !== false) ? $ArticleC->listArticles1($previousArti
                   <div class="d-sm-flex justify-content-between text-center">
                   <p class="like-info">
     <span class="align-middle">
-        <button class="like-button" data-action="like"><i class="far fa-thumbs-up"></i> Like</button>
+        <button class="like-button" data-action="like" data-comment-id="<?= $Article['id_a']; ?>"><i class="far fa-thumbs-up"></i> Like</button>
         <!--<button class="dislike-button" data-action="dislike"><i class="far fa-thumbs-down"></i> Dislike</button>-->
     </span>
     <span id="num-likes">0</span> personnes aiment ça
@@ -299,31 +302,44 @@ $list2 = ($previousArticleId !== false) ? $ArticleC->listArticles1($previousArti
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function() {
-        // Vérifie si le nombre de likes est déjà stocké localement
-        var numLikes = localStorage.getItem('numLikes');
-        if (numLikes !== null) {
-            $('#num-likes').text(numLikes);
-        }
+   $(document).ready(function() {
+    // Récupérer le nombre de likes depuis le stockage local
+    var numLikes = localStorage.getItem('numLikes');
+    if (numLikes !== null) {
+        $('#num-likes').text(numLikes);
+    }
 
-        $('.like-button').click(function() {
-            var currentLikesText = $('#num-likes').text().trim();
-            var currentLikes = parseInt(currentLikesText);
-            var newLikes = currentLikes === 1 ? 0 : 1; // Basculer entre 0 et 1
+    $('.like-button').click(function() {
+        var commentId = $(this).data('comment-id');
+        var currentLikesText = $('#num-likes').text().trim();
+        var currentLikes = parseInt(currentLikesText);
 
-            // Enregistrer le nouveau nombre de likes localement
-            localStorage.setItem('numLikes', newLikes);
+        // Vérifier si l'utilisateur a déjà liké ce commentaire
+        var alreadyLiked = $(this).hasClass('liked');
 
-            $.ajax({
-                type: 'POST',
-                url: 'update_likes.php',
-                data: { action: 'like', likes: newLikes },
-                success: function(data) {
-                    $('#num-likes').text(newLikes);
+        // Si l'utilisateur a déjà liké, diminuer le nombre de likes, sinon l'augmenter
+        var newLikes = alreadyLiked ? currentLikes - 1 : currentLikes + 1;
+
+        $.ajax({
+            type: 'POST',
+            url: 'update_likes.php',
+            data: { action: 'like', comment_id: commentId, likes: newLikes },
+            success: function(data) {
+                // Mettre à jour le nombre de likes dans le stockage local
+                localStorage.setItem('numLikes', newLikes);
+                $('#num-likes').text(newLikes);
+
+                // Modifier l'apparence du bouton en fonction du like/unlike de l'utilisateur
+                if (alreadyLiked) {
+                    $('.like-button').removeClass('liked');
+                } else {
+                    $('.like-button').addClass('liked');
                 }
-            });
+            }
         });
     });
+});
+
 </script>
 
 
@@ -484,7 +500,7 @@ $list2 = ($previousArticleId !== false) ? $ArticleC->listArticles1($previousArti
                         </div>
                         <div class="col-sm-6">
                            <div class="form-group">
-                              <input class="form-control" name="name" id="name" type="text" placeholder="ID" onblur="validateAuteur()">
+                              <input class="form-control" name="name" id="name" type="hidden" placeholder="ID" value="<?php echo $IDU; ?>">
                               <span id="auteurMessage" style="color:green;"></span>
                            </div>
                         </div>
@@ -764,7 +780,7 @@ $list2 = ($previousArticleId !== false) ? $ArticleC->listArticles1($previousArti
                      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                         <!-- logo -->
                         <div class="footer-logo mb-20">
-                          <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                          <a href="index.php"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
                         </div>
                      </div>
                      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">

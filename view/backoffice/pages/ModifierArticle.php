@@ -6,11 +6,29 @@ $titre2 = isset($_POST["titres1"]) ? $_POST["titres1"] : 'erreur';
 $contenu2 = isset($_POST["contenus1"]) ? $_POST["contenus1"] : 'erreur';
 $auteur2 = isset($_POST["auteurs1"]) ? $_POST["auteurs1"] : 'erreur';
 $categorie2 = isset($_POST["categories1"]) ? $_POST["categories1"] : 'erreur';
+$video2 = isset($_POST["videos1"]) ? $_POST["videos1"] : 'erreur';
 $datep2 = date("Y-m-d H:i:s");
 
 
-function validerTitre($titre) {
-    return (strlen($titre) >= 10 && ctype_upper(substr($titre, 0, 1)));
+function convertToEmbedLink($youtubeLink) {
+    
+    $pattern = '/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/';
+
+    
+    if (preg_match($pattern, $youtubeLink, $matches)) {
+        $videoId = $matches[1];
+        
+        $embedLink = "https://www.youtube.com/embed/$videoId";
+        return $embedLink;
+    } else {
+        return false; 
+    }
+}
+
+$videoEmbedLink1 = convertToEmbedLink($video2);
+
+function validerTitre($titre2) {
+    return (strlen($titre2) >= 10 && ctype_upper(substr($titre2, 0, 1)));
 }
 
 
@@ -22,6 +40,10 @@ function validerContenu($contenu) {
 
 function validerAuteur($auteur) {
     return ctype_alpha($auteur) && ctype_upper(substr($auteur, 0, 1));
+}
+
+function validerVideo($video) {
+    return strpos($video, 'https://') === 0;
 }
 
 $imageData1 = null;
@@ -46,7 +68,9 @@ if (!validerContenu($contenu2)) {
 if (!validerAuteur($auteur2)) {
     $erreurs[] = "L'auteur doit contenir seulement des caractères alphabétiques et commencer par une majuscule.";
 }
-
+if (!validerVideo($videoEmbedLink1)) {
+    $erreurs[] = "Le lien de la vidéo doit commencer par 'https://'.";
+}
 
 if (!empty($erreurs)) {
     foreach ($erreurs as $erreur) {
@@ -55,7 +79,7 @@ if (!empty($erreurs)) {
     }
 } else {
     $articleC1 = new ArticleController();
-    $articleC1->updatearticle($id2, $titre2, $contenu2, $auteur2, $datep2, $imageData1, $categorie2);
+    $articleC1->updatearticle($id2, $titre2, $contenu2, $auteur2, $datep2, $imageData1, $categorie2, $videoEmbedLink1);
 
     
     header('Location: gestion_des_articles.php');

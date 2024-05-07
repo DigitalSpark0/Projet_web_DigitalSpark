@@ -13,6 +13,7 @@ class CommentaireController
     try {
         $query = "INSERT INTO COMMENTAIRE (id_ar, id_ut, contenu_c, date_c) 
                   VALUES (:id_ar, :id_ut, :contenu_c, :date_c)";
+                  
         $stmt = $pdo->prepare($query);
         $stmt->execute([
             'id_ar' => $Commentaire->getid_ar(),

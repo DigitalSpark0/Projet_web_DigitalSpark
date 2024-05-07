@@ -8,9 +8,9 @@ $auteur = isset($_POST["name"])?$_POST["name"]:'erreur';
 $contenu = isset($_POST["comment"])?$_POST["comment"]:'erreur';
 $date = date("Y-m-d H:i:s");
 
-function validerAuteur($auteur) {
+/*function validerAuteur($auteur) {
     return is_numeric($auteur) && $auteur >= 1 && $auteur <= 999;
-}
+}*/
 
 /*function validerAuteur($auteur) {
     
@@ -26,9 +26,9 @@ function validerContenu($contenu) {
 
 
 $erreurs = [];
-if (!validerAuteur($auteur)) {
+/*if (!validerAuteur($auteur)) {
     $erreurs[] = "L' identifiant doit etre un nombre non nul et entre 1 et 999";
-}
+}*/
 if (!validerContenu($contenu)) {
     $erreurs[] = "Le contenu doit commencer par une majuscule et contenir au moins un espace.";
 }

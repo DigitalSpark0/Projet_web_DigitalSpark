@@ -3,10 +3,11 @@
 if (!class_exists('config')) {
     include "C:/xampp/htdocs/ProjetWebQH/config.php";
  }
-
+ 
 include "C:/xampp/htdocs/ProjetWebQH/controller/ArticleController.php";
 include "C:/xampp/htdocs/ProjetWebQH/controller/CommentaireController.php";
-
+session_start();
+ $EmailU = $_SESSION['username'];
 $db = config::getConnexion();
 $ArticleC = new ArticleController();
 $list = $ArticleC->listArticles();
@@ -115,7 +116,7 @@ $articlesToShow = array_slice($filteredArticles, $startIndex, $articlesPerPage);
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                            <a  href="index.html"><img width="200" height="150" src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt=""></a>
+                            <a  href="index.php"><img width="200" height="150" src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt=""></a>
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -124,7 +125,7 @@ $articlesToShow = array_slice($filteredArticles, $startIndex, $articlesPerPage);
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li><a href="index.html">Accueil</a></li>
+                                            <li><a href="index.php">Accueil</a></li>
                                             <li><a href="job_listing.html">Services</a></li>
                                             <li><a href="about.html">Réclamations</a></li>
                                             <li><a href="blog.php">Articles</a>
@@ -362,8 +363,8 @@ $articlesToShow = array_slice($filteredArticles, $startIndex, $articlesPerPage);
 
                             <form action="newsletter.php" method="post">
                                 <div class="form-group">
-                                    <input type="email" name="email" class="form-control" onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Enter email'" placeholder='Tapez votre email !' required>
+                                    <input type="hidden" name="email" class="form-control" onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter email'" placeholder='Tapez votre email !' required value="<?php echo $EmailU; ?>">
                                 </div>
                                 <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
                                     type="submit">S'abonner</button>
@@ -371,8 +372,8 @@ $articlesToShow = array_slice($filteredArticles, $startIndex, $articlesPerPage);
                              <br>
                             <form action="deletesub.php" method="post">
                                 <div class="form-group">
-                                    <input type="email" name="email1" class="form-control" onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Enter email'" placeholder='Tapez votre email !' required>
+                                    <input type="hidden" name="email1" class="form-control" onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter email'" placeholder='Tapez votre email !' required value="<?php echo $EmailU; ?>">
                                 </div>
                                 <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
                                     type="submit">Se désabonner</button>
@@ -465,7 +466,7 @@ $articlesToShow = array_slice($filteredArticles, $startIndex, $articlesPerPage);
                         <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                             <!-- logo -->
                             <div class="footer-logo mb-20">
-                            <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                            <a href="index.php"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">

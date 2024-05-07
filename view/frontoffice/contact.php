@@ -69,7 +69,7 @@ textarea.form-control:focus {
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                            <a  href="index.html"><img width="200" height="150" src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt=""></a>
+                            <a  href="index.php"><img width="200" height="150" src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt=""></a>
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -78,7 +78,7 @@ textarea.form-control:focus {
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li><a href="index.html">Accueil</a></li>
+                                            <li><a href="index.php">Accueil</a></li>
                                             <li><a href="job_listing.html">Services</a></li>
                                             <li><a href="about.html">Réclamations</a></li>
                                             <li><a href="blog.php">Articles</a>
@@ -136,7 +136,7 @@ function callOpenAI($message){
     $question = $_POST['subject'];*/
 
     // Appeler l'API de ChatGPT pour obtenir une réponse
-    $apiKey = ''; 
+    $apiKey = 'LL-teiXZMs5cK8QmPMy2scT5cszUAJV7ph8eCAXCLpgruVCqJ7gSqkHiqJu7ZgoinOM'; 
     $endpoint = 'https://api.llama-api.com/chat/completions';
     $data = array(
         'model' => 'codellama-7b-instruct', 
@@ -329,7 +329,7 @@ $(document).ready(function(){
                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                           <!-- logo -->
                           <div class="footer-logo mb-20">
-                            <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                            <a href="index.php"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
                           </div>
                        </div>
                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">

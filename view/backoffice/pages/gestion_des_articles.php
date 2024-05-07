@@ -3,7 +3,8 @@
 include "C:/xampp/htdocs/ProjetWebQH/controller/ArticleController.php";
 include "C:/xampp/htdocs/ProjetWebQH/controller/CommentaireController.php";
 include "C:/xampp/htdocs/ProjetWebQH/controller/AbonnementController.php";
-
+session_start();
+    $NameU = isset($_SESSION["prenom"])?$_SESSION["prenom"]:'erreur';
 $db = config::getConnexion();
 $ArticleC = new ArticleController();
 
@@ -229,10 +230,24 @@ function validateTitre() {
         }
     }
 
+    function validateVideo() {
+        var videoInput = document.getElementById("video").value;
+        var videoMessage = document.getElementById("videoMessage");
+
+        if (videoInput.startsWith("https://")) {
+            videoMessage.textContent = "Lien de la vidéo valide.";
+            videoMessage.style.color = "green";
+        } else {
+            videoMessage.textContent = "Le lien de la vidéo doit commencer par 'https://'.";
+            videoMessage.style.color = "red";
+        }
+    }
+
     function validateForm() {
         validateTitre();
         validateContenu();
         validateAuteur();
+        validateVideo();
 
         // Renvoie true si toutes les validations sont réussies, sinon false
         return document.querySelectorAll('span[style="color:red;"]').length === 0;
@@ -275,11 +290,24 @@ function validateTitre() {
         }
     }
 
+    function validateVideo1() {
+        var videoInput = document.getElementById("video1").value;
+        var videoMessage = document.getElementById("videoMessage1");
+
+        if (videoInput.startsWith("https://")) {
+            videoMessage.textContent = "Lien de la vidéo valide.";
+            videoMessage.style.color = "green";
+        } else {
+            videoMessage.textContent = "Le lien de la vidéo doit commencer par 'https://'.";
+            videoMessage.style.color = "red";
+        }
+    }
+
     function validateForm1() {
         validateTitre1();
         validateContenu1();
         validateAuteur1();
-
+        validateVideo1();
         // Renvoie true si toutes les validations sont réussies, sinon false
         return document.querySelectorAll('span[style="color:red;"]').length === 0;
     }
@@ -351,9 +379,9 @@ function validateTitre() {
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
+      <a class="navbar-brand m-0" href="../../frontoffice/index.php" target="_blank">
         <img src="../assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold text-white">Tableau de bord</span>
+        <span class="ms-1 font-weight-bold text-white">QuickHire.tn</span>
       </a>
     </div>
     
@@ -365,15 +393,15 @@ function validateTitre() {
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
-            <span class="nav-link-text ms-1">Utilisateurs</span>
+            <span class="nav-link-text ms-1">Tableau de bord</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/tables.html">
+          <a class="nav-link text-white " href="../pages/tables.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
-            <span class="nav-link-text ms-1">Services</span>
+            <span class="nav-link-text ms-1">Utilisateurs</span>
           </a>
         </li>
         <li class="nav-item">
@@ -381,7 +409,7 @@ function validateTitre() {
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">receipt_long</i>
             </div>
-            <span class="nav-link-text ms-1">Projets</span>
+            <span class="nav-link-text ms-1">Services</span>
           </a>
         </li>
         <li class="nav-item">
@@ -585,7 +613,7 @@ function validateTitre() {
             <span id="contenuMessage" style="color:green;"></span>
             <br><br>
             <label for="titre_ser">auteur de l'article:</label>
-            <input type="text" id="auteur" name="auteurs" onblur="validateAuteur()">
+            <input type="text" id="auteur" name="auteurs" onblur="validateAuteur()" value="<?php echo $NameU; ?>" readonly>
             <span id="auteurMessage" style="color:green;"></span>
             <br><br>
             <label for="titre_ser">catégorie:</label>
@@ -597,9 +625,14 @@ function validateTitre() {
                 <option value="Inspiration">Inspiration</option>
                 <option value="Vie sociale">Vie sociale</option>
                 </select>
+                <br><br>
+     <label for="titre_ser">URL de la vidéo :</label>
+            <input type="text" id="video" name="videos" onblur="validateVideo()">
+            <span id="videoMessage" style="color:green;"></span>
             <br><br>
       <label for="image">Sélectionner une image :</label>
      <input type="file" id="image" name="image">
+     
           </section>
           <br><br>
           <button class="btn bg-gradient-dark mb-0 toast-btn" type="submit" data-target="successToast"><i class="material-icons text-sm">add</i>Ajouter</button>
@@ -692,7 +725,7 @@ function validateTitre() {
       <div>
         <center><h2 class="mb-0" style="color:#0dcaf0;">Liste des abonnés</h2></center>    
       </div>
-      <div class="card mt-4" style="height: 200px; overflow-y: scroll;">
+      <div class="card mt-4" style="overflow-y: scroll;">
       
         <!-- Liste des commentaires récents -->
         <?php foreach ($list69 as $Abonnement) {
@@ -868,7 +901,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span id="contenuMessage1" style="color:green;"></span>
                   <br><br>
                   <label for="titre_ser">auteur de l'article:</label>
-                  <input type="text" id="auteur1" onblur="validateAuteur1()" name="auteurs1" value=<?php echo $Article['auteur_a']; ?>>
+                  <input type="text" id="auteur1" onblur="validateAuteur1()" name="auteurs1" value=<?php echo $NameU; ?> readonly>
                   <span id="auteurMessage1" style="color:green;"></span>
                   <br><br>
                   <label for="titre_ser">catégorie:</label>
@@ -880,6 +913,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <option value="Inspiration">Inspiration</option>
                 <option value="Vie sociale">Vie sociale</option>
                 </select>
+                <br><br>
+     <label for="titre_ser">URL de la vidéo :</label>
+            <input type="text" id="video1" name="videos1" onblur="validateVideo1()">
+            <span id="videoMessage1" style="color:green;"></span>
             <br><br>
                   <label for="image2">Sélectionner une image :</label>
      <input type="file" id="image2" name="image2">
@@ -937,7 +974,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <a href="gestion_des_articles.php?sort1=<?= $nextSort1 ?>" class="btn bg-gradient-info mb-0 toast-btn btn-spaced">Trier</a>
 </div>
 
-      <div class="card mt-4">
+      <div class="card mt-4" >
         <!-- Liste des commentaires récents -->
         <?php foreach ($commentsToShow as $Commentaire) {
           if (stripos($Commentaire['id_ut'], $searchTerm1) !== false) {

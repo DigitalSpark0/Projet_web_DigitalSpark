@@ -11,8 +11,8 @@ class ArticleController
     {
         $pdo =config::getConnexion ();
         try{
-            $query = "INSERT INTO ARTICLE (titre_a, contenu_a, auteur_a, date_p, image_a, categorie_a) 
-            VALUES (:titre_a, :contenu_a, :auteur_a, :date_p, :image_a, :categorie_a)";
+            $query = "INSERT INTO ARTICLE (titre_a, contenu_a, auteur_a, date_p, image_a, categorie_a, video_a) 
+            VALUES (:titre_a, :contenu_a, :auteur_a, :date_p, :image_a, :categorie_a, :video_a)";
   $stmt = $pdo->prepare($query);
 
   $stmt->execute([
@@ -23,6 +23,7 @@ class ArticleController
                 'date_p'=>$Article->getdate_p(),
                 'image_a'=>$Article->getimage_a(),
                 'categorie_a'=>$Article->getcategorie_a(),
+                'video_a'=>$Article->getvideo_a(),
                 
             ]);
 
@@ -91,9 +92,9 @@ public function deletearticle($id_a)
     }
 }
 
-public function updatearticle ($id1,$titre1,$contenu1,$auteur1,$date1,$image1,$categorie1)
+public function updatearticle ($id1,$titre1,$contenu1,$auteur1,$date1,$image1,$categorie1,$video1)
 {
-    $sql ="UPDATE ARTICLE SET titre_a= :Titre, contenu_a = :Contenu, auteur_a = :Auteur,date_p = :Date1,image_a = :Image1,categorie_a = :cat1 WHERE id_a = :id1"; 
+    $sql ="UPDATE ARTICLE SET titre_a= :Titre, contenu_a = :Contenu, auteur_a = :Auteur,date_p = :Date1,image_a = :Image1,categorie_a = :cat1,video_a = :vid1 WHERE id_a = :id1"; 
     $pdo =config::getConnexion ();
 
     $query =$pdo ->prepare($sql);
@@ -104,7 +105,7 @@ public function updatearticle ($id1,$titre1,$contenu1,$auteur1,$date1,$image1,$c
     $query ->bindValue (':Date1',$date1);
     $query ->bindValue (':Image1',$image1);
     $query ->bindValue (':cat1',$categorie1);
-
+    $query ->bindValue (':vid1',$video1);
     try{
         $query ->execute();
         

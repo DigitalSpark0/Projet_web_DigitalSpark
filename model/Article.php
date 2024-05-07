@@ -8,6 +8,7 @@ class Article
     private $date_p;
     private $image_a;
     private $categorie_a;
+    private $video_a;
    
 
     //Getters:
@@ -44,6 +45,10 @@ class Article
         return $this->categorie_a;
     }
 
+    public function getvideo_a()
+    {
+        return $this->video_a;
+    }
 
     //Setters:
     
@@ -78,7 +83,12 @@ class Article
         $this->categorie_a=$f;
     }
 
-    public function __construct($a,$b,$c,$d,$e,$f)
+    public function setvideo_a($g)
+    {
+        $this->video_a=$g;
+    }
+
+    public function __construct($a,$b,$c,$d,$e,$f,$g)
     {
         $this->titre_a="$a";
         $this->contenu_a="$b";
@@ -86,6 +96,7 @@ class Article
         $this->date_p="$d";
         $this->image_a="$e";
         $this->categorie_a="$f";
+        $this->video_a="$g";
        
     }
 
