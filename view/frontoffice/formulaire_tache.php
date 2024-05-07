@@ -2,6 +2,7 @@
 <?php
     $test = $_GET['id'];
 ?>
+
 <html>
     <head>
         <meta charset="utf-8">
@@ -124,9 +125,11 @@
                       <br><br>
                       <label for="titre_ser">Nom du tache:</label>
                       <input type="text" id="nom" name="tachename" onblur="verifNom()">
+                      <span id="nomspan"></span>
                       <br><br>
                       <label for="titre_ser">Description:</label>
                       <input type="text" id="des" name="description" onblur="verifDes()">
+                      <span id="descriptionspan"></span>
                       <br><br>
                       <label for="titre_ser">Deadline:</label>
                       <input type="date" id="deadline" name="deadline">
@@ -140,6 +143,7 @@
                       <!--<input type= id="statut" name="statuts">-->
                       <label for="titre_ser">Notes:</label>
                       <textarea type="text" id="notes" name="notes" onblur="verifNotes()"></textarea>
+                      <span id="notespan"></span>
                     </section>
                     <button class="btn bg-gradient-dark mb-0" type="submit"><i class="material-icons text-sm">add</i>&nbsp;&nbsp;Valider</button>
                   </form>

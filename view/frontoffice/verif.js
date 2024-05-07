@@ -1,16 +1,17 @@
 
 function verifNom() {
     var Nom=document.getElementById('nom').value;
+    var Nomspan=document.getElementById('nomspan');
     var lettersOnly = /^[A-Za-z]+$/;
     if(!Nom.match(lettersOnly) || Nom.length > 100 || Nom.value=="")
     {
-        titreSpan.innerText = "verifier nom.";
-        titreSpan.style.color = "red";
+        Nomspan.innerText = "verifier nom.";
+        Nomspan.style.color = "red";
     }
     else 
     {
-        titreSpan.innerText = "nom est valide.";
-        titreSpan.style.color = "green";
+        Nomspan.innerText = "nom est valide.";
+        Nomspan.style.color = "green";
         return false;
     }
 }
@@ -19,15 +20,16 @@ function verifNom() {
 function verifDes() {
     var Des=document.getElementById('des').value;
     var lettersOnly = /^[A-Za-z]+$/;
+    var Descriptionspan=document.getElementById('descriptionspan');
     if(!Des.match(lettersOnly) || Des.length > 100 || Des.value=="")
         {
-            titreSpan.innerText = "verifier description.";
-            titreSpan.style.color = "red";
+            Descriptionspan.innerText = "verifier description.";
+            Descriptionspan.style.color = "red";
         }
         else 
         {
-            titreSpan.innerText = "description est valide.";
-            titreSpan.style.color = "green";
+            Descriptionspan.innerText = "description est valide.";
+            Descriptionspan.style.color = "green";
             return false;
         }
 }
@@ -35,43 +37,36 @@ function verifDes() {
 function verifPcost() {
     var Pcost=document.getElementById('pcost').value;
     var numbersOnly = /^[0-9]+$/;
+    var Costspan=document.getElementById('costspan');
     if(!Pcost.match(numbersOnly) || Pcost.length > 11 || Pcost.value=="")
         {
-            titreSpan.innerText = "verifier projectCost.";
-            titreSpan.style.color = "red";
+            Costspan.innerText = "verifier projectCost.";
+            Costspan.style.color = "red";
         }
         else 
         {
-            titreSpan.innerText = " projectCostest valide.";
-            titreSpan.style.color = "green";
+            Costspan.innerText = " projectCostest valide.";
+            Costspan.style.color = "green";
             return false;
         }
 }
     
 function verifTache() {
     var Tache=document.getElementById('tache').value;
-    
+    var Tachespan=document.getElementById('tachespan');
     if(!Tache.match(lettersOnly) || Tache.length > 100 || Tache.value=="")
         {
-            titreSpan.innerText = "verifier tache.";
-            titreSpan.style.color = "red";
+            Tachespan.innerText = "verifier tache.";
+            Tachespan.style.color = "red";
         }
         else 
         {
-            titreSpan.innerText = "tache est valide.";
-            titreSpan.style.color = "green";
+            Tachespan.innerText = "tache est valide.";
+            Tachespan.style.color = "green";
             return false;
         }
 }
     
-
-
-function verift() {
-    
-    Nom=document.getElementById('nom').value;
-    Des=document.getElementById('des').value;
-    
-}
 function verifIDp() {
     var IDp=document.getElementById('idp').value;
     var IDspan=document.getElementById('idspan');
@@ -91,15 +86,16 @@ function verifIDp() {
 function verifNotes() {
     var Notes=document.getElementById('notes').value;
     var lettersOnly = /^[A-Za-z]+$/;
+    var Notespan=document.getElementById('notespan');
     if(!Notes.match(lettersOnly) || Notes.length > 100 || Notes.value=="")
         {
-            titreSpan.innerText = "verifier notes.";
-            titreSpan.style.color = "red";
+            Notespan.innerText = "verifier notes.";
+            Notespan.style.color = "red";
         }
         else 
         {
-            titreSpan.innerText = "tache est notes.";
-            titreSpan.style.color = "green";
+            Notespan.innerText = "tache est notes.";
+            Notespan.style.color = "green";
             return false;
         }
 }

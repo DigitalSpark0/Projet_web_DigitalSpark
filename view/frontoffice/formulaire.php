@@ -24,7 +24,7 @@
             <link rel="stylesheet" href="assets/css/style.css">
    </head>
    <body>
-        
+     <!--   
      Preloader Start 
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
@@ -36,7 +36,7 @@
             </div>
         </div>
     </div>
-    
+    -->
     <header>
         <!-- Header Start -->
        <div class="header-area header-transparrent">
@@ -112,11 +112,12 @@
                   </div>
                 </div>
                 <!--formulaire taa ajout taa el service-->
-                <form id="service" action="ajouter_projects.php" method="post">
+                <form id="service" action="ajouter_projects.php" method="POST">
                   <section align="center">
                    
                     <label for="titre_ser">Nom du project:</label>
                     <input type="text" id="nom" name="projectname" onblur="verifNom()">
+                    <span id="nomspan"></span>
                     <br><br>
                     <label for="titre_ser">Category du Project:</label>
                     <select name="category" id="category">
@@ -127,16 +128,47 @@
                     <br><br>
                     <label for="titre_ser">Description:</label>
                     <input type="text" id="des" name="description" onblur="verifDes()">
+                    <span id="descriptionspan"></span>
                     <br><br>
                     <label for="titre_ser">Project Cost:</label>
                     <input type="text" id="pcost" name="projectcost" onblur="verifPcost()">
+                    <span id="costspan"></span>
                     <br><br>
                     <!--<input type= id="statut" name="statuts">-->
                     <label for="titre_ser">Tache demande:</label>
                     <textarea type="text" id="tache" name="tachedemande" onblur="verifTache()"></textarea>
+                    <span id="tachespan"></span>
                   </section>
-                  <button class="btn bg-gradient-dark mb-0" type="submit"><i class="material-icons text-sm" >add</i>&nbsp;&nbsp;Valider</button>
+                  <button class="btn bg-gradient-dark mb-0" type="submit" value="Submit" name="submitpost"><i class="material-icons text-sm" >add</i>&nbsp;&nbsp;Valider</button>
                 </form>
+                <?php
+                    require_once 'C:/xampp/htdocs/project web (gestion services)/autoload.php';
+                    if (isset($_POST['submitpost'])) {
+                        if(isset($_POST['g-recaptcha-response'])){
+                            $recaptcha = new \ReCaptcha\ReCaptcha('6Lf6OdUpAAAAAEbBoZLLzY9eaOO2S-snFJ8LIngq');
+                            $resp = $recaptcha->setExpectedHostname('recaptcha-demo.appspot.com')->verify($_POST['g-recaptcha-response']);
+                            if ($resp->isSuccess()) {
+                                var_dump('capcha validé');
+                            } 
+                            else {
+                                $errors = $resp->getErrorCodes();
+                                var_dump('capcha invalide');
+                                var_dump($errors);
+                            }
+                        }
+                        else {
+                            var_dump('capcha non rempli');
+                        }
+                    }
+                    
+                    
+                ?>    
+                <form method="POST">
+                    <div class="g-recaptcha" data-sitekey="6Lf6OdUpAAAAAABdrV3gl5k_ZnH0M9YOmiH1LD_U"></div>
+                    <br/>
+                    <!--<input type="submit" value="Submit">-->
+                </form>
+                <script src="https://www.google.com/recaptcha/api.js" async defer></script>                
                 <!--formulaire taa ajout taa el service-->
                 </div>
               <div class="card-body p-3">

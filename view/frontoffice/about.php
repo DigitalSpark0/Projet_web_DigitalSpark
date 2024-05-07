@@ -253,8 +253,6 @@
                       </div>
                       <forum>
                         <a class="btn bg-gradient-dark mb-0" type="update" href="recherche_project.php?id=<?php echo $project['IDp']; ?>"><i class="material-icons text-sm"></i>Recherche</a>
-                      </forum>
-                      <forum>
                         <a class="btn bg-gradient-dark mb-0" type="update" href="stat.php?id=<?php echo $project['IDp']; ?>"><i class="material-icons text-sm"></i>Statistique</a>
                       </forum>
                     </div>
@@ -335,7 +333,7 @@
                         <div class="cv-caption text-center">
                             <p class="pera1">FEATURED TOURS Packages</p>
                             <p class="pera2"> Make a Difference with Your Online Resume!</p>
-                            <a href="formulaire.html" class="border-btn2 border-btn4">Upload your project</a>
+                            <a href="formulaire.php" class="border-btn2 border-btn4">Upload your project</a>
                         </div>
                     </div>
                 </div>
