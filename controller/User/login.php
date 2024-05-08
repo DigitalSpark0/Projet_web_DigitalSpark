@@ -26,24 +26,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit;
             }
 
-            if ($userData['Role'] == 1) {
-                // Redirection vers le tableau de bord de l'administrateur
-                header('Location: ../../view/backoffice/pages/dashboard.php');
-                exit;
-            } elseif ($userData['Role'] == 2) {
-                // Redirection vers le tableau de bord du recruteur
-                header('Location: ../../view/backoffice/pages/dashboardR.php');
-                exit;
-            }
-            elseif ($userData['Role'] == 3) {
-                // Redirection vers le tableau de bord du recruteur
-                header('Location: ../../view/frontoffice/index.php');
-                exit;
-            }
-            elseif ($userData['Role'] == 4) {
-                // Redirection vers le tableau de bord du recruteur
-                header('Location: ../../view/frontoffice/index.php');
-                exit;
+            // Redirection en fonction du rôle de l'utilisateur
+            switch ($userData['Role']) {
+                case 1:
+                    header('Location: ../../view/backoffice/pages/dashboard.php');
+                    break;
+                case 2:
+                    header('Location: ../../view/backoffice/pages/dashboardR.php');
+                    break;
+                case 3:
+                    
+                case 4:
+                    header('Location: ../../view/frontoffice/index.php');
+                    break;
+                default:
+                    echo "<script>alert('Invalid user role!'); window.location.href='../../view/User/user.html';</script>";
+                    exit;
             }
             // Enregistrer les informations de l'utilisateur dans la session
             $_SESSION['user_id'] = $userData['id_utilisateur'];

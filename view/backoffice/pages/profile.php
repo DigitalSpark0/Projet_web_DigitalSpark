@@ -6,20 +6,27 @@ include_once "C:/xampp/htdocs/ProjetWebQH/model/userC.php";
 
 // Vérifier si l'utilisateur est connecté
 session_start();
-if (!isset($_SESSION['id_utilisateur'])) {
+if (!isset($_SESSION['user_id'])) {
     // Rediriger vers la page de connexion ou afficher un message d'erreur
     header("Location: ../../User/user.html#signin");
     exit;
 }
 
 // Récupérer l'ID de l'utilisateur connecté
-$id_utilisateur = $_SESSION['id_utilisateur'];
+$id_utilisateur = $_SESSION['user_id'];
 
 // Instancier le contrôleur pour gérer les utilisateurs
 $userController = new userCRUD();
 
 // Récupérer les informations de l'utilisateur à partir de la base de données
 $userInfo = $userController->getUserById($id_utilisateur);
+
+// Vérifier si getUserById a réussi à récupérer les informations de l'utilisateur
+if ($userInfo === false) {
+    // Gérer le cas où aucune information sur l'utilisateur n'a été trouvée
+    echo "Erreur: Impossible de récupérer les informations de l'utilisateur.";
+    exit;
+}
 
 // Vérifier si le formulaire a été soumis pour mettre à jour les informations de l'utilisateur
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -28,7 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nom = $_POST['nom'];
     $email = $_POST['email'];
     $role = $_POST['role'];
-
     // Mettre à jour les informations de l'utilisateur dans la base de données
     $userController->updateUser($id_utilisateur, $prenom, $nom, $email, $role);
 
@@ -75,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/dashboard.html">
+          <a class="nav-link text-white " href="../pages/dashboard.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>

@@ -7,7 +7,7 @@ if (!class_exists('config')) {
 include "C:/xampp/htdocs/ProjetWebQH/controller/ArticleController.php";
 include "C:/xampp/htdocs/ProjetWebQH/controller/CommentaireController.php";
 session_start();
- $EmailU = $_SESSION['username'];
+ $EmailU = isset($_SESSION["username"])?$_SESSION["username"]:'erreur';
 $db = config::getConnexion();
 $ArticleC = new ArticleController();
 $list = $ArticleC->listArticles();

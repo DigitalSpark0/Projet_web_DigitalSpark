@@ -6,14 +6,14 @@ include_once "../../model/userC.php";
 
 // Vérifier si l'utilisateur est connecté
 session_start();
-if (!isset($_SESSION['id_utilisateur'])) {
+if (!isset($_SESSION['user_id'])) {
     // Rediriger vers la page de connexion ou afficher un message d'erreur
     header("Location: ../../view/User/user.html#signin");
     exit;
 }
 
 // Récupérer l'ID de l'utilisateur connecté
-$id_utilisateur = $_SESSION['id_utilisateur'];
+$id_utilisateur = $_SESSION['user_id'];
 
 // Instancier le contrôleur pour gérer les utilisateurs
 $userController = new userCRUD();

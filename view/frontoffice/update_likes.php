@@ -23,7 +23,7 @@ function userLikedComment($userId, $commentId) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if ($_POST['action'] === 'like') {
         // Vérifie si l'utilisateur a déjà aimé ce commentaire
-        $userId = $_SESSION['id_utilisateur'];
+        $userId = $_SESSION['user_id'];
         $commentId = $_POST['comment_id'];
         if (!userLikedComment($userId, $commentId)) {
             addUserLike($userId, $commentId);

@@ -10,7 +10,7 @@ $userList = $controller->listUsers();
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="C:/xampp/htdocs/projetWeb/view/backoffice/assets/img/imageservice-removebg-preview.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="C:/xampp/htdocs/ProjetWebQH/view/backoffice/assets/img/imageservice-removebg-preview.png">
     <link rel="icon" type="image/png" href="C:/xampp/htdocs/ProjetWebQH/view/backoffice/assets/img/imageservice-removebg-preview.png">
     <!-- Fonts and icons -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -135,58 +135,61 @@ $userList = $controller->listUsers();
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($userList as $user) : ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($user['prenom']) ?></td>
-                                        <td><?= htmlspecialchars($user['nom']) ?></td>
-                                        <td><?= htmlspecialchars($user['Email']) ?></td>
-                                        <td>
-                                            <?php
-                                            switch ($user['Role']) {
-                                                case 1:
-                                                    echo "Admin";
-                                                    break;
-                                                case 2:
-                                                    echo "Recruteur";
-                                                    break;
-                                                case 3:
-                                                    echo "Etudiant";
-                                                    break;
-                                                case 4:
-                                                    echo "Freelance";
-                                                    break;
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <a href='deleteUserA.php?id_utilisateur=<?= $user['id_utilisateur'] ?>' class='btn btn-outline-danger'><i class="fas fa-trash fa-icons"></i> Delete</a>
-                                            <button class="btn btn-outline-primary" onclick="toggleUpdateForm(<?= $user['id_utilisateur'] ?>)"><i class="fas fa-edit fa-icons"></i> Update</button>
-                                        </td>
-                                    </tr>
-                                    <tr id="updateFormRow_<?= $user['id_utilisateur'] ?>" style="display: none;">
-                                        <td colspan="5">
-                                            <!-- Formulaire de mise à jour de l'utilisateur -->
-                                            <form action="updateUserA.php" method="POST">
-                                                <input type="hidden" name="id_utilisateur" value="<?= $user['id_utilisateur'] ?>">
-                                                <input type="text" name="prenom" value="<?= htmlspecialchars($user['prenom']) ?>" readonly>
-                                                <input type="text" name="nom" value="<?= htmlspecialchars($user['nom']) ?>" readonly>
-                                                <input type="email" name="Email" value="<?= htmlspecialchars($user['Email']) ?>" readonly>
-                                                <div style="display: flex; justify-content: space-between;">
-                                                    <select name="Role">
-                                                        <option value="1" <?= $user['Role'] == 1 ? 'selected' : '' ?>>Admin</option>
-                                                        <option value="2" <?= $user['Role'] == 2 ? 'selected' : '' ?>>Recruteur</option>
-                                                        <option value="3" <?= $user['Role'] == 3 ? 'selected' : '' ?>>Etudiant</option>
-                                                        <option value="4" <?= $user['Role'] == 4 ? 'selected' : '' ?>>Freelance</option>
-                                                    </select>
-                                                    <div>
-                                                        <button type="submit" class="btn btn-success"><i class="fas fa-save fa-icons"></i> Save</button>
-                                                        <button type="button" class="btn btn-danger" onclick="toggleUpdateForm(<?= $user['id_utilisateur'] ?>)"><i class="fas fa-times fa-icons"></i> Cancel</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
+                            <?php foreach ($userList as $user) : ?>
+<?php if ($user['Role'] == 3) : ?>
+<tr>
+    <td><?= htmlspecialchars($user['prenom']) ?></td>
+    <td><?= htmlspecialchars($user['nom']) ?></td>
+    <td><?= htmlspecialchars($user['Email']) ?></td>
+    <td>
+        <?php
+        switch ($user['Role']) {
+            case 1:
+                echo "Admin";
+                break;
+            case 2:
+                echo "Recruteur";
+                break;
+            case 3:
+                echo "Etudiant";
+                break;
+            case 4:
+                echo "Freelance";
+                break;
+        }
+        ?>
+    </td>
+    <td>
+        <a href='deleteUserA.php?id_utilisateur=<?= $user['id_utilisateur'] ?>' class='btn btn-outline-danger'><i class="fas fa-trash fa-icons"></i> Delete</a>
+        <button class="btn btn-outline-primary" onclick="toggleUpdateForm(<?= $user['id_utilisateur'] ?>)"><i class="fas fa-edit fa-icons"></i> Update</button>
+    </td>
+</tr>
+<tr id="updateFormRow_<?= $user['id_utilisateur'] ?>" style="display: none;">
+    <td colspan="5">
+        <!-- Formulaire de mise à jour de l'utilisateur -->
+        <form action="updateUserR.php" method="POST">
+            <input type="hidden" name="id_utilisateur" value="<?= $user['id_utilisateur'] ?>">
+            <input type="text" name="prenom" value="<?= htmlspecialchars($user['prenom']) ?>" readonly>
+            <input type="text" name="nom" value="<?= htmlspecialchars($user['nom']) ?>" readonly>
+            <input type="email" name="Email" value="<?= htmlspecialchars($user['Email']) ?>" readonly>
+            <div style="display: flex; justify-content: space-between;">
+                <select name="Role">
+                    <option value="1" <?= $user['Role'] == 1 ? 'selected' : '' ?>>Admin</option>
+                    <option value="2" <?= $user['Role'] == 2 ? 'selected' : '' ?>>Recruteur</option>
+                    <option value="3" <?= $user['Role'] == 3 ? 'selected' : '' ?>>Etudiant</option>
+                    <option value="4" <?= $user['Role'] == 4 ? 'selected' : '' ?>>Freelance</option>
+                </select>
+                <div>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save fa-icons"></i> Save</button>
+                    <button type="button" class="btn btn-danger" onclick="toggleUpdateForm(<?= $user['id_utilisateur'] ?>)"><i class="fas fa-times fa-icons"></i> Cancel</button>
+                </div>
+            </div>
+        </form>
+    </td>
+</tr>
+<?php endif; ?>
+<?php endforeach; ?>
+
                             </tbody>
                         </table>
                     </div>
@@ -194,10 +197,10 @@ $userList = $controller->listUsers();
             </div>
             <div style="float: right; margin-right: 10px;">
     <!-- Bouton pour générer le PDF -->
-<form method="POST" action="generatepdf.php" style="display: inline-block; margin-right: 10px;">
+<!--<form method="POST" action="generatepdf.php" style="display: inline-block; margin-right: 10px;">
     <input type="hidden" name="type" value="pdf">
     <button type="submit" class="btn btn-primary"><i class="fas fa-file-pdf fa-icons"></i> Generate PDF</button>
-</form>
+</form>-->
 <!-- Lien vers la page de statistiques -->
 
         </section>

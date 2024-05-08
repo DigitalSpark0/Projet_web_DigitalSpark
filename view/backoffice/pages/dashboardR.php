@@ -1,3 +1,20 @@
+<?php
+require_once "C:/xampp/htdocs/ProjetWebQH/controller/User/user.php";
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    // Rediriger vers la page de connexion ou afficher un message d'erreur
+    header("Location: ../../User/user.html#signin");
+    exit;
+}
+// Instanciez le contrôleur UserCRUD
+$controller = new UserCRUD();
+
+// Obtenez la liste des utilisateurs
+
+$userList = $controller->listUsers()->fetchAll(PDO::FETCH_ASSOC);
+$userCount = count($userList);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,6 +47,7 @@
             text-decoration: none;
             margin-left: 20px;
         }
+
         .go-frontoffice {
             background-color: #2196f3;
         }
@@ -54,7 +72,7 @@
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-primary" href="../../pages/dashboardR.php">
+          <a class="nav-link text-white active bg-gradient-primary" href="../../pages/dashboard.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
@@ -76,13 +94,15 @@
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="../../backoffice/pages/profileR.php">
+          <a class="nav-link text-white " href="../../backoffice/pages/profile.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">person</i>
             </div>
             <span class="nav-link-text ms-1">Profile</span>
           </a>
         </li>
+       
+
         <li class="nav-item">
           <a class="nav-link text-white " href="../../frontoffice/index.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -91,7 +111,8 @@
             <span class="nav-link-text ms-1">Go to Front Office</span>
           </a>
         </li>
-        
+
+
       </ul>
     </div>
     <div class="sidenav-footer position-absolute w-100 bottom-0 ">
@@ -113,10 +134,7 @@
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-            <div class="input-group input-group-outline">
-              <label class="form-label">Type here...</label>
-              <input type="text" class="form-control">
-            </div>
+            
 
             <a href="../../../controller/User/logout.php" class="logout">
               <i class="fas fa-sign-out-alt fa-icons"></i> Log out
@@ -217,23 +235,23 @@
         </div>
       </div>
     </nav>
-    <!-- End Navbar -->
-    <div class="container-fluid py-4">
+ <!-- End Navbar -->
+ <div class="container-fluid py-4">
       <div class="row">
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
           <div class="card">
             <div class="card-header p-3 pt-2">
-              <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                <i class="material-icons opacity-10">weekend</i>
+              <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                <i class="material-icons opacity-10">person</i>
               </div>
               <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">Today's Money</p>
-                <h4 class="mb-0">$53k</h4>
-              </div>
+                <p class="text-sm mb-0 text-capitalize">Nombre d'utilisateurs</p>
+                <h4 class="mb-0"><?php echo $userCount; ?></h4>           
+                 </div>
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>than lask week</p>
+              <p class="mb-0"><span class="text-danger text-sm font-weight-bolder"></span> </p>
             </div>
           </div>
         </div>
@@ -254,23 +272,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-          <div class="card">
-            <div class="card-header p-3 pt-2">
-              <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
-                <i class="material-icons opacity-10">person</i>
-              </div>
-              <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">New Clients</p>
-                <h4 class="mb-0">3,462</h4>
-              </div>
-            </div>
-            <hr class="dark horizontal my-0">
-            <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> than yesterday</p>
-            </div>
-          </div>
-        </div>
+        
         <div class="col-xl-3 col-sm-6">
           <div class="card">
             <div class="card-header p-3 pt-2">
@@ -289,48 +291,26 @@
           </div>
         </div>
       </div>
-      <div class="row mt-4">
-        <div class="col-lg-4 col-md-6 mt-4 mb-4">
-          <div class="card z-index-2 ">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-              <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
-                <div class="chart">
-                  <canvas id="chart-bars" class="chart-canvas" height="170"></canvas>
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <h6 class="mb-0 ">Website Views</h6>
-              <p class="text-sm ">Last Campaign Performance</p>
-              <hr class="dark horizontal">
-              <div class="d-flex ">
-                <i class="material-icons text-sm my-auto me-1">schedule</i>
-                <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
-              </div>
+      <div class="card-body">
+    <?php
+    // Inclure le contenu de la page statistique.php
+    include "statistique.php"; 
+    // Inclure le contenu de la page temperature.html
+    include "temperature.html"; 
+    ?>
+</div>
+
+
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-md-6 mt-4 mb-4">
-          <div class="card z-index-2  ">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-              <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
-                <div class="chart">
-                  <canvas id="chart-line" class="chart-canvas" height="170"></canvas>
-                </div>
+        
               </div>
             </div>
             </div>
           </div>
         </div>
-        <div class="col-lg-4 mt-4 mb-3">
-          <div class="card z-index-2 ">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-              <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
-                <div class="chart">
-                  <canvas id="chart-line-tasks" class="chart-canvas" height="170"></canvas>
-                </div>
-              </div>
-            </div>
+       
             
             </div>
           </div>
@@ -339,11 +319,11 @@
       <div class="row mb-4">
         <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
           <div class="card">
-            <div class="card-header pb-0">
-              <div class="row">
+           
                 <div class="col-lg-6 col-7">
                   
-        <!-- End Toggle Button -->
+        <!-- End Toggle Button -->      
+
       </div>
       <hr class="horizontal dark my-1">
       <div class="card-body pt-sm-3 pt-0">
@@ -353,123 +333,7 @@
         
     </div>
   </div>
-  <body class="g-sidenav-show  bg-gray-200">
-  <!-- Sidebar and main content -->
-  
-  <!-- Chart to display temperature -->
-  <canvas id="chart-bars"></canvas>
-
-  <!-- JavaScript to fetch and display temperature -->
-  <script>
-    // OpenWeatherMap API Key
-    const apiKey = '8a5f4d655b2b2e35e3f8f652fbda95cb';
-
-    // Ville pour laquelle vous voulez obtenir la température
-    const city = 'Tunis';
-
-    // URL de l'API OpenWeatherMap
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-
-    // Fonction pour récupérer les données de température
-    async function fetchTemperature() {
-      try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        const temperature = data.main.temp;
-        updateChart(temperature); // Mettre à jour le graphique avec la température récupérée
-      } catch (error) {
-        console.error('Erreur lors de la récupération de la température:', error);
-      }
-    }
-
-    // Fonction pour mettre à jour le graphique avec les données de température
-    function updateChart(temperature) {
-      const ctx = document.getElementById("chart-bars").getContext("2d");
-
-      // Créer le graphique avec la température récupérée
-      new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"],
-          datasets: [{
-            label: "Température",
-            tension: 0.4,
-            borderWidth: 0,
-            borderRadius: 4,
-            borderSkipped: false,
-            backgroundColor: "rgba(255, 255, 255, .8)",
-            data: [temperature, temperature, temperature, temperature, temperature, temperature, temperature],
-            maxBarThickness: 6
-          }],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false,
-            }
-          },
-          interaction: {
-            intersect: false,
-            mode: 'index',
-          },
-          scales: {
-            y: {
-              grid: {
-                drawBorder: false,
-                display: true,
-                drawOnChartArea: true,
-                drawTicks: false,
-                borderDash: [5, 5],
-                color: 'rgba(255, 255, 255, .2)'
-              },
-              ticks: {
-                suggestedMin: 0,
-                suggestedMax: 40, // Définissez la plage de température selon vos besoins
-                beginAtZero: true,
-                padding: 10,
-                font: {
-                  size: 14,
-                  weight: 300,
-                  family: "Roboto",
-                  style: 'normal',
-                  lineHeight: 2
-                },
-                color: "#fff"
-              },
-            },
-            x: {
-              grid: {
-                drawBorder: false,
-                display: true,
-                drawOnChartArea: true,
-                drawTicks: false,
-                borderDash: [5, 5],
-                color: 'rgba(255, 255, 255, .2)'
-              },
-              ticks: {
-                display: true,
-                padding: 20,
-                font: {
-                  size: 14,
-                  weight: 300,
-                  family: "Roboto",
-                  style: 'normal',
-                  lineHeight: 2
-                },
-                color: "#fff"
-              },
-            },
-          },
-        },
-      });
-    }
-
-    // Récupérer les données de température lorsque la page se charge
-    fetchTemperature();
-  </script>
-  </body>
+ 
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>

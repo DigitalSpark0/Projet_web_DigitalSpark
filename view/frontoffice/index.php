@@ -1,7 +1,7 @@
 <?php
     // Vérifier si l'utilisateur est connecté
     session_start();
-    $showUpdateAccountButton = isset($_SESSION['id_utilisateur']);
+    $showUpdateAccountButton = isset($_SESSION['user_id']);
     $showGoToBackofficeButton = $showUpdateAccountButton; // Le bouton "Go to backoffice" s'affichera également si l'utilisateur est connecté
 
     // Vérifier si l'utilisateur est admin ou recruteur
@@ -89,8 +89,18 @@
                                                 </ul>-->
                                             </li>
                                             <li><a href="contact.php">QuickChat</a></li>
+                                            <li><a href="../../view/entretien/entretien.html">Entretien</a></li>
+
+
+
+
+                                            
                                             <?php if ($showUpdateAccountButton): ?>
                                                 <li><a href="updateUser.php">Update Account</a></li>
+                                            <?php endif; ?>
+
+                                            <?php if ($showGoToBackofficeButton): ?>
+                                                <li><a href="../../view/backoffice/pages/dashboard.html">Go to backoffice</a></li>
                                             <?php endif; ?>
 
                                             
@@ -99,14 +109,18 @@
                                     </nav>
                                 </div>          
                                 <!-- Header-btn -->
-                                <div class="header-btn d-none f-right d-lg-block">
-                                    <a href="../../view/User/user.html" class="btn head-btn1">Signup/in</a>
-                                    <!--<a href="../../view/backoffice/pages/gestion_des_articles.php" class="btn head-btn2">Login</a>-->
-                                </div>
+                                <?php if (!$showUpdateAccountButton): ?>
+            <div class="header-btn d-none f-right d-lg-block">
+                <a href="../../view/User/user.html" class="btn head-btn1">SignUp/SignIn</a>
+            </div>
+        <?php endif; ?>
+
+
                                 <?php if ($showUpdateAccountButton): ?>
                                     <li><a  href="../../controller/User/logout.php" class="logout">
                             <i class="fas fa-sign-out-alt fa-icons"></i> Log out
                         </a></li>
+                       
                         <?php endif; ?>
                             </div>
                         </div>

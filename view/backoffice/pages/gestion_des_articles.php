@@ -4,7 +4,7 @@ include "C:/xampp/htdocs/ProjetWebQH/controller/ArticleController.php";
 include "C:/xampp/htdocs/ProjetWebQH/controller/CommentaireController.php";
 include "C:/xampp/htdocs/ProjetWebQH/controller/AbonnementController.php";
 session_start();
-    $NameU = isset($_SESSION["prenom"])?$_SESSION["prenom"]:'erreur';
+    $NameU = isset($_SESSION["firstName"])?$_SESSION["firstName"]:'erreur';
 $db = config::getConnexion();
 $ArticleC = new ArticleController();
 

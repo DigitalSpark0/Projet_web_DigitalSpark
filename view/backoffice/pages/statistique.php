@@ -1,12 +1,8 @@
 
 <?php
-
-
-require_once "C:/xampp/htdocs/ProjetWebQH/controller/User/user.php";
-require_once "C:/xampp/htdocs/ProjetWebQH/model/userC.php";
+require_once "../../../controller/User/user.php";
+require_once "../../../model/userC.php";
 $controller = new userCRUD();
-
-
 
 $db = config::getConnexion();
 
@@ -38,17 +34,7 @@ $locationLabelsJSON = json_encode(array_keys($locationCounts));
 
 <head>
 <div class="container-fluid">
-                    <nav>
-                        <ul>
-                            <li>
-                                <!-- Bouton avec icône qui renvoie vers une autre page -->
-                                <a href="dashboard_admin.php" class="btn btn-primary">
-                                    <i class="fas fa-home"></i> Retour au Dashboard
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+                   
 
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
@@ -79,13 +65,14 @@ $locationLabelsJSON = json_encode(array_keys($locationCounts));
     
 
 
-            <div class="graphBox"  style="width: 500px; height: 500px;"  >
+            <div class="graphBox"  style="width: 400px; height: 400px;"  >
   <div class="box1">
   <canvas id="pieChart"></canvas> 
 </div>
 </div>
     </div>
-<div style="width: 500px; height: 500px;" > 
+    <br>
+<div> 
     <script>
 var locationCounts = <?php echo $locationCountsJSON; ?>;
 var locationLabels = <?php echo $locationLabelsJSON; ?>;
