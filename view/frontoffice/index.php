@@ -100,7 +100,7 @@
                                             <?php endif; ?>
 
                                             <?php if ($showGoToBackofficeButton): ?>
-                                                <li><a href="../../view/backoffice/pages/dashboard.html">Go to backoffice</a></li>
+                                                <li><a href="../../view/backoffice/pages/dashboard.php">Go to backoffice</a></li>
                                             <?php endif; ?>
 
                                             

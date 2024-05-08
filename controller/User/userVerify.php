@@ -20,7 +20,7 @@ if (isset($_GET['token'])) {
             if ($userObject['Role'] == 1 || $userObject['Role'] == 2) {
                 header('Location: ../../view/User/verified.html');
             } else {
-                header('Location: ../../view/User/verifiedE.html');
+                header('Location: ../../view/User/verified.html');
             }
             exit;
         } else {
