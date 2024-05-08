@@ -1,28 +1,34 @@
+<!-- Dans votre fichier updateUser.php -->
+
 <?php
-// Inclure le fichier de configuration et le contrôleur utilisateur
- require_once "C:/xampp/htdocs/projet web (gestion services)/controller/userController.php";
+// Assurez-vous que le fichier est inclus et que la session est démarrée
+session_start();
+session_start();
+include_once "C:/xampp/htdocs/projetWeb/database/connect.php";
+include_once "C:/xampp/htdocs/projetWeb/controller/User/user.php";
+include_once "C:/xampp/htdocs/projetWeb/model/User/userC.php";
 
-// Vérifier si le formulaire a été soumis
+// Vérifiez si les données du formulaire sont soumises via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupérer les données du formulaire
-    $id_utilisateur = $_POST["id_utilisateur"];
-    $prenom = $_POST["prenom"];
-    $nom = $_POST["nom"];
-    $Email = $_POST["Email"];
-    $Role = $_POST["Role"];
+    // Récupérez les valeurs du formulaire
+    $id_utilisateur = $_POST['id_utilisateur'];
+    $prenom = $_POST['prenom'];
+    $nom = $_POST['nom'];
+    $email = $_POST['Email'];
+    $role = $_POST['Role'];
 
-    // Créer une instance du contrôleur utilisateur
-    $controller = new userController();
+    // Instanciez votre contrôleur utilisateur
+    $controller = new userCRUD();
 
-    // Appeler la méthode updateUser pour mettre à jour l'utilisateur dans la base de données
-    $controller->updateUser($id_utilisateur, $prenom, $nom, $Email, $Role);
+    // Appelez la méthode de mise à jour de l'utilisateur avec les données récupérées du formulaire
+    $controller->updateUser($id_utilisateur, $prenom, $nom, $email, $role);
 
-    // Rediriger vers la page d'origine avec un message de succès
-    header("Location: tables.php?success=1");
-    exit();
+    // Redirigez l'utilisateur vers la page appropriée après la mise à jour
+    header("Location: tablesR.php");
+    exit;
 } else {
-    // Si le formulaire n'a pas été soumis, rediriger vers la page d'origine avec un message d'erreur
-    header("Location: tables.php?error=1");
-    exit();
+    // Si les données ne sont pas soumises via POST, redirigez l'utilisateur vers une page d'erreur ou une autre page appropriée
+    header("Location: error.php");
+    exit;
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
     // Vérifier si l'utilisateur est connecté
     session_start();
-    $showUpdateAccountButton = isset($_SESSION['id_utilisateur']);
+    $showUpdateAccountButton = isset($_SESSION['user_id']);
     $showGoToBackofficeButton = $showUpdateAccountButton; // Le bouton "Go to backoffice" s'affichera également si l'utilisateur est connecté
 
     // Vérifier si l'utilisateur est admin ou recruteur
@@ -24,6 +24,7 @@
     max-width: 150px; /* Définissez la taille maximale que vous souhaitez pour le logo */
     height: auto; /* Cela garantit que la hauteur s'ajuste automatiquement en fonction de la largeur */
 }
+
 .logout {
             color: #f44336;
             text-decoration: none;
@@ -33,6 +34,8 @@
         .logout:hover {
             color: #4caf50;
         }
+
+
 
 </style>
     <!-- CSS here -->
@@ -85,36 +88,42 @@
                                             <li><a href="index.html">Home</a></li>
                                             <li><a href="job_listing.html">Find a Jobs</a></li>
                                             <li><a href="about.html">About</a></li>
-                                            <li><a href="#">Page</a>
-                                                <ul class="submenu">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="single-blog.html">Blog Details</a></li>
-                                                    <li><a href="elements.html">Elements</a></li>
-                                                    <li><a href="commandes.html">Les commandes</a></li>
-                                                </ul>
-                                            </li>
+                                            
+                                    <li><a href="../../view/entretien/entretien.html">Entretien</a></li>
+
+
+
+
+                                            
                                             <?php if ($showUpdateAccountButton): ?>
                                                 <li><a href="updateUser.php">Update Account</a></li>
                                             <?php endif; ?>
 
                                             <?php if ($showGoToBackofficeButton): ?>
-    <li><a href="../../view/backoffice/pages/dashboard.html">Go to backoffice</a></li>
-<?php endif; ?>
+                                                <li><a href="../../view/backoffice/pages/dashboard.html">Go to backoffice</a></li>
+                                            <?php endif; ?>
 
+                                            
                                         </ul>
                                     </nav>
                                 </div>          
                                 <!-- Header-btn -->
-                                <div class="header-btn d-none f-right d-lg-block">
-                                    <a href="../../view/User/user.html" class="btn head-btn1">SignUp/SignIn</a>
-                                </div>
+                                <!-- Bouton SignUp/SignIn -->
+        <?php if (!$showUpdateAccountButton): ?>
+            <div class="header-btn d-none f-right d-lg-block">
+                <a href="../../view/User/user.html" class="btn head-btn1">SignUp/SignIn</a>
+            </div>
+        <?php endif; ?>
+
+
                                 <?php if ($showUpdateAccountButton): ?>
                                     <li><a  href="../../controller/User/logout.php" class="logout">
                             <i class="fas fa-sign-out-alt fa-icons"></i> Log out
                         </a></li>
+                       
                         <?php endif; ?>
-                            </div>
 
+                            </div>
                         </div>
                         <!-- Mobile Menu -->
                         <div class="col-12">

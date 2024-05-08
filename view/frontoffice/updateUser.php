@@ -6,14 +6,14 @@ include_once "../../model/User/userC.php";
 
 // Vérifier si l'utilisateur est connecté
 session_start();
-if (!isset($_SESSION['id_utilisateur'])) {
+if (!isset($_SESSION['user_id'])) {
     // Rediriger vers la page de connexion ou afficher un message d'erreur
     header("Location: ../../view/User/user.html#signin");
     exit;
 }
 
 // Récupérer l'ID de l'utilisateur connecté
-$id_utilisateur = $_SESSION['id_utilisateur'];
+$id_utilisateur = $_SESSION['user_id'];
 
 // Instancier le contrôleur pour gérer les utilisateurs
 $userController = new userCRUD();
@@ -155,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="button-group">
             <a href="../../view/frontoffice/index.php" class="home-btn"><i class="fas fa-home"></i> Accueil</a>
             <?php if ($userInfo['Role'] == 1 || $userInfo['Role'] == 2) { ?>
-                <a href="../../view/backoffice/pages/dashboard.html" class="home-btn"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="../../view/backoffice/pages/dashboard.php" class="home-btn"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             <?php } else { ?>
                 <a href="../../view/frontoffice/index.php" class="home-btn"><i class="fas fa-home"></i> Dashboard</a>
             <?php } ?>

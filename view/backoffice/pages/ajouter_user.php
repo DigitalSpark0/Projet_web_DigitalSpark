@@ -1,6 +1,6 @@
 <?php
 
-include "C:/xampp/htdocs/projet web (gestion services)/controller/userController.php";
+include "C:/xampp/htdocs/projetWeb/controller/User/user.php";
 
 // Récupérer les données du formulaire
 $prenom = isset($_POST["prenoms"]) ? $_POST["prenoms"] : 'erreur';
@@ -9,10 +9,10 @@ $Email = isset($_POST["Emails"]) ? $_POST["Emails"] : 'erreur';
 $Password = isset($_POST["Passwords"]) ? $_POST["Passwords"] : 'erreur';
 $Role = isset($_POST["Role"]) ? $_POST["Role"] : 'erreur';
 
-// Créer un nouvel objet user avec les données du formulaire
-$User = new user($prenom, $nom, $Email, $Password, $Role);
-$userC = new userController();
-$userC->ajouterUser($User);
+// Créer un nouvel objet User avec les données du formulaire
+$user = new UserClass($prenom, $nom, $Email, $Password, $Role);
+$userC = new UserCRUD();
+$userC->create_user($user);
 
-header('Location:gestion_des_services.php'); 
+header('Location: dashboard.php'); 
 ?>

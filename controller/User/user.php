@@ -1,6 +1,7 @@
 <?php
-require_once "../../database/connect.php";
-require_once '../../model/User/userC.php';
+require_once __DIR__ . "/../../database/connect.php"; // Utilisation de __DIR__ pour obtenir le chemin absolu du répertoire actuel
+require_once __DIR__ . '/../../model/User/userC.php'; // Utilisation de __DIR__ pour obtenir le chemin absolu du répertoire actuel
+
 
 class UserCRUD {
     public function create_user($user) {
@@ -121,4 +122,10 @@ public function SupprimerUser($id)
         }
         return false;
     }
+
+    
+    
 }
+
+
+

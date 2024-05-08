@@ -52,4 +52,5 @@ class UserClass
         $this->id_utilisateur = $id_utilisateur;
     }
 }
+
 ?>

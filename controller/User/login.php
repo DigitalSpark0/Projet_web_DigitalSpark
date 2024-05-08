@@ -19,32 +19,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if (isset($userData) && $userData['Email'] == $email && $userData['Password'] == $password) {
-           
             if ($userData['Status'] == 0) {
                 echo "<script>alert('Your account is not yet verified. Please check your email for the verification link. You must verify your account before you can log in.'); window.location.href='../../view/User/user.html';</script>";
                 sendVerificationEmail($email);
                 exit;
             }
 
-            if ($userData['Role'] == 1) {
-                // Redirection vers le tableau de bord de l'administrateur
-                header('Location: ../../view/backoffice/pages/dashboard.html');
-                exit;
-            } elseif ($userData['Role'] == 2) {
-                // Redirection vers le tableau de bord du recruteur
-                header('Location: ../../view/backoffice/pages/dashboardR.html');
-                exit;
+            // Redirection en fonction du rôle de l'utilisateur
+            switch ($userData['Role']) {
+                case 1:
+                    header('Location: ../../view/backoffice/pages/dashboard.php');
+                    break;
+                case 2:
+                    header('Location: ../../view/backoffice/pages/dashboardR.php');
+                    break;
+                case 3:
+                    header('Location: ../../view/backoffice/pages/dashboardR.php');
+                    break;
+                case 4:
+                    header('Location: ../../view/frontoffice/index.php');
+                    break;
+                default:
+                    echo "<script>alert('Invalid user role!'); window.location.href='../../view/User/user.html';</script>";
+                    exit;
             }
-            elseif ($userData['Role'] == 3) {
-                // Redirection vers le tableau de bord du recruteur
-                header('Location: ../../view/frontoffice/index.php');
-                exit;
-            }
-            elseif ($userData['Role'] == 4) {
-                // Redirection vers le tableau de bord du recruteur
-                header('Location: ../../view/frontoffice/index.php');
-                exit;
-            }
+
             // Enregistrer les informations de l'utilisateur dans la session
             $_SESSION['user_id'] = $userData['id_utilisateur'];
             $_SESSION['username'] = $userData['Email'];
@@ -52,15 +51,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['firstName'] = $userData["prenom"];
             $_SESSION['lastName'] = $userData["nom"];
             $_SESSION['role'] = $userData["Role"];
-            
             exit;
-        } else  {
+        } else {
             echo "<script>alert('Invalid email or password!'); window.location.href='../../view/User/user.html';</script>";
+            exit;
         }
     } else {
         echo "<script>alert('Please provide both email and password!'); window.location.href='../../view/User/user.html';</script>";
+        exit;
     }
 } else {
     echo "<script>alert('Invalid request method!'); window.location.href='../../view/User/user.html';</script>";
+    exit;
 }
 ?>
