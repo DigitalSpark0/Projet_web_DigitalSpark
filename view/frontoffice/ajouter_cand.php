@@ -3,7 +3,7 @@ require_once "C:\wamp64\www\Projet_web_DigitalSpark-gestion_des_offres\controlle
 require_once "C:\wamp64\www\Projet_web_DigitalSpark-gestion_des_offres\model\candidature.php";
 
 // Vérifier si tous les champs sont remplis
-if(empty($_POST["id_offre"]) || empty($_POST["date_candidature"])) {
+if(empty($_POST["id_offre"]) || empty($_POST["date_candidature"]) || empty($_FILES["cv"]["name"]) || empty($_POST["disponibilite"])) {
     echo "Tous les champs doivent être remplis.";
     exit; // Arrêter l'exécution du script si des champs sont vides
 }
@@ -11,6 +11,11 @@ if(empty($_POST["id_offre"]) || empty($_POST["date_candidature"])) {
 // Récupérer les données du formulaire
 $id_offre = $_POST["id_offre"];
 $date_candidature = $_POST["date_candidature"];
+$disponibilite = $_POST["disponibilite"];
+
+// Récupérer le nom du fichier CV et son emplacement temporaire
+$cv = $_FILES["cv"]["name"];
+$cv_temp = $_FILES["cv"]["tmp_name"];
 
 // Vérifier si la date de candidature est au format ../../....
 if(!preg_match("/^\d{2}\/\d{2}\/\d{4}$/", $date_candidature)) {
@@ -45,14 +50,21 @@ if(strtotime($date_candidature) > strtotime(date("d/m/Y"))) {
     exit; // Arrêter l'exécution du script si la date de candidature est future
 }
 
-// Créer un nouvel objet candidature avec les données du formulaire
-$candidatures = new candidatures($id_offre, $date_candidature);
+// Définir le chemin où enregistrer le fichier CV
+$upload_dir = "C:\\Users\\21652\\Desktop\\"; // Chemin absolu vers le dossier de destination, par exemple, le bureau
 
-// Instancier le contrôleur de candidatures et appeler la méthode pour ajouter une candidature
-$candiC = new candiController();
-$candiC->ajouterCand($candidatures);
+// Déplacer le fichier CV vers un emplacement permanent
+if(move_uploaded_file($cv_temp, $upload_dir . $cv)) {
+    // Créer un nouvel objet candidature avec les données du formulaire
+    $candidatures = new candidatures($id_offre, $date_candidature, $cv, $disponibilite);
 
-// Redirection vers la page contact.php après l'ajout de la candidature
-header('Location: contact.php'); 
+    // Instancier le contrôleur de candidatures et appeler la méthode pour ajouter une candidature
+    $candiC = new candiController();
+    $candiC->ajouterCand($candidatures);
 
+    // Redirection vers la page contact.php après l'ajout de la candidature
+    header('Location: contact.php');
+} else {
+    echo "Une erreur s'est produite lors de l'enregistrement du CV.";
+}
 ?>

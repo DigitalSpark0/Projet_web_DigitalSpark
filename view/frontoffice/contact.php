@@ -1,35 +1,3 @@
-<?php
-// Vérifie si le formulaire a été soumis avec la méthode POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupère les données soumises par le formulaire
-    $id_offre = $_POST['id_offre'];
-    $date_cand = $_POST['date_cand'];
-
-    // Inclure le fichier de configuration de la base de données si nécessaire
-    // require_once 'config.php';
-
-    // Essayez d'insérer les données dans la base de données
-    try {
-        // Obtenir une instance de la connexion à la base de données
-        // $pdo = config::getConnexion();
-
-        // Préparer la requête SQL pour insérer les données
-        // $stmt = $pdo->prepare("INSERT INTO candidatures (id_offre, date_cand) VALUES (:id_offre, :date_cand)");
-        // Liaison des paramètres
-        // $stmt->bindParam(':id_offre', $id_offre);
-        // $stmt->bindParam(':date_cand', $date_cand);
-
-        // Exécuter la requête
-        // $stmt->execute();
-
-        // Afficher un message de succès
-        echo "Candidature ajoutée avec succès.";
-    } catch(PDOException $e) {
-        // En cas d'erreur, afficher l'erreur
-        echo "Erreur : " . $e->getMessage();
-    }
-}
-?>
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
@@ -138,37 +106,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- ================ contact section start ================= -->
 
     <section class="contact-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h2 class="contact-title">Votre Candidature :</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="contact-title">Votre Candidature :</h2>
+                </div>
+            </div>
+            <form id="service" action="ajouter_cand.php" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input class="form-control valid" name="id_offre" id="id_offre" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'ID de l\'offre'" placeholder="ID de l'offre" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input class="form-control valid" name="date_candidature" id="date_candidature" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Date de candidature'" placeholder="Date de candidature" required>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <input class="form-control-file" name="cv" id="cv" type="file" accept=".pdf,.doc,.docx" required>
+                            <small class="form-text text-muted">Veuillez télécharger votre CV au format PDF ou Word.</small>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="disponibilite">Disponibilité :</label>
+                            <select class="form-control" id="disponibilite" name="disponibilite" required>
+                                <option value="">Sélectionnez votre disponibilité</option>
+                                <option value="temps_plein">Temps plein</option>
+                                <option value="temps_partiel">Temps partiel</option>
+                                <option value="flexible">Flexibilité des horaires</option>
+                                <option value="nuit">Travail de nuit</option>
+                                <option value="weekend">Week-ends seulement</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <button type="submit" class="button button-contactForm boxed-btn">Ajouter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Formulaire indépendant pour le QR code -->
+    <form action="../../controller/qrcode.php" method="get">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control me-3" id="qr" name="qr" placeholder="Entrez l'ID de la matière à scanner">
+                        <button type="submit" class="btn btn-success">QR CODE</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <form id="service" action="ajouter_cand.php" method="post">
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="form-group">
-                <input class="form-control valid" name="id_offre" id="id_offre" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'ID de l\'offre'" placeholder="ID de l'offre" required>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="form-group">
-                <input class="form-control valid" name="date_candidature" id="date_candidature" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Date de candidature'" placeholder="Date de candidature" required>
-            </div>
-        </div>
-        <div class="form-group mt-3">
-            <button type="submit" class="button button-contactForm boxed-btn">Ajouter</button>
-            
-        </div>
-    </div>
-</form>
-
-    </div>
-</section>
-
-
-
-
+    </form>
 
     <!-- ================ contact section end ================= -->
     <footer>

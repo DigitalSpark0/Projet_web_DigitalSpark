@@ -4,15 +4,19 @@ class candidatures
     private $id_candidature;
     private $id_offre;
     private $date_candidature;
+    private $cv;
+    private $disponibilté;
 
 
     
 
-    public function __construct($c,$d)
+    public function __construct($c,$d,$e,$f)
     {
         //$this->id_candidature=$b;
         $this->id_offre=$c;
         $this->date_candidature=$d;
+        $this->cv=$e;
+        $this->disponibilté=$f;
     }
 
     //Getters:
@@ -31,6 +35,15 @@ class candidatures
     {
         return $this->date_candidature;
     }
+    public function getcv()
+    {
+        return $this->cv;
+    }
+    public function getdisponibilite()
+{
+    return $this->disponibilté;
+}
+
 
 
     //Setters:
@@ -48,6 +61,14 @@ class candidatures
     public function setdate_cand($d)
     {
         $this->date_candidature=$d;
+    }
+    public function setcv($e)
+    {
+        $this->cv=$e;
+    }
+    public function setdisponibilté($f)
+    {
+        $this->disponibilté=$f;
     }
     
 

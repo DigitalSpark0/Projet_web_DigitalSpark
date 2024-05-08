@@ -15,11 +15,15 @@ class candiController
                         <th>ID Offre</th>
                         <th>ID Candidature</th>
                         <th>Date de Candidature</th>
+                        <th>cv</th>
+                        <th>Disponibilité</th>
                     </tr>
                     <tr>
                         <td><?php echo $candidatures->getid_offre(); ?></td>
                         <td><?php echo $candidatures->getid_cand(); ?></td>
                         <td><?php echo $candidatures->getdate_cand(); ?></td>
+                        <td><?php echo $candidatures->getcv(); ?></td>
+                        <td><?php echo $candidatures->getdisponibilité(); ?></td>
                     </tr>
                 </table>
             </body>
@@ -47,12 +51,14 @@ class candiController
         }
 
         // Maintenant, insérer la candidature
-        $query = "INSERT INTO candidatures (id_offre, date_candidature) 
-                  VALUES (:id_offre, :date_candidature)";
+        $query = "INSERT INTO candidatures (id_offre, date_candidature, cv, disponibilité) 
+                  VALUES (:id_offre, :date_candidature, :cv, :disponibilite)";
         $stmt = $pdo->prepare($query);
         $stmt->execute([
             'id_offre' => $offre_id,
             'date_candidature' => $candidatures->getdate_cand(),
+            'cv' => $candidatures->getcv(),
+            'disponibilite' => $candidatures->getdisponibilite() // Correction ici
         ]);
 
         $pdo->commit(); // Valider la transaction
@@ -62,6 +68,7 @@ class candiController
         $pdo->rollBack(); // Annuler la transaction en cas d'erreur
     }
 }
+
 
 
 
@@ -117,12 +124,16 @@ class candiController
             $query = $db->prepare(
                 'UPDATE candidatures SET 
                 id_offre = :id_offre,
-                date_candidature = :date_candidature
+                date_candidature = :date_candidature,
+                cv = :cv,
+                disponibilité = :disponibilité
                 WHERE id_candidature = :id'
             );
             $query->execute([
-                'id_offre' => $offreObject->getid_offre(),
-                'date_candidature' => $offreObject->getdate_cand(),
+                'id_offre' => $candidaturesObject->getid_offre(),
+                'date_candidature' => $candidaturesObject->getdate_cand(),
+                'cv' => $candidaturesObject->getcv(),
+                'date_candidature' => $candidaturesObject->getdate_cand(),
                 'id' => $candidaturesObject->getid_cand()
             ]);
         } catch (PDOException $e) {
@@ -132,11 +143,13 @@ class candiController
         }
     }
     
-    public function getCandidatureById($id_candidature, $id_offre)
+    public function getCandidatureById($id_candidature, $id_offre, $cv, $disponibilité)
 {
     $pdo = config::getConnexion();
     $stmt = $pdo->prepare("SELECT * FROM candidatures WHERE id_candidature = :id_candidature");
     $stmt->execute(['id_candidature' => $id_candidature]);
+    $stmt->execute(['cv' => $cv]);
+    $stmt->execute(['disponibilité' => $disponibilité]);
     $candidature = $stmt->fetch(PDO::FETCH_ASSOC);
     
     // Vérifier si l'id de l'offre est disponible
@@ -148,7 +161,7 @@ class candiController
     // Créer un objet candidature seulement si une candidature est trouvée
     if ($candidature) {
         // Utiliser les valeurs de $candidature pour créer un nouvel objet candidatures
-        $candidature_obj = new candidatures($candidature['id_offre'], $candidature['date_candidature']);
+        $candidature_obj = new candidatures($candidature['id_offre'], $candidature['date_candidature'], $candidature['cv'], $candidature['disponibilité']);
         // Ajouter l'id de la candidature à l'objet
         $candidature_obj->setid_cand($candidature['id_candidature']);
         return $candidature_obj;
