@@ -2,6 +2,8 @@
 include "../../controller/reclamationsC.php";
 $reclamationC = new reclamationsC();
 $list = $reclamationC->listereclamation();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,6 +53,10 @@ $list = $reclamationC->listereclamation();
          <div style="margin-right: 40px;"> 
           <a class="custom-link" href ="http://localhost/GestionDesReclamation/view/Backoffice/pages/tables.php"> Back office → </a>
         </div>
+
+
+
+        
         <style>
 a.custom-link {
     position: relative; /* Définir la position relative pour pouvoir utiliser top et left */

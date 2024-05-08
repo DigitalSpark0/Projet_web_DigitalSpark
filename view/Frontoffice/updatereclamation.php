@@ -174,7 +174,7 @@ a.custom-link:hover {
     <div class="container">
         <div class="row">
             <div class="col-12" >
-                <h2 class="contact-title" > Contact us!</h2>
+                <h2 class="contact-title" >  Envoyez vos reclamations ici !</h2>
             </div>
             
             <div class="col-lg-8">

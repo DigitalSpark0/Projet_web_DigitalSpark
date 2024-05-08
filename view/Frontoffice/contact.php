@@ -106,10 +106,7 @@ a.custom-link:hover {
                                     </nav>
                                 </div>          
                                 <!-- Header-btn -->
-                                <div class="header-btn d-none f-right d-lg-block">
-                                    <a href="#" class="btn head-btn1">Register</a>
-                                    <a href="#" class="btn head-btn2">Login</a>
-                                </div>
+                               
                             </div>
                         </div>
                         <!-- Mobile Menu -->
@@ -151,7 +148,7 @@ a.custom-link:hover {
     <section class="contact-section text-center">
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <h2 class="contact-title"> Contact us! </h2>
+            <h2 class="contact-title"> Envoyez vos reclamations ici ! </h2>
             <form action="contact1.php" method="POST" id="inscription" onsubmit="return validateForm()">
                 <div class="row">
                     <div class="col-12">

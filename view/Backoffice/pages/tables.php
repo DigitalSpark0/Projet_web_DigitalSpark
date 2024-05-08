@@ -2,6 +2,8 @@
 <?php
 include "../../../controller/reponsesC.php";
 include "../../../controller/reclamationsC.php";
+
+
 $reclamationC = new reclamationsC();
 $list = $reclamationC->listereclamation();
 
@@ -10,8 +12,9 @@ $listReponses= $reponseC->listereponses();
 
 $reclamationController = new reclamationsC();
 $notifications = $reclamationController->getNotifications();
-?>
 
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,13 +42,7 @@ $notifications = $reclamationController->getNotifications();
 
 <body class="g-sidenav-show  bg-gray-200">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
-    <div class="sidenav-header">
-      <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
-        <img src="../assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold text-white">Material Dashboard 2</span>
-      </a>
-    </div>
+    
     <hr class="horizontal light mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
       <ul class="navbar-nav">
@@ -62,75 +59,13 @@ $notifications = $reclamationController->getNotifications();
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
-            <span class="nav-link-text ms-1">Tables</span>
+            <span class="nav-link-text ms-1">Reclamations</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/billing.html">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">receipt_long</i>
-            </div>
-            <span class="nav-link-text ms-1">Billing</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/virtual-reality.html">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">view_in_ar</i>
-            </div>
-            <span class="nav-link-text ms-1">Virtual Reality</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/rtl.html">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
-            </div>
-            <span class="nav-link-text ms-1">RTL</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/notifications.html">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">notifications</i>
-            </div>
-            <span class="nav-link-text ms-1">Notifications</span>
-          </a>
-        </li>
-        <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/profile.html">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">person</i>
-            </div>
-            <span class="nav-link-text ms-1">Profile</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/sign-in.html">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">login</i>
-            </div>
-            <span class="nav-link-text ms-1">Sign In</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/sign-up.html">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">assignment</i>
-            </div>
-            <span class="nav-link-text ms-1">Sign Up</span>
-          </a>
-        </li>
+        
       </ul>
     </div>
-    <div class="sidenav-footer position-absolute w-100 bottom-0 ">
-      <div class="mx-3">
-        <a class="btn bg-gradient-primary mt-4 w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
-      </div>
-    </div>
+    
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
 
@@ -141,7 +76,7 @@ $notifications = $reclamationController->getNotifications();
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tables</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Reclamations</li>
         </ol>
     </nav>
     <div style="margin-right: 100px;">
@@ -210,12 +145,14 @@ a.custom-link:hover {
                         foreach ($notifications as $notification) {
                             ?>
                             <li class="mb-2">
-                                <a class="dropdown-item border-radius-md" href="javascript:;">
+                            <a class="dropdown-item border-radius-md" href="javascript:;" data-idreclamation="<?= $notification['id_reclamation']; ?>">
+
                                     <div class="d-flex py-1">
                                     
                                         <div class="d-flex flex-column justify-content-center">
                                             <h6 class="text-sm font-weight-normal mb-1">
-                                                <span class="font-weight-bold">Nouvelle réclamation</span> de ID: <?php echo $notification['id_reclamation']; ?>
+                                                <span class="font-weight-bold">Nouvelle réclamation</span> de l'utilisateur: <?php echo $notification['id_utilisateur']; ?>- Réclamation ID: <?= $notification['id_reclamation']; ?>
+
                                             </h6>
                                             <p class="text-xs text-secondary mb-0">
                                                 <i class="fa fa-clock me-1"></i>
@@ -250,9 +187,11 @@ a.custom-link:hover {
                 <table class="table align-items-center mb-0">
                 <thead>
     <tr>
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">id reclamation</th>
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">sujet</th>
-        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">discription</th>
+   
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">ID Reclamation</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">ID Utilisateur</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">Sujet</th>
+        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
         <th class="text-secondary opacity-7"></th>
         <th class="text-secondary opacity-7"></th>
@@ -261,11 +200,20 @@ a.custom-link:hover {
 <tbody>
     <?php foreach ($list as $reclamationC) { ?>
         <tr>
+
             <td class="text-center">
                 <div class="d-flex px-2 py-1">
                     <div></div>
                     <div class="d-flex flex-column justify-content-center">
                         <h6 class="mb-0 text-sm"><?= $reclamationC['idr']; ?></h6>
+                    </div>
+                </div>
+            </td>
+            <td class="text-center">
+                <div class="d-flex px-2 py-1">
+                    <div></div>
+                    <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm"><?= $reclamationC['idu']; ?></h6>
                     </div>
                 </div>
             </td>
@@ -291,8 +239,9 @@ a.custom-link:hover {
             </td>
         </tr>
     <?php } ?>
-
 </tbody>
+
+
 
 
        
@@ -432,6 +381,26 @@ a.custom-link:hover {
                 // Masquer la ligne si elle ne correspond pas à la recherche
                 row.style.display = 'none';
             }
+        });
+    });
+
+    // Sélection de tous les éléments de notification dans le dropdown menu
+    const notifications = document.querySelectorAll('.dropdown-menu .dropdown-item');
+
+    // Ajout d'un gestionnaire d'événements de clic à chaque notification
+    notifications.forEach(notification => {
+        notification.addEventListener('click', function() {
+            // Récupération de l'ID de la réclamation associée à la notification
+            const idReclamation = notification.getAttribute('data-idreclamation');
+
+            // Mettre l'ID de la réclamation dans le champ de recherche
+            input.value = idReclamation;
+
+            // Déclencher manuellement l'événement de saisie pour activer la fonction de recherche
+            input.dispatchEvent(new Event('input'));
+
+            // Déplacer le focus hors du champ de saisie pour éviter la superposition
+            input.blur();
         });
     });
 </script>

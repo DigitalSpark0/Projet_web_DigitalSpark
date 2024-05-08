@@ -15,6 +15,7 @@ class reclamations
         $this->description="";
         
         
+        
     }
 
     //Getters:
@@ -63,6 +64,5 @@ class reclamations
         echo "nom:".$this->sujet;
         echo "mot de passe:".$this->description;
         
-
     }
 }
