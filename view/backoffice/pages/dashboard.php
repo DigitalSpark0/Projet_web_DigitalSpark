@@ -19,7 +19,7 @@ $userCount = count($userList);
 <html lang="en">
 
 <head>
-
+<title>Tableau de bord</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
@@ -65,7 +65,7 @@ $userCount = count($userList);
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
         <img src="../assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold text-white"> Dashboard </span>
+        <span class="ms-1 font-weight-bold text-white">Tableau de bord</span>
       </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -76,7 +76,7 @@ $userCount = count($userList);
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
-            <span class="nav-link-text ms-1">Dashboard</span>
+            <span class="nav-link-text ms-1">Tableau de bord</span>
           </a>
         </li>
         <li class="nav-item">
@@ -84,7 +84,7 @@ $userCount = count($userList);
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
-            <span class="nav-link-text ms-1">Users</span>
+            <span class="nav-link-text ms-1">Utilisateurs</span>
           </a>
         </li>
        
@@ -108,18 +108,14 @@ $userCount = count($userList);
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
-            <span class="nav-link-text ms-1">Go to Front Office</span>
+            <span class="nav-link-text ms-1">Allez au Front Office</span>
           </a>
         </li>
 
 
       </ul>
     </div>
-    <div class="sidenav-footer position-absolute w-100 bottom-0 ">
-      <div class="mx-3">
-        <a class="btn bg-gradient-primary mt-4 w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
-      </div>
-    </div>
+    
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
@@ -318,21 +314,7 @@ $userCount = count($userList);
       </div>
       <div class="row mb-4">
         <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
-          <div class="card">
-           
-                <div class="col-lg-6 col-7">
-                  
-        <!-- End Toggle Button -->      
-
-      </div>
-      <hr class="horizontal dark my-1">
-      <div class="card-body pt-sm-3 pt-0">
-        <!-- Sidebar Backgrounds -->
-        
-        
-        
-    </div>
-  </div>
+          
  
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
