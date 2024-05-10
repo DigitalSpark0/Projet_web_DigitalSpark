@@ -1,7 +1,7 @@
 <?php
 ob_start();
-require_once "C:/xampp/htdocs/ProjetWebQH/view/backoffice/pages/vendor/autoload.php";
-require_once "C:/xampp/htdocs/ProjetWebQH/controller/User/user.php";
+require_once "C:/xampp/htdocs/projet web integration/view/backoffice/pages/vendor/autoload.php";
+require_once "C:/xampp/htdocs/projet web integration/controller/User/user.php";
 $controller = new userCRUD();
 $userList = $controller->listUsers();
 

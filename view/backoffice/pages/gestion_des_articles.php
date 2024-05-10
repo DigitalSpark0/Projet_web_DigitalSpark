@@ -1,8 +1,8 @@
 <?php
 //////////////////////////////////////////////////////////////////////////
-include "C:/xampp/htdocs/ProjetWebQH/controller/ArticleController.php";
-include "C:/xampp/htdocs/ProjetWebQH/controller/CommentaireController.php";
-include "C:/xampp/htdocs/ProjetWebQH/controller/AbonnementController.php";
+include "C:/xampp/htdocs/projet web integration/controller/ArticleController.php";
+include "C:/xampp/htdocs/projet web integration/controller/CommentaireController.php";
+include "C:/xampp/htdocs/projet web integration/controller/AbonnementController.php";
 session_start();
     $NameU = isset($_SESSION["firstName"])?$_SESSION["firstName"]:'erreur';
 $db = config::getConnexion();
@@ -389,7 +389,7 @@ function validateTitre() {
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/dashboard.html">
+          <a class="nav-link text-white " href="../pages/dashboard.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
@@ -405,7 +405,7 @@ function validateTitre() {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/gestion_des_services.html">
+          <a class="nav-link text-white " href="../pages/gestion_des_services.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">receipt_long</i>
             </div>
@@ -434,6 +434,25 @@ function validateTitre() {
               <i class="material-icons opacity-10">notifications</i>
             </div>
             <span class="nav-link-text ms-1">Articles</span>
+          </a>
+        </li>
+        <li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Mon compte</h6>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="../pages/profile.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">person</i>
+            </div>
+            <span class="nav-link-text ms-1">Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="../../frontoffice/index.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">login</i>
+            </div>
+            <span class="nav-link-text ms-1">FrontOffice</span>
           </a>
         </li>
         <!--<li class="nav-item mt-3">

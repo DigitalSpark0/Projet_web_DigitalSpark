@@ -1,6 +1,6 @@
 <?php
 // Inclure le fichier de connexion à la base de données et les fonctions nécessaires
-include_once "C:/xampp/htdocs/ProjetWebQH/config.php";
+include_once "C:/xampp/htdocs/projet web integration/config.php";
 include_once "../../controller/User/user.php";
 include_once "../../model/userC.php";
 

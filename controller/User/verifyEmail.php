@@ -38,7 +38,7 @@ function sendVerificationEmail($email)
                             <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
                                 To complete your account verification, please click the button below.
                             </p>
-                            <a href="http://localhost/ProjetWebQH/controller/User/userVerify.php?token=' . urlencode($token) . '"
+                            <a href="http://localhost/projet web integration/controller/User/userVerify.php?token=' . urlencode($token) . '"
                                 style="background:#F4BE37;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Verify
                                 Account</a>
                         </td>

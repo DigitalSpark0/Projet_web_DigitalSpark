@@ -1,7 +1,7 @@
 <?php
 
 
-include "C:/xampp/htdocs/ProjetWebQH/controller/CommentaireController.php";
+include "C:/xampp/htdocs/projet web integration/controller/CommentaireController.php";
    
 $id0000 = isset($_POST["id000"])?$_POST["id000"]:'erreur';
 $auteur = isset($_POST["name"])?$_POST["name"]:'erreur';

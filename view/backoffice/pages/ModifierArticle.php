@@ -1,5 +1,5 @@
 <?php
-include "C:/xampp/htdocs/ProjetWebQH/controller/ArticleController.php";
+include "C:/xampp/htdocs/projet web integration/controller/ArticleController.php";
 
 $id2 = isset($_POST["id1s"]) ? $_POST["id1s"] : 'erreur';
 $titre2 = isset($_POST["titres1"]) ? $_POST["titres1"] : 'erreur';

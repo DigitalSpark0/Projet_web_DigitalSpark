@@ -2,10 +2,10 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-include "C:/xampp/htdocs/ProjetWebQH/controller/AbonnementController.php";
-require 'C:/xampp/htdocs/ProjetWebQH/view/frontoffice/src/PHPMailer.php';
-require 'C:/xampp/htdocs/ProjetWebQH/view/frontoffice/src/SMTP.php';
-require 'C:/xampp/htdocs/ProjetWebQH/view/frontoffice/src/Exception.php';
+include "C:/xampp/htdocs/projet web integration/controller/AbonnementController.php";
+require 'C:/xampp/htdocs/projet web integration/view/frontoffice/src/PHPMailer.php';
+require 'C:/xampp/htdocs/projet web integration/view/frontoffice/src/SMTP.php';
+require 'C:/xampp/htdocs/projet web integration/view/frontoffice/src/Exception.php';
 
 $email1 = isset($_POST["email"]) ? $_POST["email"] : 'erreur';
 $date1 = date("Y-m-d H:i:s");
@@ -14,7 +14,7 @@ $abonnement = new Abonnement($email1, $date1);
 $abonnementC = new AbonnementController();
 
 $abonnementAdded = $abonnementC->addabonnement($abonnement);
-$confirmationLink = "http://localhost/ProjetWebQH/view/frontoffice/confirm_subscription.php?email=" . urlencode($email1);
+$confirmationLink = "http://localhost/projet web integration/view/frontoffice/confirm_subscription.php?email=" . urlencode($email1);
 $confirmationMessage = '';
 if ($abonnementAdded) {
     $confirmationMessage = 'Merci ! Votre abonnement à notre newsletter est en attente de vérification.';
@@ -42,7 +42,7 @@ if ($abonnementAdded) {
                 <p style="font-size: 16px; color: #666666;">Merci de vous être abonné à notre newsletter !</p>
                 <p style="font-size: 16px; color: #666666;">Cliquez sur le bouton ci-dessous pour confirmer votre abonnement :</p>
                 <p style="text-align: center;">
-                    <a href="localhost/ProjetWebQH/view/frontoffice/confirm_subscription.php?email='.$to.'" style="display: inline-block; background-color: #007bff; color: #ffffff; font-size: 18px; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Confirmer l\'abonnement</a>
+                    <a href="localhost/projet web integration/view/frontoffice/confirm_subscription.php?email='.$to.'" style="display: inline-block; background-color: #007bff; color: #ffffff; font-size: 18px; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Confirmer l\'abonnement</a>
                 </p>
             </div>
         </div>

@@ -1,5 +1,5 @@
 <?php
-require_once "C:/xampp/htdocs/ProjetWebQH/controller/User/user.php";
+require_once "C:/xampp/htdocs/projet web integration/controller/User/user.php";
 $controller = new userCRUD();
 $userList = $controller->listUsers();
 ?>
@@ -10,8 +10,8 @@ $userList = $controller->listUsers();
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="C:/xampp/htdocs/ProjetWebQH/view/backoffice/assets/img/imageservice-removebg-preview.png">
-    <link rel="icon" type="image/png" href="C:/xampp/htdocs/ProjetWebQH/view/backoffice/assets/img/imageservice-removebg-preview.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="C:/xampp/htdocs/projet web integration/view/backoffice/assets/img/imageservice-removebg-preview.png">
+    <link rel="icon" type="image/png" href="C:/xampp/htdocs/projet web integration/view/backoffice/assets/img/imageservice-removebg-preview.png">
     <!-- Fonts and icons -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
     <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
@@ -83,7 +83,7 @@ $userList = $controller->listUsers();
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
-            <span class="nav-link-text ms-1">Go to Front Office</span>
+            <span class="nav-link-text ms-1">Allez au Front Office</span>
           </a>
         </li>
       </ul>

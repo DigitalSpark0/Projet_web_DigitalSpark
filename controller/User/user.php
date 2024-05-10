@@ -1,6 +1,6 @@
 <?php
-include "C:/xampp/htdocs/ProjetWebQH/config.php"; 
-include "C:/xampp/htdocs/ProjetWebQH/model/userC.php";
+include "C:/xampp/htdocs/projet web integration/config.php"; 
+include "C:/xampp/htdocs/projet web integration/model/userC.php";
 
 
 class UserCRUD {

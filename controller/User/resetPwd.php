@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\Exception;
 require '../PHPMailer/src/Exception.php';
 require '../PHPMailer/src/PHPMailer.php';
 require '../PHPMailer/src/SMTP.php';
-require_once 'C:/xampp/htdocs/ProjetWebQH/config.php';
+require_once 'C:/xampp/htdocs/projet web integration/config.php';
 require_once '../../controller/User/user.php';
 require_once '../../model/userC.php';
 

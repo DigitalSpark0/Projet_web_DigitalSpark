@@ -1,12 +1,20 @@
 <?php
+
+
+session_start();
+    $showUpdateAccountButton = isset($_SESSION['user_id']);
+    $showGoToBackofficeButton = $showUpdateAccountButton; // Le bouton "Go to backoffice" s'affichera également si l'utilisateur est connecté
+
+    // Vérifier si l'utilisateur est admin ou recruteur
+    $role_id = 0; // Remplacez cela par le code pour récupérer le rôle de l'utilisateur depuis la base de données
+    $is_admin_or_recruteur = ($role_id === 1 || $role_id === 2);
 ////////////////////////////////////////////////////////////////////////
 if (!class_exists('config')) {
-   include "C:/xampp/htdocs/ProjetWebQH/config.php";
+   include "C:/xampp/htdocs/projet web integration/config.php";
 }
 
-include "C:/xampp/htdocs/ProjetWebQH/controller/ArticleController.php";
-include "C:/xampp/htdocs/ProjetWebQH/controller/CommentaireController.php";
-session_start();
+include "C:/xampp/htdocs/projet web integration/controller/ArticleController.php";
+include "C:/xampp/htdocs/projet web integration/controller/CommentaireController.php";
     $IDU = isset($_SESSION["user_id"])?$_SESSION["user_id"]:'erreur';
 $id00 = isset($_GET["id0"])?$_GET["id0"]:'error';
 $db = config::getConnexion();
@@ -86,6 +94,16 @@ $list1 = $CommentaireC->listCommentaires($id00);
     border-radius: 5px; /* Ajoute des coins arrondis */
 }
 
+.logout {
+            color: #f44336;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .logout:hover {
+            color: #4caf50;
+        }
+    
 </style>
 <head>
    <meta charset="utf-8">
@@ -189,52 +207,78 @@ $list1 = $CommentaireC->listCommentaires($id00);
    <!-- Preloader Start-->
    <header>
       <!-- Header Start -->
-     <div class="header-area header-transparrent">
-         <div class="headder-top header-sticky">
-              <div class="container">
-                  <div class="row align-items-center">
-                      <div class="col-lg-3 col-md-2">
-                          <!-- Logo -->
-                          <div class="logo">
-                          <a  href="index.php"><img width="200" height="150" src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt=""></a>
-                          </div>  
-                      </div>
-                      <div class="col-lg-9 col-md-9">
-                          <div class="menu-wrapper">
-                              <!-- Main-menu -->
-                              <div class="main-menu">
-                                  <nav class="d-none d-lg-block">
-                                      <ul id="navigation">
-                                          <li><a href="index.php">Accueil</a></li>
-                                          <li><a href="job_listing.html">services</a></li>
-                                          <li><a href="about.html">Réclamations</a></li>
-                                          <li><a href="blog.php">Articles</a>
-                                              <!--<ul class="submenu">
-                                                  <li><a href="blog.php">Articles</a></li>
-                                                  <li><a href="single-blog.php">Blog Details</a></li>
-                                                  <li><a href="elements.html">Elements</a></li>
-                                                  <li><a href="commandes.html">Les commandes</a></li>
-                                              </ul>-->
-                                          </li>
-                                          <li><a href="contact.php">QuickChat</a></li>
-                                      </ul>
-                                  </nav>
-                              </div>          
-                              <!-- Header-btn -->
-                              <div class="header-btn d-none f-right d-lg-block">
-                                  <a href="#" class="btn head-btn1">Register</a>
-                                  <a href="../../view/backoffice/pages/gestion_des_articles.php" class="btn head-btn2">Login</a>
-                              </div>
-                          </div>
-                      </div>
-                      <!-- Mobile Menu -->
-                      <div class="col-12">
-                          <div class="mobile_menu d-block d-lg-none"></div>
-                      </div>
-                  </div>
-              </div>
-         </div>
-     </div>
+      <div class="header-area header-transparrent">
+           <div class="headder-top header-sticky">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 col-md-2">
+                            <!-- Logo -->
+                            <div class="logo">
+                                <a  href="../../view/backoffice/pages/gestion_des_articles.php"><img width="200" height="150" src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt=""></a>
+                            </div>  
+                        </div>
+                        <div class="col-lg-9 col-md-9">
+                            <div class="menu-wrapper">
+                                <!-- Main-menu -->
+                                <div class="main-menu">
+                                    <nav class="d-none d-lg-block">
+                                        <ul id="navigation">
+                                            <li><a href="index.php">Accueil</a></li>
+                                            <li><a href="commandes.php">Services</a></li>
+                                            <li><a href="contact.php">Réclamations</a></li>
+                                            <li><a href="blog.php">Articles</a>
+                                           
+                                                <!--<ul class="submenu">
+                                                    <li><a href="blog.php">Articles</a></li>
+                                                    <li><a href="single-blog.php">Blog Details</a></li>
+                                                    <li><a href="elements.html">Elements</a></li>
+                                                    <li><a href="commandes.html">Les commandes</a></li>
+                                                </ul>-->
+                                            </li>
+                                            <li><a href="quickchat.php">QuickChat</a></li>
+                                            <li><a href="../../view/entretien/entretien.html">Entretien</a></li>
+
+
+
+
+                                            
+                                            <?php if ($showUpdateAccountButton): ?>
+                                                <li><a href="updateUser.php">Update Account</a></li>
+                                            <?php endif; ?>
+
+                                            <?php if ($showGoToBackofficeButton): ?>
+                                                <li><a href="../../view/backoffice/pages/dashboard.php">Go to backoffice</a></li>
+                                            <?php endif; ?>
+
+                                            
+                                        </ul>
+                                        
+                                    </nav>
+                                </div>          
+                                <!-- Header-btn -->
+                                <?php if (!$showUpdateAccountButton): ?>
+            <div class="header-btn d-none f-right d-lg-block">
+                <a href="../../view/User/user.html" class="btn head-btn1">SignUp/SignIn</a>
+            </div>
+        <?php endif; ?>
+
+
+                                <?php if ($showUpdateAccountButton): ?>
+                                    <li><a  href="../../controller/User/logout.php" class="logout">
+                            <i class="fas fa-sign-out-alt fa-icons"></i> Log out
+                        </a></li>
+                       
+                        <?php endif; ?>
+                            </div>
+                        </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+           </div>
+       </div>
       <!-- Header End -->
   </header>
    <!-- Hero Area Start-->
@@ -362,8 +406,8 @@ $list2 = ($previousArticleId !== false) ? $ArticleC->listArticles1($previousArti
                      <li><a href="https://www.facebook.com/sharer/sharer.php?u=http://google.com" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
 
                          <li><a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a></li>
-    <li><a href="https://twitter.com/intent/tweet?url=http://localhost/ProjetWebQH/view/frontoffice/single-blog.php?id0=<?= $Article['id_a'] ?>&text=<?= $Article['titre_a'] ?> par <?= $Article['auteur_a'] ?>" target="_blank"><i class="fab fa-twitter"></i></a></li>
-    <li><a href="https://www.linkedin.com/sharing/share-offsite/?url=http://localhost/ProjetWebQH/view/frontoffice/single-blog.php?id0=<?= $Article['id_a'] ?>&title=<?= urlencode($Article['titre_a']) ?>&summary=<?= urlencode($Article['contenu_a']) ?>" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+    <li><a href="https://twitter.com/intent/tweet?url=http://localhost/projet web integration/view/frontoffice/single-blog.php?id0=<?= $Article['id_a'] ?>&text=<?= $Article['titre_a'] ?> par <?= $Article['auteur_a'] ?>" target="_blank"><i class="fab fa-twitter"></i></a></li>
+    <li><a href="https://www.linkedin.com/sharing/share-offsite/?url=http://localhost/projet web integration/view/frontoffice/single-blog.php?id0=<?= $Article['id_a'] ?>&title=<?= urlencode($Article['titre_a']) ?>&summary=<?= urlencode($Article['contenu_a']) ?>" target="_blank"><i class="fab fa-linkedin"></i></a></li>
 </ul>
 
 

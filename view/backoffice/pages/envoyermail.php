@@ -2,12 +2,12 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-include "C:/xampp/htdocs/ProjetWebQH/controller/AbonnementController.php";
+include "C:/xampp/htdocs/projet web integration/controller/AbonnementController.php";
 
 // Inclusion des fichiers nécessaires pour PHPMailer
-require 'C:/xampp/htdocs/ProjetWebQH/view/frontoffice/src/PHPMailer.php';
-require 'C:/xampp/htdocs/ProjetWebQH/view/frontoffice/src/SMTP.php';
-require 'C:/xampp/htdocs/ProjetWebQH/view/frontoffice/src/Exception.php';
+require 'C:/xampp/htdocs/projet web integration/view/frontoffice/src/PHPMailer.php';
+require 'C:/xampp/htdocs/projet web integration/view/frontoffice/src/SMTP.php';
+require 'C:/xampp/htdocs/projet web integration/view/frontoffice/src/Exception.php';
 
 // Récupération des données du formulaire
 $sujet = $_POST['titres69'];

@@ -1,7 +1,7 @@
 <?php
 
 
-include "C:/xampp/htdocs/ProjetWebQH/controller/CommentaireController.php";
+include "C:/xampp/htdocs/projet web integration/controller/CommentaireController.php";
 
 $id5 = $_GET["id011"];
 $commentaireC=new CommentaireController();

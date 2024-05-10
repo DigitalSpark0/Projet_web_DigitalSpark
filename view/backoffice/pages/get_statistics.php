@@ -1,7 +1,7 @@
 <?php
 
-include "C:/xampp/htdocs/ProjetWebQH/config.php";
-include "C:/xampp/htdocs/ProjetWebQH/controller/ArticleController.php";
+include "C:/xampp/htdocs/projet web integration/config.php";
+include "C:/xampp/htdocs/projet web integration/controller/ArticleController.php";
 
 
 $articleController = new ArticleController();

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once 'C:/xampp/htdocs/ProjetWebQH/config.php';
+require_once 'C:/xampp/htdocs/projet web integration/config.php';
 require_once '../../controller/User/user.php';
 require_once '../../model/userC.php';
 require_once '../../controller/User/verifyEmail.php';

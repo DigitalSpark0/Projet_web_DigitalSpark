@@ -1,12 +1,19 @@
 <?php
+session_start();
+$showUpdateAccountButton = isset($_SESSION['user_id']);
+$showGoToBackofficeButton = $showUpdateAccountButton; // Le bouton "Go to backoffice" s'affichera également si l'utilisateur est connecté
+
+// Vérifier si l'utilisateur est admin ou recruteur
+$role_id = 0; // Remplacez cela par le code pour récupérer le rôle de l'utilisateur depuis la base de données
+$is_admin_or_recruteur = ($role_id === 1 || $role_id === 2);
 /////////////////////////////////////////////////////
 if (!class_exists('config')) {
-    include "C:/xampp/htdocs/ProjetWebQH/config.php";
+    include "C:/xampp/htdocs/projet web integration/config.php";
  }
  
-include "C:/xampp/htdocs/ProjetWebQH/controller/ArticleController.php";
-include "C:/xampp/htdocs/ProjetWebQH/controller/CommentaireController.php";
-session_start();
+include "C:/xampp/htdocs/projet web integration/controller/ArticleController.php";
+include "C:/xampp/htdocs/projet web integration/controller/CommentaireController.php";
+
  $EmailU = isset($_SESSION["username"])?$_SESSION["username"]:'erreur';
 $db = config::getConnexion();
 $ArticleC = new ArticleController();
@@ -69,6 +76,17 @@ $articlesToShow = array_slice($filteredArticles, $startIndex, $articlesPerPage);
     height: auto; 
 }
 
+.logout {
+            color: #f44336;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .logout:hover {
+            color: #4caf50;
+        }
+    
+
 </style>
 <head>
     <meta charset="utf-8">
@@ -110,13 +128,13 @@ $articlesToShow = array_slice($filteredArticles, $startIndex, $articlesPerPage);
     <header>
         <!-- Header Start -->
         <div class="header-area header-transparrent">
-            <div class="headder-top header-sticky">
+           <div class="headder-top header-sticky">
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                            <a  href="index.php"><img width="200" height="150" src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt=""></a>
+                                <a  href="../../view/backoffice/pages/gestion_des_articles.php"><img width="200" height="150" src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt=""></a>
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -126,9 +144,10 @@ $articlesToShow = array_slice($filteredArticles, $startIndex, $articlesPerPage);
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
                                             <li><a href="index.php">Accueil</a></li>
-                                            <li><a href="job_listing.html">Services</a></li>
-                                            <li><a href="about.html">Réclamations</a></li>
+                                            <li><a href="commandes.php">Services</a></li>
+                                            <li><a href="contact.php">Réclamations</a></li>
                                             <li><a href="blog.php">Articles</a>
+                                           
                                                 <!--<ul class="submenu">
                                                     <li><a href="blog.php">Articles</a></li>
                                                     <li><a href="single-blog.php">Blog Details</a></li>
@@ -136,15 +155,40 @@ $articlesToShow = array_slice($filteredArticles, $startIndex, $articlesPerPage);
                                                     <li><a href="commandes.html">Les commandes</a></li>
                                                 </ul>-->
                                             </li>
-                                            <li><a href="contact.php">QuickChat</a></li>
+                                            <li><a href="quickchat.php">QuickChat</a></li>
+                                            <li><a href="../../view/entretien/entretien.html">Entretien</a></li>
+
+
+
+
+                                            
+                                            <?php if ($showUpdateAccountButton): ?>
+                                                <li><a href="updateUser.php">Update Account</a></li>
+                                            <?php endif; ?>
+
+                                            <?php if ($showGoToBackofficeButton): ?>
+                                                <li><a href="../../view/backoffice/pages/dashboard.php">Go to backoffice</a></li>
+                                            <?php endif; ?>
+
+                                            
                                         </ul>
+                                        
                                     </nav>
                                 </div>          
                                 <!-- Header-btn -->
-                                <div class="header-btn d-none f-right d-lg-block">
-                                    <a href="#" class="btn head-btn1">Register</a>
-                                    <a href="../../view/backoffice/pages/gestion_des_articles.php" class="btn head-btn2">Login</a>
-                                </div>
+                                <?php if (!$showUpdateAccountButton): ?>
+            <div class="header-btn d-none f-right d-lg-block">
+                <a href="../../view/User/user.html" class="btn head-btn1">SignUp/SignIn</a>
+            </div>
+        <?php endif; ?>
+
+
+                                <?php if ($showUpdateAccountButton): ?>
+                                    <li><a  href="../../controller/User/logout.php" class="logout">
+                            <i class="fas fa-sign-out-alt fa-icons"></i> Log out
+                        </a></li>
+                       
+                        <?php endif; ?>
                             </div>
                         </div>
                         <!-- Mobile Menu -->
@@ -153,8 +197,8 @@ $articlesToShow = array_slice($filteredArticles, $startIndex, $articlesPerPage);
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+           </div>
+       </div>
         <!-- Header End -->
     </header>
     <!-- Hero Area Start-->

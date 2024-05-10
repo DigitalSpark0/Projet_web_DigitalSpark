@@ -1,9 +1,9 @@
 <?php
 if (!class_exists('config')) {
-    include "C:/xampp/htdocs/ProjetWebQH/config.php";
+    include "C:/xampp/htdocs/projet web integration/config.php";
  }
 
-include "C:/xampp/htdocs/ProjetWebQH/model/Article.php";
+include "C:/xampp/htdocs/projet web integration/model/Article.php";
 
 class ArticleController
 {

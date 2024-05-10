@@ -7,6 +7,18 @@
     // Vérifier si l'utilisateur est admin ou recruteur
     $role_id = 0; // Remplacez cela par le code pour récupérer le rôle de l'utilisateur depuis la base de données
     $is_admin_or_recruteur = ($role_id === 1 || $role_id === 2);
+    if (!class_exists('config')) {
+        include "C:/xampp/htdocs/projet web integration/config.php";
+     }
+     include "C:/xampp/htdocs/projet web integration/controller/ServiceController.php";
+     include "C:/xampp/htdocs/projet web integration/controller/CommandeController.php";
+    
+    
+    $db=config::getConnexion(); 
+    $serv = new ServiceController(); 
+    $com = new CommandeController();
+    $list =$serv->listServices();
+    $lista =$com->listcommande();
 ?>
 
 <!doctype html>
@@ -77,8 +89,8 @@
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
                                             <li><a href="index.php">Accueil</a></li>
-                                            <li><a href="job_listing.html">Services</a></li>
-                                            <li><a href="about.html">Réclamations</a></li>
+                                            <li><a href="commandes.php">Services</a></li>
+                                            <li><a href="contact.php">Réclamations</a></li>
                                             <li><a href="blog.php">Articles</a>
                                            
                                                 <!--<ul class="submenu">
@@ -88,7 +100,7 @@
                                                     <li><a href="commandes.html">Les commandes</a></li>
                                                 </ul>-->
                                             </li>
-                                            <li><a href="contact.php">QuickChat</a></li>
+                                            <li><a href="quickchat.php">QuickChat</a></li>
                                             <li><a href="../../view/entretien/entretien.html">Entretien</a></li>
 
 
@@ -325,93 +337,75 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-tittle text-center">
-                            <span>Recent Job</span>
-                            <h2>Featured Jobs</h2>
+                            <span>QUICKHIRE</span>
+                            <h2>Les services</h2>
+                            <a href="chatbot.php" class="lien">Talk to QuickBot</a>
+                            <style>
+                               .lien {
+    color: blue; /* Couleur du texte */
+    text-decoration: none; /* Supprime le soulignement par défaut */
+    position: relative; /* Position relative pour les animations absolues */
+}
+
+.lien::after {
+    content: ''; /* Ajoute un contenu après le lien */
+    position: absolute; /* Position absolue pour permettre le positionnement */
+    top: -5px; /* Ajustement pour que la bordure soit à l'extérieur du lien */
+    left: -5px; /* Ajustement pour que la bordure soit à l'extérieur du lien */
+    width: calc(100% + 10px); /* Largeur avec ajustement pour que la bordure soit plus grande */
+    height: calc(100% + 10px); /* Hauteur avec ajustement pour que la bordure soit plus grande */
+    border: 4px solid transparent; /* Bordure initialement transparente */
+    border-radius: 8px; /* Coins arrondis */
+    animation: bordureClignotante 1s infinite alternate; /* Animation de la bordure */
+}
+
+@keyframes bordureClignotante {
+    from {
+        border-color: transparent; /* Couleur de la bordure transparente */
+    }
+    to {
+        border-color: blue; /* Couleur de la bordure bleue */
+    }
+}
+
+
+
+                            </style>
                         </div>
                     </div>
+                    <form  action="pageajout.php"  >
+                        <button  class="btn bg-gradient-dark mb-0" type="submit">ajouter un service</button>
+                    </form>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-xl-10">
                         <!-- single-job-content -->
+                        <?php foreach ($list as $service){ ?>
                         <div class="single-job-items mb-30">
                             <div class="job-items">
                                 <div class="company-img">
                                     <a href="commandes.html"><img src="assets/img/icon/job-list1.png" alt=""></a>
                                 </div>
                                 <div class="job-tittle">
-                                    <a href="commandes.html"><h4>Digital Marketer</h4></a>
+                                    <a href="commandes.html"><h4><?= $service['titre_s'];?></h4></a>
                                     <ul>
-                                        <li>Creative Agency</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        <li>$3500 - $4000</li>
+                                        <li><?= $service['statut_s'];?></li>
+                                        <li><?= $service['categorie_s'];?> </li>
+                                        <li><?= $service['prix_s'];?>DT</li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="items-link f-right">
-                                <a href="commandes.html">Full Time</a>
-                                <span>7 hours ago</span>
+                                <a href="commandes.php">afficher tous les informations</a>
+                                <a class="" href="updateservice.php?idd=<?php echo $service['ids']; ?>">Update</a>
+                                <a class="" href="deleteservice.php?id=<?php echo $service['titre_s']; ?>">Delete</a>
+                                 
                             </div>
                         </div>
-                        <!-- single-job-content -->
-                        <div class="single-job-items mb-30">
-                            <div class="job-items">
-                                <div class="company-img">
-                                    <a href="commandes.html"><img src="assets/img/icon/job-list2.png" alt=""></a>
-                                </div>
-                                <div class="job-tittle">
-                                    <a href="commandes.html"><h4>Digital Marketer</h4></a>
-                                    <ul>
-                                        <li>Creative Agency</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        <li>$3500 - $4000</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="items-link f-right">
-                                <a href="commandes.html">Full Time</a>
-                                <span>7 hours ago</span>
-                            </div>
+                        <?php } ?>
+                        
                         </div>
-                         <!-- single-job-content -->
-                        <div class="single-job-items mb-30">
-                            <div class="job-items">
-                                <div class="company-img">
-                                    <a href="commandes.html"><img src="assets/img/icon/job-list3.png" alt=""></a>
-                                </div>
-                                <div class="job-tittle">
-                                    <a href="commandes.html"><h4>Digital Marketer</h4></a>
-                                    <ul>
-                                        <li>Creative Agency</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        <li>$3500 - $4000</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="items-link f-right">
-                                <a href="commandes.html">Full Time</a>
-                                <span>7 hours ago</span>
-                            </div>
-                        </div>
-                         <!-- single-job-content -->
-                        <div class="single-job-items mb-30">
-                            <div class="job-items">
-                                <div class="company-img">
-                                    <a href="commandes.html"><img src="assets/img/icon/job-list4.png" alt=""></a>
-                                </div>
-                                <div class="job-tittle">
-                                    <a href="commandes.html"><h4>Digital Marketer</h4></a>
-                                    <ul>
-                                        <li>Creative Agency</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        <li>$3500 - $4000</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="items-link f-right">
-                                <a href="commandes.html">Full Time</a>
-                                <span>7 hours ago</span>
-                            </div>
-                        </div>
+                         
                     </div>
                 </div>
             </div>

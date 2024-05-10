@@ -4,9 +4,9 @@
 // Assurez-vous que le fichier est inclus et que la session est démarrée
 session_start();
 session_start();
-include_once "C:/xampp/htdocs/projetWeb/database/connect.php";
-include_once "C:/xampp/htdocs/projetWeb/controller/User/user.php";
-include_once "C:/xampp/htdocs/projetWeb/model/User/userC.php";
+include_once "C:/xampp/htdocs/projet web integration/config.php";
+include_once "C:/xampp/htdocs/projet web integration/controller/User/user.php";
+include_once "C:/xampp/htdocs/projet web integration/model/userC.php";
 
 // Vérifiez si les données du formulaire sont soumises via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $controller->updateUser($id_utilisateur, $prenom, $nom, $email, $role);
 
     // Redirigez l'utilisateur vers la page appropriée après la mise à jour
-    header("Location: dashboard_recruteur.php");
+    header("Location: tablesR.php");
     exit;
 } else {
     // Si les données ne sont pas soumises via POST, redirigez l'utilisateur vers une page d'erreur ou une autre page appropriée

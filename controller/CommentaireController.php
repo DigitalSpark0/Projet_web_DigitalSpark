@@ -1,10 +1,10 @@
 <?php
 
 if (!class_exists('config')) {
-    include "C:/xampp/htdocs/ProjetWebQH/config.php";
+    include "C:/xampp/htdocs/projet web integration/config.php";
  }
 
-include "C:/xampp/htdocs/ProjetWebQH/model/Commentaire.php";
+include "C:/xampp/htdocs/projet web integration/model/Commentaire.php";
 class CommentaireController
 {
     public function addCommentaire($Commentaire)

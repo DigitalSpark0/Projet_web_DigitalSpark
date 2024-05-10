@@ -1,5 +1,5 @@
 <?php
-require_once "C:/xampp/htdocs/ProjetWebQH/controller/User/user.php";
+require_once "C:/xampp/htdocs/projet web integration/controller/User/user.php";
 $controller = new userCRUD();
 $userList = $controller->listUsers();
 ?>
@@ -196,7 +196,7 @@ $userList = $controller->listUsers();
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/gestion_des_services.html">
+          <a class="nav-link text-white " href="../pages/gestion_des_services.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">receipt_long</i>
             </div>
@@ -243,7 +243,7 @@ $userList = $controller->listUsers();
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">login</i>
             </div>
-            <span class="nav-link-text ms-1">FrontOffice</span>
+            <span class="nav-link-text ms-1">Allez au FrontOffice</span>
           </a>
         </li>
         

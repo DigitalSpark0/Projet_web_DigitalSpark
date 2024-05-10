@@ -3,9 +3,9 @@
 <?php
 // Assurez-vous que le fichier est inclus et que la session est démarrée
 session_start();
-include_once "C:/xampp/htdocs/projetWeb/database/connect.php";
-include_once "C:/xampp/htdocs/projetWeb/controller/User/user.php";
-include_once "C:/xampp/htdocs/projetWeb/model/User/userC.php";
+include_once "C:/xampp/htdocs/projet web integration/config.php";
+include_once "C:/xampp/htdocs/projet web integration/controller/User/user.php";
+include_once "C:/xampp/htdocs/projet web integration/model/userC.php";
 
 // Vérifiez si les données du formulaire sont soumises via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

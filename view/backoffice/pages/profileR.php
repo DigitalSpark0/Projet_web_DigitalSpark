@@ -1,8 +1,8 @@
 <!--<?php
 // Inclure le fichier de connexion à la base de données et les fonctions nécessaires
-include_once "C:/xampp/htdocs/ProjetWebQH/config.php";
-include_once "C:/xampp/htdocs/ProjetWebQH/controller/User/user.php";
-include_once "C:/xampp/htdocs/ProjetWebQH/model/userC.php";
+include_once "C:/xampp/htdocs/projet web integration/config.php";
+include_once "C:/xampp/htdocs/projet web integration/controller/User/user.php";
+include_once "C:/xampp/htdocs/projet web integration/model/userC.php";
 
 // Vérifier si l'utilisateur est connecté
 session_start();
@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
         <img src="../assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold text-white">Material Dashboard 2</span>
+        <span class="ms-1 font-weight-bold text-white">QuickHire.tn</span>
       </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
-            <span class="nav-link-text ms-1">Dashboard</span>
+            <span class="nav-link-text ms-1">Tableau de bord</span>
           </a>
         </li>
         <li class="nav-item">
@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
-            <span class="nav-link-text ms-1">Users</span>
+            <span class="nav-link-text ms-1">Utilisateurs</span>
           </a>
         </li>
         
@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
        
         
         <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
+          <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Mon compte</h6>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white active bg-gradient-primary" href="../pages/profileR.php">
@@ -124,6 +124,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <span class="nav-link-text ms-1">Profile</span>
           </a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white active bg-gradient-primary" href="../../frontoffice/index.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">person</i>
+            </div>
+            <span class="nav-link-text ms-1">Allez au FrontOffice</span>
+          </a>
+        </li>
         
         <li class="nav-item">
         
@@ -131,11 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </li>
       </ul>
     </div>
-    <div class="sidenav-footer position-absolute w-100 bottom-0 ">
-      <div class="mx-3">
-        <a class="btn bg-gradient-primary mt-4 w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
-      </div>
-    </div>
+    
   </aside>
   <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
     <!-- Navbar -->
@@ -196,11 +201,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
           <div class="container">
         <div class="button-group">
-            <a href="C:/xampp/htdocs/projetWeb/view/frontoffice/index.php" class="home-btn"><i class="fas fa-home"></i> Accueil</a>
+            <a href="C:/xampp/htdocs/projet web integration/view/frontoffice/index.php" class="home-btn"><i class="fas fa-home"></i> Accueil</a>
             <?php if ($userInfo['Role'] == 1 || $userInfo['Role'] == 2) { ?>
-                <a href="C:/xampp/htdocs/projetWeb/view/backoffice/pages/dashboardR.php" class="home-btn"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="C:/xampp/htdocs/projet web integration/view/backoffice/pages/dashboardR.php" class="home-btn"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             <?php } else { ?>
-                <a href="C:/xampp/htdocs/projetWeb/view/frontoffice/index.php" class="home-btn"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="C:/xampp/htdocs/projet web integration/view/frontoffice/index.php" class="home-btn"><i class="fas fa-home"></i> Dashboard</a>
             <?php } ?>
         </div>
         <h1>Modifier mon compte</h1>

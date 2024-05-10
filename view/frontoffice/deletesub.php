@@ -3,10 +3,10 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Inclusion des fichiers PHPMailer et la configuration nécessaire
-include "C:/xampp/htdocs/ProjetWebQH/controller/AbonnementController.php";
-require 'C:/xampp/htdocs/ProjetWebQH/view/frontoffice/src/PHPMailer.php';
-require 'C:/xampp/htdocs/ProjetWebQH/view/frontoffice/src/SMTP.php';
-require 'C:/xampp/htdocs/ProjetWebQH/view/frontoffice/src/Exception.php';
+include "C:/xampp/htdocs/projet web integration/controller/AbonnementController.php";
+require 'C:/xampp/htdocs/projet web integration/view/frontoffice/src/PHPMailer.php';
+require 'C:/xampp/htdocs/projet web integration/view/frontoffice/src/SMTP.php';
+require 'C:/xampp/htdocs/projet web integration/view/frontoffice/src/Exception.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupération de l'adresse e-mail saisie dans le formulaire

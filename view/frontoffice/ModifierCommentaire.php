@@ -1,5 +1,5 @@
 <?php
-include "C:/xampp/htdocs/ProjetWebQH/controller/CommentaireController.php";
+include "C:/xampp/htdocs/projet web integration/controller/CommentaireController.php";
 
 $id4 = isset($_POST["id010"])?$_POST["id010"]:'erreur';
 $id3 = isset($_POST["idh"])?$_POST["idh"]:'erreur';

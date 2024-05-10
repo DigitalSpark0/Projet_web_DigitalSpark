@@ -1,3 +1,17 @@
+<?php 
+
+session_start();
+    $showUpdateAccountButton = isset($_SESSION['user_id']);
+    $showGoToBackofficeButton = $showUpdateAccountButton; // Le bouton "Go to backoffice" s'affichera également si l'utilisateur est connecté
+
+    // Vérifier si l'utilisateur est admin ou recruteur
+    $role_id = 0; // Remplacez cela par le code pour récupérer le rôle de l'utilisateur depuis la base de données
+    $is_admin_or_recruteur = ($role_id === 1 || $role_id === 2);
+
+
+?>
+
+
 <!doctype html>
 <html class="no-js" lang="zxx">
 <style>
@@ -22,11 +36,21 @@ textarea.form-control:focus {
     outline: none; /* Supprimer le contour */
     border-color: #66afe9; /* Couleur de la bordure lorsqu'il est en focus */
 }
+
+.logout {
+            color: #f44336;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .logout:hover {
+            color: #4caf50;
+        }
     </style>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-     <title>QuickChat</title>
+     <title>Réclamations</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/image_2024-03-10_171426764-removebg-preview.png">
@@ -62,14 +86,14 @@ textarea.form-control:focus {
     <!-- Preloader Start -->
     <header>
         <!-- Header Start -->
-       <div class="header-area header-transparrent">
+        <div class="header-area header-transparrent">
            <div class="headder-top header-sticky">
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                            <a  href="index.php"><img width="200" height="150" src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt=""></a>
+                                <a  href="../../view/backoffice/pages/gestion_des_articles.php"><img width="200" height="150" src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt=""></a>
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -79,25 +103,51 @@ textarea.form-control:focus {
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
                                             <li><a href="index.php">Accueil</a></li>
-                                            <li><a href="job_listing.html">Services</a></li>
-                                            <li><a href="about.html">Réclamations</a></li>
+                                            <li><a href="commandes.php">Services</a></li>
+                                            <li><a href="contact.php">Réclamations</a></li>
                                             <li><a href="blog.php">Articles</a>
+                                           
                                                 <!--<ul class="submenu">
                                                     <li><a href="blog.php">Articles</a></li>
                                                     <li><a href="single-blog.php">Blog Details</a></li>
-                                                    <li><a href="elements.html">Abassi Fedi 2A24</a></li>
+                                                    <li><a href="elements.html">Elements</a></li>
                                                     <li><a href="commandes.html">Les commandes</a></li>
                                                 </ul>-->
                                             </li>
-                                            <li><a href="contact.php">QuickChat</a></li>
+                                            <li><a href="quickchat.php">QuickChat</a></li>
+                                            <li><a href="../../view/entretien/entretien.html">Entretien</a></li>
+
+
+
+
+                                            
+                                            <?php if ($showUpdateAccountButton): ?>
+                                                <li><a href="updateUser.php">Update Account</a></li>
+                                            <?php endif; ?>
+
+                                            <?php if ($showGoToBackofficeButton): ?>
+                                                <li><a href="../../view/backoffice/pages/dashboard.php">Go to backoffice</a></li>
+                                            <?php endif; ?>
+
+                                            
                                         </ul>
+                                        
                                     </nav>
                                 </div>          
                                 <!-- Header-btn -->
-                                <div class="header-btn d-none f-right d-lg-block">
-                                    <a href="#" class="btn head-btn1">Register</a>
-                                    <a href="../../view/backoffice/pages/gestion_des_articles.php" class="btn head-btn2">Login</a>
-                                </div>
+                                <?php if (!$showUpdateAccountButton): ?>
+            <div class="header-btn d-none f-right d-lg-block">
+                <a href="../../view/User/user.html" class="btn head-btn1">SignUp/SignIn</a>
+            </div>
+        <?php endif; ?>
+
+
+                                <?php if ($showUpdateAccountButton): ?>
+                                    <li><a  href="../../controller/User/logout.php" class="logout">
+                            <i class="fas fa-sign-out-alt fa-icons"></i> Log out
+                        </a></li>
+                       
+                        <?php endif; ?>
                             </div>
                         </div>
                         <!-- Mobile Menu -->
@@ -117,7 +167,7 @@ textarea.form-control:focus {
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="hero-cap text-center">
-                            <h2>Discutez avec QuickChat !</h2>
+                            <h2>Lina tekber w taatina <3</h2>
                         </div>
                     </div>
                 </div>
@@ -127,76 +177,21 @@ textarea.form-control:focus {
         <!-- Hero Area End -->
     <!-- ================ contact section start ================= -->
 
-    <?php
+    
 
-function callOpenAI($message){
-// Si le formulaire est soumis
-/*if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupérer la question de l'utilisateur depuis la requête POST
-    $question = $_POST['subject'];*/
 
-    // Appeler l'API de ChatGPT pour obtenir une réponse
-    $apiKey = 'LL-teiXZMs5cK8QmPMy2scT5cszUAJV7ph8eCAXCLpgruVCqJ7gSqkHiqJu7ZgoinOM'; 
-    $endpoint = 'https://api.llama-api.com/chat/completions';
-    $data = array(
-        'model' => 'codellama-7b-instruct', 
-        'messages' => array(
-            array('role' => 'system', 'content' => 'You:'),
-            array('role' => 'user', 'content' => $message),
-        ),
-        'max_tokens' => 100,
-        'temperature' => 0.7
-    );
-    $headers = array(
-"Content-Type: application/json",
-"Authorization: Bearer ".$apiKey
-
-    );
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $endpoint);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    $response = curl_exec($ch);
-    curl_close($ch);
-    return $response;
-    /*$options = array(
-        'http' => array(
-            'header'  => "Content-Type: application/json\r\nAuthorization: Bearer " . $apiKey,
-            'method'  => 'POST',
-            'content' => json_encode($data),
-        ),
-    );
-    $context  = stream_context_create($options);
-    $result = file_get_contents($endpoint, false, $context);
-    $response = json_decode($result, true);
-    $answer = $response['choices'][0]['message']['content'];
-
-    // Afficher la réponse de ChatGPT
-    echo '<script>document.getElementById("message").value = "' . $answer . '";</script>';*/
-}
-if(isset($_POST['message']) && isset($_POST['ok'])){
-    $message = $_POST['message'];
-    $response = callOpenAI($message);
-    $data = json_decode($response, true);
-    echo '<textarea class="form-control w-100" name="message" id="message" cols="30" rows="7">' . htmlspecialchars($data['choices'][0]['message']['content']) . '</textarea>';
-
-}
-
-?>
 
 
 
     <section class="contact-section">
-            <div class="container">
+            <!--<div class="container">
                
     
                 <div class="row">
                     <div class="col-12">
                         <h2 class="contact-title">Demandez-moi n'importe quoi ! Je suis là pour vous aider à booster votre carrière !</h2>
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-8">-->
     <!--<form class="form-contact contact_form" method="post" id="chatForm" novalidate="novalidate">
         <div class="row">
             <div class="col-12">
@@ -214,12 +209,12 @@ if(isset($_POST['message']) && isset($_POST['ok'])){
             <button type="button" id="sendButton" class="button button-contactForm boxed-btn">Send</button>
         </div>
     </form>-->
-    <form class="form-contact contact_form" method="POST">
+    <!--<form class="form-contact contact_form" method="POST">
         <input class="form-control" type="text" name="message" placeholder="entrez un message">
         <br>
         <input class="button button-contactForm boxed-btn" type="submit" name="ok" value="Envoyer">
         
-</div>
+</div>-->
 
 <!--<div class="col-12">
     <br>
@@ -243,10 +238,10 @@ $(document).ready(function(){
         });
     });
 });
-</script>-->
+</script>
                     
                 </div>
-            </div>
+            </div>-->
         </section>
     <!-- ================ contact section end ================= -->
     <footer>

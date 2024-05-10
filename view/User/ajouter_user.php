@@ -1,6 +1,6 @@
 <?php
 
-include "C:/xampp/htdocs/ProjetWebQH/controller/User/user.php";
+include "C:/xampp/htdocs/projet web integration/controller/User/user.php";
 
 // Récupérer les données du formulaire
 $prenom = isset($_POST["prenoms"]) ? $_POST["prenoms"] : 'erreur';

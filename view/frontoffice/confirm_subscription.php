@@ -3,10 +3,10 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Inclusion des classes PHPMailer
-include "C:/xampp/htdocs/ProjetWebQH/controller/AbonnementController.php";
-require 'C:/xampp/htdocs/ProjetWebQH/view/frontoffice/src/PHPMailer.php';
-require 'C:/xampp/htdocs/ProjetWebQH/view/frontoffice/src/SMTP.php';
-require 'C:/xampp/htdocs/ProjetWebQH/view/frontoffice/src/Exception.php';
+include "C:/xampp/htdocs/projet web integration/controller/AbonnementController.php";
+require 'C:/xampp/htdocs/projet web integration/view/frontoffice/src/PHPMailer.php';
+require 'C:/xampp/htdocs/projet web integration/view/frontoffice/src/SMTP.php';
+require 'C:/xampp/htdocs/projet web integration/view/frontoffice/src/Exception.php';
 
 // Création d'une nouvelle instance de PHPMailer
 $mail = new PHPMailer(true); 

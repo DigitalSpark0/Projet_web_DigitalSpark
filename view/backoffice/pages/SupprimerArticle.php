@@ -1,6 +1,6 @@
 <?php
 
-include "C:/xampp/htdocs/ProjetWebQH/controller/ArticleController.php";
+include "C:/xampp/htdocs/projet web integration/controller/ArticleController.php";
 
 
 $articleC=new ArticleController();
