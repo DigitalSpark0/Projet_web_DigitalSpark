@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 } else {
     // Rediriger l'utilisateur vers une page d'erreur si les données du formulaire n'ont pas été soumises via POST
-    header("Location: tables.php");
+    header("Location: tables0.php");
     exit;
 }
 ?>

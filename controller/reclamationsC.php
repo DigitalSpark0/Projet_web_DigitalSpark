@@ -1,8 +1,8 @@
 <?php
-include "C:/xampp/htdocs/GestionDesReclamation/model/reclamationsM.php";
-include "C:/xampp/htdocs/GestionDesReclamation/model/userC.PHP";
+include "C:/xampp/htdocs/projet web integration/model/reclamationsM.php";
+include "C:/xampp/htdocs/projet web integration/model/userC.php";
 
-require_once "C:/xampp/htdocs/GestionDesReclamation/view/config.php";
+require_once "C:/xampp/htdocs/projet web integration/config.php";
 
 class reclamationsC
 {
@@ -69,7 +69,7 @@ class reclamationsC
     }
     
     /////////////////////////////////////////////
-    public function addreclamation($reclamation)
+    public function addreclamation($reclamation, $user_id)
 {
     $pdo = config::getConnexion();
     try {
@@ -78,19 +78,17 @@ class reclamationsC
             VALUES (:sujet, :description, :idu)"
         );
 
-        // Récupérer l'ID de l'utilisateur manuellement ajouté
-        $idu = 1; // Remplacez 1 par l'ID de l'utilisateur que vous avez ajouté manuellement
-
         $query->execute([
             'sujet' => $reclamation->getsujet(),
             'description' => $reclamation->getdescription(),
-            'idu' => $idu,
+            'idu' => $user_id, // Utiliser l'user_id passé en paramètre
         ]);
 
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
 }
+
     ///////////////////////////////////////////////
     public function update($idr3,$sujet3,$description3,$dater3)
     {

@@ -1,5 +1,5 @@
 <?php
-include "../../controller/reclamationsC.php";
+include "C:/xampp/htdocs/projet web integration/controller/reclamationsC.php";
 
 
 $employeC=new reclamationsC();

@@ -1,7 +1,7 @@
 
 <?php
-include "../../controller/reponsesC.php";
-include "../../controller/reclamationsC.php";
+include "C:/xampp/htdocs/projet web integration/controller/reponsesC.php";
+include "C:/xampp/htdocs/projet web integration/controller/reclamationsC.php";
 
 
 // Initialisez la variable $listReponses en tant que tableau vide

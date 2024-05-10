@@ -1,18 +1,60 @@
-<?php
-include "../../controller/reclamationsC.php";
+<?php 
+include "C:/xampp/htdocs/projet web integration/controller/reclamationsC.php";
+session_start();
+    $showUpdateAccountButton = isset($_SESSION['user_id']);
+    $showGoToBackofficeButton = $showUpdateAccountButton; // Le bouton "Go to backoffice" s'affichera également si l'utilisateur est connecté
+
+    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+    // Vérifier si l'utilisateur est admin ou recruteur
+    $role_id = 0; // Remplacez cela par le code pour récupérer le rôle de l'utilisateur depuis la base de données
+    $is_admin_or_recruteur = ($role_id === 1 || $role_id === 2);
+
 
 ?>
 
+
 <!doctype html>
 <html class="no-js" lang="zxx">
+<style>
 
+textarea.form-control {
+    border: 1px solid #ccc; /* Bordure */
+    border-radius: 5px; /* Coins arrondis */
+    padding: 10px; /* Espace intérieur */
+    font-size: 16px; /* Taille de la police */
+    resize: none; /* Empêcher le redimensionnement */
+    background-color: #f8f9fa; /* Couleur de fond */
+    color: #333; /* Couleur du texte */
+}
+
+/* Style pour le placeholder */
+textarea.form-control::placeholder {
+    color: #999; /* Couleur du placeholder */
+}
+
+/* Style pour le focus */
+textarea.form-control:focus {
+    outline: none; /* Supprimer le contour */
+    border-color: #66afe9; /* Couleur de la bordure lorsqu'il est en focus */
+}
+
+.logout {
+            color: #f44336;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .logout:hover {
+            color: #4caf50;
+        }
+    </style>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-     <title>Job board HTML-5 Template </title>
+     <title>Réclamations</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/image_2024-03-10_171426764-removebg-preview.png">
 
    <!-- CSS here -->
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -37,7 +79,7 @@ include "../../controller/reclamationsC.php";
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/logo.png" alt="">
+                <img src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt="">
                 </div>
             </div>
         </div>
@@ -45,14 +87,14 @@ include "../../controller/reclamationsC.php";
     <!-- Preloader Start -->
     <header>
         <!-- Header Start -->
-       <div class="header-area header-transparrent">
+        <div class="header-area header-transparrent">
            <div class="headder-top header-sticky">
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a  href="../../view/backoffice/pages/gestion_des_articles.php"><img width="200" height="150" src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt=""></a>
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -61,46 +103,64 @@ include "../../controller/reclamationsC.php";
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="job_listing.html">Find a Jobs </a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="#">Page</a>
-                                                <ul class="submenu">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="single-blog.html">Blog Details</a></li>
+                                            <li><a href="index.php">Accueil</a></li>
+                                            <li><a href="commandes.php">Services</a></li>
+                                            <li><a href="contact.php">Réclamations</a></li>
+                                            <li><a href="blog.php">Articles</a>
+                                           
+                                                <!--<ul class="submenu">
+                                                    <li><a href="blog.php">Articles</a></li>
+                                                    <li><a href="single-blog.php">Blog Details</a></li>
                                                     <li><a href="elements.html">Elements</a></li>
-                                                    <li><a href="job_details.html">job Details</a></li>
-                                                </ul>
+                                                    <li><a href="commandes.html">Les commandes</a></li>
+                                                </ul>-->
                                             </li>
-                                            <li><a href="contact.html">Contact</a></li>
-         <div> 
-          <a class="custom-link" href ="http://localhost/GestionDesReclamation/view/Backoffice/pages/tables.php">to the Back office</a>
-        </div>
-        <style>
-a.custom-link {
-    position: relative; /* Définir la position relative pour pouvoir utiliser top et left */
-    top: 50%; /* Déplacer le lien vers le bas de 50% de la hauteur de son conteneur */
-    left: 50%; /* Déplacer le lien vers la droite de 50% de la largeur de son conteneur */
-    transform: translate(-50%, -50%); /* Déplacer le lien de moitié de sa propre largeur et hauteur vers le haut et la gauche pour le centrer */
-    color: black; /* Couleur du texte */
-    text-decoration: none; /* Supprimer le soulignement par défaut */
-    font-weight: bold; /* Gras */
-    padding: 10px 20px; /* Ajouter de l'espace autour du texte */
-    border: 2px #FB246A; /* Bordure noire */
-    border-radius: 10px; /* Bordure arrondie */
-    background-color: whitesmoke; /* Fond rose */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Ombre */
-    transition: all 0.3s ease; /* Transition fluide pour l'effet hover */
-}
+                                            <li><a href="quickchat.php">QuickChat</a></li>
+                                            <li><a href="../../view/entretien/entretien.html">Entretien</a></li>
 
-/* Style du lien lorsqu'il est survolé */
-a.custom-link:hover {
-    background-color: whitesmoke; /* Changement de couleur de fond au survol */
-    color: #FB246A; /* Changement de couleur de texte au survol */
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7); /* Ombre plus prononcée au survol */
-}
 
-      </style>
+
+
+                                            
+                                            <?php if ($showUpdateAccountButton): ?>
+                                                <li><a href="updateUser.php">Update Account</a></li>
+                                            <?php endif; ?>
+
+                                            <?php if ($showGoToBackofficeButton): ?>
+                                                <li><a href="../../view/backoffice/pages/dashboard.php">Go to backoffice</a></li>
+                                            <?php endif; ?>
+
+                                            
+                                        </ul>
+                                        
+                                    </nav>
+                                </div>          
+                                <!-- Header-btn -->
+                                <?php if (!$showUpdateAccountButton): ?>
+            <div class="header-btn d-none f-right d-lg-block">
+                <a href="../../view/User/user.html" class="btn head-btn1">SignUp/SignIn</a>
+            </div>
+        <?php endif; ?>
+
+
+                                <?php if ($showUpdateAccountButton): ?>
+                                    <li><a  href="../../controller/User/logout.php" class="logout">
+                            <i class="fas fa-sign-out-alt fa-icons"></i> Log out
+                        </a></li>
+                       
+                        <?php endif; ?>
+                            </div>
+                        </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+           </div>
+       </div>
+        <!-- Header End -->
+
       
                                         </ul>
                                     </nav>
@@ -135,7 +195,7 @@ a.custom-link:hover {
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="hero-cap text-center">
-                            <h2>Contact us</h2>
+                            <h2>Reclamation<3</h2>
                         </div>
                     </div>
                 </div>
@@ -144,7 +204,8 @@ a.custom-link:hover {
     </div>
         <!-- Hero Area End -->
     <!-- ================ contact section start ================= -->
-    
+
+
     <section class="contact-section text-center">
     <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -185,9 +246,9 @@ a.custom-link:hover {
             </form>
         </div>
     </div>
-</section>
 
-<script>
+        </section>
+        <script>
     function validateForm() {
         var sujet = document.getElementById("sujet").value;
         var description = document.getElementById("description").value;
@@ -222,8 +283,8 @@ a.custom-link:hover {
         return true; // Soumission du formulaire si la validation réussit
     }
 </script>
-
     <!-- ================ contact section end ================= -->
+
     <footer>
         <!-- Footer Start-->
         <div class="footer-area footer-bg footer-padding">
@@ -304,7 +365,7 @@ a.custom-link:hover {
                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                           <!-- logo -->
                           <div class="footer-logo mb-20">
-                            <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                            <a href="index.php"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
                           </div>
                        </div>
                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
@@ -396,4 +457,3 @@ a.custom-link:hover {
     </body>
     
     </html>
-    

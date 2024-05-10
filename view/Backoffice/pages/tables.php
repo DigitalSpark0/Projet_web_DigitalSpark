@@ -1,19 +1,7 @@
-
 <?php
-include "../../../controller/reponsesC.php";
-include "../../../controller/reclamationsC.php";
-
-
-$reclamationC = new reclamationsC();
-$list = $reclamationC->listereclamation();
-
-$reponseC = new reponsesC();
-$listReponses= $reponseC->listereponses();
-
-$reclamationController = new reclamationsC();
-$notifications = $reclamationController->getNotifications();
-
-
+require_once "C:/xampp/htdocs/projet web integration/controller/User/user.php";
+$controller = new userCRUD();
+$userList = $controller->listUsers();
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +13,7 @@ $notifications = $reclamationController->getNotifications();
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Material Dashboard 2 by Creative Tim
+    Utilisateurs
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -41,17 +29,162 @@ $notifications = $reclamationController->getNotifications();
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
-  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+
+<!-- Bootstrap JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+<!-- JavaScript pour la validation du formulaire et la bascule de la visibilité du mot de passe -->
+
+<script>
+    function toggleUpdateForm(userId) {
+        var formRow = document.getElementById('updateFormRow_' + userId);
+        if (formRow) {
+            formRow.style.display = (formRow.style.display === 'none' || formRow.style.display === '') ? 'table-row' : 'none';
+        }
+    }
+
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("Password");
+        var toggleIcon = document.getElementById("togglePassword");
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleIcon.classList.remove("fa-eye");
+            toggleIcon.classList.add("fa-eye-slash");
+        } else {
+            passwordInput.type = "password";
+            toggleIcon.classList.remove("fa-eye-slash");
+            toggleIcon.classList.add("fa-eye");
+        }
+    }
+
+    function validateForm() {
+        // Ajoutez votre logique de validation ici
+        return true; // Retourne true si le formulaire est valide, sinon retourne false
+    }
+
+    function toggleSearchInput() {
+        var input = document.querySelector('.search-input');
+        input.classList.toggle('show-input');
+
+        if (input.classList.contains('show-input')) {
+            input.focus();
+        } else {
+            input.value = '';
+            search();
+        }
+    }
+
+    function search() {
+        var searchBar = document.querySelector('.search-input');
+        var filter = searchBar.value.toUpperCase();
+        var table = document.querySelector('.table');
+        var tr = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < tr.length; i++) {
+            var td = tr[i].getElementsByTagName("td");
+
+            var rowText = "";
+            for (var j = 1; j < td.length; j++) {
+                rowText += td[j].textContent || td[j].innerText;
+            }
+
+            if (rowText.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+
+    function toggleSortMenu() {
+        var sortOptions = document.getElementById('sortOptions');
+        if (sortOptions.style.display === 'block') {
+            sortOptions.style.display = 'none';
+        } else {
+            sortOptions.style.display = 'block';
+        }
+    }
+
+    function sortByID() {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.querySelector('.table');
+        switching = true;
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("td")[0];
+                y = rows[i + 1].getElementsByTagName("td")[0];
+
+                if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+
+    function sortByFirstName() {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.querySelector('.table');
+        switching = true;
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("td")[1];
+                y = rows[i + 1].getElementsByTagName("td")[1];
+
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+
+    function togglePopup() {
+        var popup = document.getElementById('popup');
+        popup.classList.toggle('show');
+    }
+
     
+</script>
+
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
+        <img src="../assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
+        <span class="ms-1 font-weight-bold text-white">QuickHire</span>
+      </a>
+    </div>
     <hr class="horizontal light mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/dashboard.html">
+          <a class="nav-link text-white " href="../pages/dashboard.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
-            <span class="nav-link-text ms-1">Dashboard</span>
+            <span class="nav-link-text ms-1">Tableau de bord</span>
           </a>
         </li>
         <li class="nav-item">
@@ -59,7 +192,58 @@ $notifications = $reclamationController->getNotifications();
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
-            <span class="nav-link-text ms-1">Reclamations</span>
+            <span class="nav-link-text ms-1">Utilisateurs</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="../pages/gestion_des_services.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">receipt_long</i>
+            </div>
+            <span class="nav-link-text ms-1">Services</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="../pages/virtual-reality.html">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">view_in_ar</i>
+            </div>
+            <span class="nav-link-text ms-1">Réclamations</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="../pages/rtl.html">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
+            </div>
+            <span class="nav-link-text ms-1">Projets</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="../pages/gestion_des_articles.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">notifications</i>
+            </div>
+            <span class="nav-link-text ms-1">Articles</span>
+          </a>
+        </li>
+        <li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Mon compte</h6>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="../pages/profile.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">person</i>
+            </div>
+            <span class="nav-link-text ms-1">Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="../../frontoffice/index.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">login</i>
+            </div>
+            <span class="nav-link-text ms-1">Allez au FrontOffice</span>
           </a>
         </li>
         
@@ -68,276 +252,171 @@ $notifications = $reclamationController->getNotifications();
     
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-
-
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
-    <div class="container-fluid py-1 px-3">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Reclamations</li>
-        </ol>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Gestion des utilisateurs</li>
+          </ol>
+          <h6 class="font-weight-bolder mb-0">Utilisateurs</h6>
+        </nav>
+      </div>
     </nav>
-    <div style="margin-right: 100px;">
-        <a class="custom-link" href="http://localhost/GestionDesReclamation/view/Frontoffice/contact.php"> Front office → </a>
-    </div>
-</div>
-
-        <style>
-a.custom-link {
-    position: relative; /* Définir la position relative pour pouvoir utiliser top et left */
-    top: 50%; /* Déplacer le lien vers le bas de 50% de la hauteur de son conteneur */
-    left: 50%; /* Déplacer le lien vers la droite de 50% de la largeur de son conteneur */
-    transform: translate(-50%, -50%); /* Déplacer le lien de moitié de sa propre largeur et hauteur vers le haut et la gauche pour le centrer */
-    color: black; /* Couleur du texte */
-    text-decoration: none; /* Supprimer le soulignement par défaut */
-    font-weight: bold; /* Gras */
-    padding: 10px 20px; /* Ajouter de l'espace autour du texte */
-    border: 2px #FB246A; /* Bordure noire */
-    border-radius: 10px; /* Bordure arrondie */
-    background-color: whitesmoke; /* Fond rose */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Ombre */
-    transition: all 0.3s ease; /* Transition fluide pour l'effet hover */
-}
-
-/* Style du lien lorsqu'il est survolé */
-a.custom-link:hover {
-    background-color: whitesmoke; /* Changement de couleur de fond au survol */
-    color: #FB246A; /* Changement de couleur de texte au survol */
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7); /* Ombre plus prononcée au survol */
-}
-      </style>
-            
-<div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-    <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-        <div class="input-group input-group-outline">
-            <label class="form-label">Recherche par ID</label>
-            <input type="text" id="searchInput" class="form-control">
-        </div>
-    </div>  
-</div>
-
-
-<ul class="navbar-nav justify-content-end">
-  <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                        <div class="sidenav-toggler-inner">
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
-                        </div>
-                    </a>
-                </li>
-                <li class="nav-item px-3 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-body p-0">
-                        <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
-                    </a>
-                </li>
-                <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-bell cursor-pointer"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                        <!-- Affichage des notifications -->
-                        <?php
-                        // Parcours des notifications et affichage
-                        foreach ($notifications as $notification) {
-                            ?>
-                            <li class="mb-2">
-                            <a class="dropdown-item border-radius-md" href="javascript:;" data-idreclamation="<?= $notification['id_reclamation']; ?>">
-
-                                    <div class="d-flex py-1">
-                                    
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="text-sm font-weight-normal mb-1">
-                                                <span class="font-weight-bold">Nouvelle réclamation</span> de l'utilisateur: <?php echo $notification['id_utilisateur']; ?>- Réclamation ID: <?= $notification['id_reclamation']; ?>
-
-                                            </h6>
-                                            <p class="text-xs text-secondary mb-0">
-                                                <i class="fa fa-clock me-1"></i>
-                                                <?php echo $notification['time_elapsed']; ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <?php
-                        }
-                        ?>
-                        <!-- Fin de l'affichage des notifications -->
-                    </ul>
-                </li>
-            </ul>
-      
-</nav>
-
     <!-- End Navbar -->
     <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-12">
-          <div class="card my-4">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-              <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Tableau des reclamations</h6>
-              </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Les Utilisateurs</h4>
+                </div>
+                <div class="search-container">
+                        <i class="fas fa-search fa-icons"></i> <input type="text" class="search-input" id="searchInput"
+                            placeholder="Search..." oninput="search()">
+      </div>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#addUserModal"><i class="fas fa-plus fa-icons"></i> Add User</button>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>prenom</th>
+                                    <th>nom</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($userList as $user) : ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($user['prenom']) ?></td>
+                                        <td><?= htmlspecialchars($user['nom']) ?></td>
+                                        <td><?= htmlspecialchars($user['Email']) ?></td>
+                                        <td>
+                                            <?php
+                                            switch ($user['Role']) {
+                                                case 1:
+                                                    echo "Admin";
+                                                    break;
+                                                case 2:
+                                                    echo "Recruteur";
+                                                    break;
+                                                case 3:
+                                                    echo "Etudiant";
+                                                    break;
+                                                case 4:
+                                                    echo "Freelance";
+                                                    break;
+                                            }
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <a href='deleteUserA.php?id_utilisateur=<?= $user['id_utilisateur'] ?>' class='btn btn-outline-danger'><i class="fas fa-trash fa-icons"></i> Delete</a>
+                                            <button class="btn btn-outline-primary" onclick="toggleUpdateForm(<?= $user['id_utilisateur'] ?>)"><i class="fas fa-edit fa-icons"></i> Update</button>
+                                        </td>
+                                    </tr>
+                                    <tr id="updateFormRow_<?= $user['id_utilisateur'] ?>" style="display: none;">
+                                        <td colspan="5">
+                                            <!-- Formulaire de mise à jour de l'utilisateur -->
+                                            <form action="updateUserA.php" method="POST">
+                                                <input type="hidden" name="id_utilisateur" value="<?= $user['id_utilisateur'] ?>">
+                                                <input type="text" name="prenom" value="<?= htmlspecialchars($user['prenom']) ?>" readonly>
+                                                <input type="text" name="nom" value="<?= htmlspecialchars($user['nom']) ?>" readonly>
+                                                <input type="email" name="Email" value="<?= htmlspecialchars($user['Email']) ?>" readonly>
+                                                <div style="display: flex; justify-content: space-between;">
+                                                    <select name="Role">
+                                                        <option value="1" <?= $user['Role'] == 1 ? 'selected' : '' ?>>Admin</option>
+                                                        <option value="2" <?= $user['Role'] == 2 ? 'selected' : '' ?>>Recruteur</option>
+                                                        <option value="3" <?= $user['Role'] == 3 ? 'selected' : '' ?>>Etudiant</option>
+                                                        <option value="4" <?= $user['Role'] == 4 ? 'selected' : '' ?>>Freelance</option>
+                                                    </select>
+                                                    <div>
+                                                        <button type="submit" class="btn btn-success"><i class="fas fa-save fa-icons"></i> Save</button>
+                                                        <button type="button" class="btn btn-danger" onclick="toggleUpdateForm(<?= $user['id_utilisateur'] ?>)"><i class="fas fa-times fa-icons"></i> Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </td>
+                                        
+                                    </tr>
+                                    
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div class="card-body px-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                <thead>
-    <tr>
-   
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">ID Reclamation</th>
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">ID Utilisateur</th>
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">Sujet</th>
-        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
-        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
-        <th class="text-secondary opacity-7"></th>
-        <th class="text-secondary opacity-7"></th>
-    </tr>
-</thead>
-<tbody>
-    <?php foreach ($list as $reclamationC) { ?>
-        <tr>
+            <div style="float: right; margin-right: 10px;">
+    <!-- Bouton pour générer le PDF -->
+<form method="POST" action="generatepdf.php" style="display: inline-block; margin-right: 10px;">
+    <input type="hidden" name="type" value="pdf">
+    <button type="submit" class="btn btn-primary"><i class="fas fa-file-pdf fa-icons"></i> Generate PDF</button>
+</form>
+<!-- Lien vers la page de statistiques -->
+<a href="./statistique.php" class="btn btn-info" style="background-color: #007bff;"><i class="fas fa-chart-bar fa-icons"></i> Statistique</a>
 
-            <td class="text-center">
-                <div class="d-flex px-2 py-1">
-                    <div></div>
-                    <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm"><?= $reclamationC['idr']; ?></h6>
-                    </div>
-                </div>
-            </td>
-            <td class="text-center">
-                <div class="d-flex px-2 py-1">
-                    <div></div>
-                    <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm"><?= $reclamationC['idu']; ?></h6>
-                    </div>
-                </div>
-            </td>
-            <td class="text-center">
-                <p class="text-xs font-weight-bold mb-0"><?= $reclamationC['sujet']; ?></p>
-            </td>
-            <td class="align-middle text-center text-sm">
-                <span class="text-xs font-weight-bold mb-0"><?= $reclamationC['description']; ?></span>
-            </td>
-            <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold"><?= $reclamationC['dater']; ?></span>
-            </td>
-            <td class="text-center">
-                <!-- Bouton "Répondre" -->
-                <form method="POST" action="repondre.php">
-                    <input type="hidden" name="id_reclamation" value="<?= $reclamationC['idr']; ?>">
-                    <button type="submit" class="btn btn-primary">Répondre</button>
-                </form>
-            </td>
-            <!-- Bouton "Consulter les réponses" -->
-            <td class="text-center">
-                <a href="tables1.php?idr=<?= $reclamationC['idr']; ?>" class="btn btn-primary">Consulter les réponses</a>
-            </td>
-        </tr>
-    <?php } ?>
-</tbody>
-
-
-
-
+        </section>
+        <!-- Ajoutez cette section à votre code HTML -->
        
 
-                </table>
-              </div>
+ <!-- Modal pour ajouter un utilisateur -->
+ <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="user" action="ajouter_user.php" method="post" class="text-center" onsubmit="return validateForm()">
+                            <div class="form-group">
+                                <label for="prenom">Prenom:</label>
+                                <input type="text" id="prenom" name="prenoms" required>
+                                <span class="error-message" id="prenom-error"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="nom">Nom:</label>
+                                <input type="text" id="nom" name="noms" required>
+                                <span class="error-message" id="nom-error"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="Email">Email:</label>
+                                <input type="text" id="Email" name="Emails" required>
+                                <span class="error-message" id="email-error"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="Password">Password:</label>
+                                <input type="password" id="Password" name="Passwords" required>
+                                <span class="error-message" id="password-error"></span>
+                                <span class="password-toggle" onclick="togglePasswordVisibility()">
+                                    <i class="fas fa-eye fa-icons" id="togglePassword"></i>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label for="Role">Role:</label>
+                                <select class="signup-form-elements" name="Role" id="Role" required>
+                                    <option value="" selected disabled>Choose role</option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Recruteur</option>
+                                    <option value="3">Etudiant</option>
+                                    <option value="4">Freelance</option>
+                                </select>
+                                <span class="error-message" id="role-error"></span>
+                            </div>
+                            <button class="btn btn-success" type="submit"><i class="fas fa-check fa-icons"></i> valider</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times fa-icons"></i> Cancel</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <footer class="footer py-4  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-               
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
+   
   </main>
-  <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-      <i class="material-icons py-2">settings</i>
-    </a>
-    <div class="card shadow-lg">
-      <div class="card-header pb-0 pt-3">
-        <div class="float-start">
-          <h5 class="mt-3 mb-0">Material UI Configurator</h5>
-          <p>See our dashboard options.</p>
-        </div>
-        <div class="float-end mt-4">
-          <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
-            <i class="material-icons">clear</i>
-          </button>
-        </div>
-        <!-- End Toggle Button -->
-      </div>
-      <hr class="horizontal dark my-1">
-      <div class="card-body pt-sm-3 pt-0">
-        <!-- Sidebar Backgrounds -->
-        <div>
-          <h6 class="mb-0">Sidebar Colors</h6>
-        </div>
-        <a href="javascript:void(0)" class="switch-trigger background-color">
-          <div class="badge-colors my-2 text-start">
-            <span class="badge filter bg-gradient-primary active" data-color="primary" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-success" data-color="success" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-warning" data-color="warning" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)"></span>
-          </div>
-        </a>
-        <!-- Sidenav Type -->
-        <div class="mt-3">
-          <h6 class="mb-0">Sidenav Type</h6>
-          <p class="text-sm">Choose between 2 different sidenav types.</p>
-        </div>
-        <div class="d-flex">
-          <button class="btn bg-gradient-dark px-3 mb-2 active" data-class="bg-gradient-dark" onclick="sidebarType(this)">Dark</button>
-          <button class="btn bg-gradient-dark px-3 mb-2 ms-2" data-class="bg-transparent" onclick="sidebarType(this)">Transparent</button>
-          <button class="btn bg-gradient-dark px-3 mb-2 ms-2" data-class="bg-white" onclick="sidebarType(this)">White</button>
-        </div>
-        <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
-        <!-- Navbar Fixed -->
-        <div class="mt-3 d-flex">
-          <h6 class="mb-0">Navbar Fixed</h6>
-          <div class="form-check form-switch ps-0 ms-auto my-auto">
-            <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
-          </div>
-        </div>
-        <hr class="horizontal dark my-3">
-        <div class="mt-2 d-flex">
-          <h6 class="mb-0">Light / Dark</h6>
-          <div class="form-check form-switch ps-0 ms-auto my-auto">
-            <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version" onclick="darkMode(this)">
-          </div>
-        </div>
-        <hr class="horizontal dark my-sm-4">
-        <a class="btn btn-outline-dark w-100" href="">View documentation</a>
-        <div class="w-100 text-center">
-          <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star creativetimofficial/material-dashboard on GitHub">Star</a>
-          <h6 class="mt-3">Thank you for sharing!</h6>
-          <a href="https://twitter.com/intent/tweet?text=Check%20Material%20UI%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fsoft-ui-dashboard" class="btn btn-dark mb-0 me-2" target="_blank">
-            <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
-          </a>
-          <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/material-dashboard" class="btn btn-dark mb-0 me-2" target="_blank">
-            <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+  
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
@@ -356,55 +435,6 @@ a.custom-link:hover {
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/material-dashboard.min.js?v=3.0.0"></script>
-
-
-  <script>
-    // Sélection de l'élément de saisie
-    const input = document.querySelector('.form-control');
-
-    // Sélection de tous les éléments de ligne du tableau
-    const rows = document.querySelectorAll('tbody tr');
-
-    // Ajout d'un écouteur d'événements pour le champ de saisie
-    input.addEventListener('input', function() {
-        const searchTerm = input.value.toLowerCase();
-
-        // Parcourir toutes les lignes du tableau
-        rows.forEach(row => {
-            const idReclamation = row.querySelector('.text-sm').textContent.toLowerCase();
-
-            // Vérifier si l'ID de réclamation contient le terme de recherche
-            if (idReclamation.includes(searchTerm)) {
-                // Afficher la ligne si elle correspond à la recherche
-                row.style.display = '';
-            } else {
-                // Masquer la ligne si elle ne correspond pas à la recherche
-                row.style.display = 'none';
-            }
-        });
-    });
-
-    // Sélection de tous les éléments de notification dans le dropdown menu
-    const notifications = document.querySelectorAll('.dropdown-menu .dropdown-item');
-
-    // Ajout d'un gestionnaire d'événements de clic à chaque notification
-    notifications.forEach(notification => {
-        notification.addEventListener('click', function() {
-            // Récupération de l'ID de la réclamation associée à la notification
-            const idReclamation = notification.getAttribute('data-idreclamation');
-
-            // Mettre l'ID de la réclamation dans le champ de recherche
-            input.value = idReclamation;
-
-            // Déclencher manuellement l'événement de saisie pour activer la fonction de recherche
-            input.dispatchEvent(new Event('input'));
-
-            // Déplacer le focus hors du champ de saisie pour éviter la superposition
-            input.blur();
-        });
-    });
-</script>
-
 </body>
 
 </html>

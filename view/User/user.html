@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css'>
+    <link rel="stylesheet" href="user.css">
+    <title>Welcome</title>
+    <script>
+        var captchaVerified = false;
+
+        function successCallBack(token) {
+            captchaVerified = true;
+            document.getElementById('captchaError').innerHTML = '';
+        }
+        function onLoadCallBack() {
+            grecaptcha.render('divRecaptcha', {
+                sitekey: '6Lc7XjEpAAAAALvcF8JdM3x2L8_i3ZlZNOvVn5xn',
+                callback: successCallBack,
+            })
+        }
+    </script>
+    
+    <script src="https://www.google.com/recaptcha/api.js?onload=onLoadCallBack&render=explicit" async defer></script>
+
+</head>
+
+<body>
+    <div class="notification" id="notification">
+    </div>
+    <div class="notification" id="Verification-message" style="display: none;">
+        <p>Your account registration is complete.
+            We've just sent a verification email to the address you provided.
+            Simply check your inbox and follow the instructions to activate your account.
+            If you don't see the email right away, kindly look in your spam or junk folder.</p>
+    </div>
+    <div class="container" id="container">
+
+        <div class="form-container sign-up-container">
+            <form action="../../controller/User/userCreate.php" method="post" id="signup-form">
+                <h1>Create Account</h1>
+                <div class="social-container">
+                    <a href="https://www.facebook.com/" class="social"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.google.tn" class="social"><i class="fab fa-google-plus-g"></i></a>
+                    <a href="https://www.linkedin.com" class="social"><i class="fab fa-linkedin-in"></i></a>
+                    
+                </div>
+                <input class="signup-form-elements" type="text" name="prenom" id="prenom"
+                    placeholder="First Name">
+                <span class="error-message" id="First_Name_error"></span>
+
+                <input class="signup-form-elements" type="text" name="nom" id="nom" placeholder="Last Name">
+                <span class="error-message" id="Last_Name_error"></span>
+
+                <input class="signup-form-elements" type="email" name="Email" id="Email" placeholder="Email">
+                <span class="error-message" id="Email_error"></span>
+
+       
+                <div class="password-container">
+                    <input class="signup-form-elements" type="password" name="Password" id="Password"
+                        placeholder="Password">
+                    <span class="password-toggle" onclick="togglePasswordVisibility()">
+                        <i class="fas fa-eye" id="togglePassword"></i>
+                    </span>
+                </div>
+                <span class="error-message" id="Password_error"></span>
+
+                <div class="select">
+                    <select class="signup-form-elements" name="Role" id="Role">
+                        <option selected disabled>Role</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Recruteur</option>
+                        <option value="3">Etudiant</option>
+                        <option value="4">Freelance</option>
+
+
+                    </select>
+                    <span class="error-message" id="Role_error"></span>
+                </div>
+
+                <div id="divRecaptcha" class="g-recaptcha"></div>
+                <span class="error-message" id="captchaError"></span>
+
+                <input type="submit" value="Sign up">
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form action="../../controller/User/login.php" method="post" id="signin-form">
+                <h1>Sign in</h1>
+                <div class="social-container">
+                    <a href="https://www.facebook.com/" class="social"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.google.tn" class="social"><i class="fab fa-google-plus-g"></i></a>
+                    <a href="https://www.linkedin.com" class="social"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+                <input type="email" name="Email" id="Email" placeholder="Email" />
+                <input type="password" name="Password" id="Password" placeholder="Password" />
+                <a onclick=" showForgotPasswordForm()" style="cursor: pointer;">Forgot your password?</a>
+                <button>Sign In</button>
+                <a href="../../view/frontoffice/index.php" class="btn btn-secondary">page d'accueil</a>
+            </form>
+        </div>
+        <div class="form-container forgot-password-container" style="display: none;">
+            <div class="back-to-login">
+                <a href="#" id="backToLogin">
+                    <i class="fas fa-arrow-left arrow-icon"></i>
+                </a>
+            </div>
+            <form action="../../controller/User/forgotPwd.php" method="post" id="forgot-password-form">
+                <h1>Forgot Password</h1>
+                <input type="email" name="mail" id="mail" placeholder="Email" />
+                <input type="submit" value="Reset Password">
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Welcome !</h1>
+                    <p>Get started by entering your details below. Let's begin this journey together!</p>
+                    <button class="ghost" id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.onload = function () {
+
+            const redirectHappened = localStorage.getItem('redirectHappened');
+
+            if (!redirectHappened) {
+                window.history.pushState({}, "", "C:/xampp/htdocs/projet web integration/view/User/user.html");
+                localStorage.setItem('redirectHappened', 'true');
+            } else {
+
+                localStorage.removeItem('redirectHappened');
+            }
+
+            const notification = document.querySelector('.notification');
+            const urlParams = new URLSearchParams(window.location.search);
+            const showVerifyMessageParam = urlParams.get('showVerifyMessage');
+            const verificationMessage = document.getElementById('Verification-message');
+
+            if (verificationMessage && showVerifyMessageParam === 'true') {
+                displayNotification(verificationMessage.textContent.trim(), '#b9deb9');
+            } else {
+                console.log('Verification message not found or showVerifyMessage is not true');
+            }
+
+        };
+
+
+        const signUpButton = document.getElementById('signUp');
+        const signInButton = document.getElementById('signIn');
+        const container = document.getElementById('container');
+        const hash = window.location.hash;
+
+        signUpButton.addEventListener('click', () => {
+            container.classList.add("right-panel-active");
+            document.querySelector('.sign-up-container').style.display = 'block';
+            document.querySelector('.forgot-password-container').style.display = 'none';
+        });
+
+        signInButton.addEventListener('click', () => {
+            container.classList.remove("right-panel-active");
+            document.querySelector('.sign-in-container').style.display = 'block';
+        });
+
+        if (hash === '#signin') {
+            container.classList.remove("right-panel-active");
+            document.querySelector('.sign-in-container').style.display = 'block';
+        } else if (hash === '#signup') {
+            container.classList.add("right-panel-active");
+        }
+
+        function showForgotPasswordForm() {
+            event.preventDefault();
+            document.querySelector('.sign-in-container').style.display = 'none';
+            document.querySelector('.sign-up-container').style.display = 'none';
+            document.querySelector('.forgot-password-container').style.display = 'block';
+        }
+
+
+        document.getElementById('backToLogin').addEventListener('click', function (event) {
+            event.preventDefault();
+            document.querySelector('.forgot-password-container').style.display = 'none';
+            document.querySelector('.sign-in-container').style.display = 'block';
+            document.querySelector('.sign-up-container').style.display = 'none';
+        });
+
+        document.getElementById('signup-form').addEventListener('submit', function (event) {
+            var hasErrors = false;
+
+            var firstName = document.getElementById('prenom').value;
+            var lastName = document.getElementById('nom').value;
+            var email = document.getElementById('Email').value;
+            var password = document.getElementById('Password').value;
+            var role = document.getElementById('Role').value;
+
+            if (!firstName) {
+                document.getElementById('First_Name_error').textContent = 'First Name is required.';
+                hasErrors = true;
+            }
+
+            if (!lastName) {
+                document.getElementById('Last_Name_error').textContent = 'Last Name is required.';
+                hasErrors = true;
+            }
+
+            var emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('Email_error').textContent = 'Please enter a valid email address.';
+                hasErrors = true;
+            }
+
+            var passwordRegex = /^(?=.*\d|.*\W)(?=.*[A-Z])(?=.*[a-z]).{8,}$/;
+            if (!passwordRegex.test(password)) {
+                document.getElementById('Password_error').textContent = 'Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.';
+                hasErrors = true;
+            }
+
+            if (password.length < 8) {
+                document.getElementById('Password_error').textContent = 'Password must be at least 8 characters long.';
+                hasErrors = true;
+            }
+
+           
+
+            
+
+            if (role === 'Role') {
+                document.getElementById('Role_error').textContent = 'Please select a role.';
+                hasErrors = true;
+            }
+
+            if (!captchaVerified) {
+                document.getElementById('captchaError').textContent = 'Please verify the reCAPTCHA before submitting the form.';
+                hasErrors = true;
+            }
+
+            if (hasErrors) {
+                event.preventDefault();
+            }
+        });
+
+
+        document.getElementById('forgot-password-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+
+            fetch('../../controller/User/forgotPwd.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(data => {
+                    displayNotification(data, '#b9deb9');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+
+        function displayNotification(message, color) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.backgroundColor = color;
+            notification.classList.add('show');
+        }
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById("Password");
+            var toggleIcon = document.getElementById("togglePassword");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
+            }
+        }
+
+    </script>
+</body>
+
+</html>

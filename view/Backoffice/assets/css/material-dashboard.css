@@ -4,6 +4,53 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+/*------------------------------------------------*/
+.col-6.d-flex.align-items-center {
+  justify-content: flex-start;
+}
+
+
+#service {
+  margin: 20px auto;
+  width: 90%;
+  padding: 20px;
+  border: 2px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#service section {
+  text-align: left;
+}
+
+#service section label {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #333;
+}
+
+#service section input[type="text"],
+#service textarea {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease;
+}
+
+#service section input[type="text"]:focus,
+#service textarea:focus {
+  border-color: #007bff;
+}
+
+
+/*--------------------------------------------------------*/
+
 :root {
   --bs-blue: #63B3ED;
   --bs-indigo: #596CFF;
@@ -95,7 +142,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   margin-bottom: 0.5rem;
   font-weight: 400;
   line-height: 1.2;
-  color: #344767; }
+  color: #a89d9d; }
 
 h1, .h1 {
   font-size: calc(1.425rem + 2.1vw); }
@@ -3803,13 +3850,30 @@ textarea.form-control-lg {
 .card-link + .card-link {
   margin-left: 1rem; }
 
+
+
+
+
 .card-header {
   padding: 0.5rem 1rem;
   margin-bottom: 0;
   background-color: #fff;
-  border-bottom: 0 solid rgba(0, 0, 0, 0.125); }
-  .card-header:first-child {
-    border-radius: 0.75rem 0.75rem 0 0; }
+  border-bottom: 0 solid rgba(0, 0, 0, 0.125);
+  text-align: left; 
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 .card-footer {
   padding: 0.5rem 1rem;
@@ -6454,8 +6518,16 @@ textarea.form-control-lg {
 .me-auto {
   margin-right: auto !important; }
 
+
+
+
+
+
 .mb-0 {
   margin-bottom: 0 !important; }
+
+
+
 
 .mb-1 {
   margin-bottom: 0.25rem !important; }

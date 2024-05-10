@@ -17,6 +17,6 @@ $content = isset($_POST["contenu"]) ? $_POST["contenu"] : 'erreur';
     
     // Appelez la fonction update avec les données postées
     $reponceC->update($_POST["idr3"], $content, $dater2);
-    header('Location: tables.php');
+    header('Location: tables0.php');
 
 ?>

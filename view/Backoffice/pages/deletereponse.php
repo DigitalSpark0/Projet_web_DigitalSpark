@@ -14,6 +14,6 @@ $reponseC = new reponsesC();
 $reponseC->deletereponse($_POST["idrep"]); // Supprimer la réponse en utilisant la méthode appropriée
 
 // Rediriger vers la page du tableau des réponses après la suppression
-header('Location: tables.php');
+header('Location: tables0.php');
 exit; // Arrêter l'exécution du script après la redirection
 ?>

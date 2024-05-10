@@ -1,6 +1,6 @@
 <?php
-include "C:/xampp/htdocs/GestionDesReclamation/model/reponsesM.php";
-require_once "C:/xampp/htdocs/GestionDesReclamation/view/config.php";
+include "C:/xampp/htdocs/projet web integration/model/reponsesM.php";
+require_once "C:/xampp/htdocs/projet web integration/config.php";
 
 class reponsesC
 {

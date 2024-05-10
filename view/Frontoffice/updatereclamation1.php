@@ -1,5 +1,5 @@
 <?php 
-include "../../controller/reclamationsC.php";
+include "C:/xampp/htdocs/projet web integration/controller/reclamationsC.php";
 $sujet2 = isset($_POST["sujet2"]) ?$_POST["sujet2"]:'erreur';
 $description2 = isset($_POST["description2"])?$_POST["description2"]:'erreur';
 $dater2 = isset($_POST["dater2"])?$_POST["dater2"]:'erreur';
