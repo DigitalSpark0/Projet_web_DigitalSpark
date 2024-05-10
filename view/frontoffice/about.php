@@ -47,7 +47,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/logo.png" alt="">
+                    <img src="assets/img/logo/digitalspark.png" alt="">
                 </div>
             </div>
         </div>
@@ -62,7 +62,7 @@
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a href="index.html"><img width="200" height="150" src="assets/img/logo/digitalspark.png" alt=""></a>
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -103,6 +103,9 @@
        </div>
         <!-- Header End -->
     </header>
+    <forum>
+      <a class="btn bg-gradient-dark mb-0" type="submit" href="C:/xampp/htdocs/project web (gestion services)/view/backoffice/pages/ajouter_project.php"><i class="material-icons text-sm"></i>Go to backoffice</a>
+    </forum>
     <main>
 
         <!-- Hero Area Start-->
@@ -152,7 +155,7 @@
         </div>
         <!-- Support Company End-->
         <!-- How  Apply Process Start-->
-        <div class="apply-process-area apply-bg pt-150 pb-150" data-background="assets/img/gallery/how-applybg.png">
+        <div class="apply-process-area apply-bg pt-150 pb-150">
             <div class="container">
                 <!-- Section Tittle -->
                 <div class="row">
@@ -343,7 +346,7 @@
     
         <!-- Blog Area Start -->
         <div class="home-blog-area blog-h-padding">
-            <div class="apply-process-area apply-bg pt-150 pb-150" data-background="assets/img/gallery/how-applybg.png">
+            <div class="apply-process-area apply-bg pt-150 pb-150">
             <div class="container">
                 <!-- Section Tittle -->
                 <div class="row">
@@ -538,7 +541,7 @@
                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                           <!-- logo -->
                           <div class="footer-logo mb-20">
-                            <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                            <a href="index.html"><img width="200" height="150" src="assets/img/logo/digitalspark.png" alt=""></a>
                           </div>
                        </div>
                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
