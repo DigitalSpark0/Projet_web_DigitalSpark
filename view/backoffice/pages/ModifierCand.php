@@ -21,7 +21,7 @@
     <div class="container">
         <h1 class="mb-4">Modifier Candidature</h1>
         <?php
-        require_once "C:/wamp64/www/Projet_web_DigitalSpark-gestion_des_offres/controller/candiController.php";
+        require_once "C:/xampp/htdocs/projet web integration/controller/candiController.php";
         
         // Initialisation des variables
         $id_candidature = $_GET["id_candidature"] ?? null;
@@ -35,7 +35,7 @@
         $candidature = [];
         
         // Récupère les données de la candidature à modifier
-        $candidature = $candiController->getCandidatureById($id_candidature, $id_offre);
+        $candidature = $candiController->getCandidatureById($id_candidature, $id_offre, null, null);
         
         // Vérifie si le formulaire a été soumis
         if ($_SERVER["REQUEST_METHOD"] === "POST") {

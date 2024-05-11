@@ -90,10 +90,57 @@
 </head>
 
 <body>
+    
     <div class="container">
-        <aside class="sidebar">
-            <!-- Sidebar content here -->
-        </aside>
+    <aside class="sidebar">
+    <!-- Sidebar content here -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link text-white active bg-gradient-primary" href="../../pages/dashboard.php">
+                <span class="nav-link-text ms-1">Tableau de bord</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white " href="../../backoffice/pages/tables.php">
+                <span class="nav-link-text ms-1">Utilisateurs</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white " href="../../backoffice/pages/gestion_des_services.php">
+                <span class="nav-link-text ms-1">Services</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white " href="../pages/tables0.php">
+                <span class="nav-link-text ms-1">Réclamations</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white " href="../pages/rtl.php">
+                <span class="nav-link-text ms-1">Offres</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white active bg-gradient-primary" href="../pages/gestion_des_articles.php">
+                <span class="nav-link-text ms-1">Articles</span>
+            </a>
+        </li>
+        <li class="nav-item mt-3">
+            <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Mon compte</h6>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white " href="../../backoffice/pages/profile.php">
+                <span class="nav-link-text ms-1">Profile</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white " href="../../frontoffice/index.php">
+                <span class="nav-link-text ms-1">Allez au Front Office</span>
+            </a>
+        </li>
+    </ul>
+</aside>
+
         <main class="main-content">
             <div class="row">
                 <div class="col-md-12 mb-lg-0 mb-4">
@@ -108,7 +155,7 @@
                         </div>
                         <div class="card-body p-3">
                             <!-- Formulaire d'ajout d'offre -->
-                            <form id="service" action="ajouter_service.php" method="post">
+                            <form id="service" action="ajouter_offre.php" method="post">
     <!-- Autres champs du formulaire -->
     <label for="titres">Titre:</label>
     <input type="text" id="titres" name="titres" required>

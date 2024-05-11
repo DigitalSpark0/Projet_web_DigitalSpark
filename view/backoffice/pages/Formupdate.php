@@ -23,7 +23,7 @@
     <div class="container">
         <h1 class="mb-4">Update Offre</h1>
         <?php
-        require_once "C:/wamp64/www/Projet_web_DigitalSpark-gestion_des_offres/controller/offreController.php";
+        require_once 'C:\xampp\htdocs\projet web integration\controller\offreController.php';
         // Initialisation des variables
         $id_offre = $_GET["id_offre"] ?? null;
         $error = "";
@@ -57,7 +57,7 @@
                     $offreController->updateoffre($offreData);
 
                     // Redirige vers la page de gestion des services
-                    header('Location: gestion_des_services.php');
+                    header('Location: rtl.php');
                     exit(); // Arrête l'exécution du script après la redirection
                 } else {
                     // Affiche un message d'erreur si des informations sont manquantes

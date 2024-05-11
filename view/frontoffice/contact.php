@@ -1,28 +1,75 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zxx">
+<?php 
+include "C:/xampp/htdocs/projet web integration/controller/reclamationsC.php";
+session_start();
+    $showUpdateAccountButton = isset($_SESSION['user_id']);
+    $showGoToBackofficeButton = $showUpdateAccountButton; // Le bouton "Go to backoffice" s'affichera également si l'utilisateur est connecté
 
+    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+    // Vérifier si l'utilisateur est admin ou recruteur
+    $role_id = 0; // Remplacez cela par le code pour récupérer le rôle de l'utilisateur depuis la base de données
+    $is_admin_or_recruteur = ($role_id === 1 || $role_id === 2);
+$EmailU = $_SESSION['username'];
+
+?>
+
+
+<!doctype html>
+<html class="no-js" lang="zxx">
+<style>
+
+textarea.form-control {
+    border: 1px solid #ccc; /* Bordure */
+    border-radius: 5px; /* Coins arrondis */
+    padding: 10px; /* Espace intérieur */
+    font-size: 16px; /* Taille de la police */
+    resize: none; /* Empêcher le redimensionnement */
+    background-color: #f8f9fa; /* Couleur de fond */
+    color: #333; /* Couleur du texte */
+}
+
+/* Style pour le placeholder */
+textarea.form-control::placeholder {
+    color: #999; /* Couleur du placeholder */
+}
+
+/* Style pour le focus */
+textarea.form-control:focus {
+    outline: none; /* Supprimer le contour */
+    border-color: #66afe9; /* Couleur de la bordure lorsqu'il est en focus */
+}
+
+.logout {
+            color: #f44336;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .logout:hover {
+            color: #4caf50;
+        }
+    </style>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Job board HTML-5 Template </title>
+     <title>Réclamations</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/image_2024-03-10_171426764-removebg-preview.png">
 
-    <!-- CSS here -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="assets/css/slicknav.css">
-    <link rel="stylesheet" href="assets/css/price_rangs.css">
-    <link rel="stylesheet" href="assets/css/animate.min.css">
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/css/themify-icons.css">
-    <link rel="stylesheet" href="assets/css/themify-icons.css">
-    <link rel="stylesheet" href="assets/css/slick.css">
-    <link rel="stylesheet" href="assets/css/nice-select.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+   <!-- CSS here -->
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="assets/css/slicknav.css">
+        <link rel="stylesheet" href="assets/css/price_rangs.css">
+        <link rel="stylesheet" href="assets/css/animate.min.css">
+        <link rel="stylesheet" href="assets/css/magnific-popup.css">
+        <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="assets/css/themify-icons.css">
+        <link rel="stylesheet" href="assets/css/themify-icons.css">
+        <link rel="stylesheet" href="assets/css/slick.css">
+        <link rel="stylesheet" href="assets/css/nice-select.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
 
 <body>
@@ -32,7 +79,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/logo.png" alt="">
+                <img src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt="">
                 </div>
             </div>
         </div>
@@ -41,14 +88,14 @@
     <header>
         <!-- Header Start -->
         <div class="header-area header-transparrent">
-            <div class="headder-top header-sticky">
+           <div class="headder-top header-sticky">
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
-                            </div>
+                                <a  href="../../view/backoffice/pages/gestion_des_articles.php"><img width="200" height="150" src="assets/img/image_2024-03-10_171426764-removebg-preview.png" alt=""></a>
+                            </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">
                             <div class="menu-wrapper">
@@ -56,26 +103,53 @@
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="job_listing.php">Find a Jobs </a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="#">Page</a>
-                                                <ul class="submenu">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="single-blog.html">Blog Details</a></li>
+                                            <li><a href="index.php">Accueil</a></li>
+                                            <li><a href="offre.php">Offres</a></li>
+                                            <li><a href="commandes.php">Services</a></li>
+                                            <li><a href="contact.php">Réclamations</a></li>
+                                            <li><a href="blog.php">Articles</a>
+                                           
+                                                <!--<ul class="submenu">
+                                                    <li><a href="blog.php">Articles</a></li>
+                                                    <li><a href="single-blog.php">Blog Details</a></li>
                                                     <li><a href="elements.html">Elements</a></li>
-                                                    <li><a href="commandes.html">Les candidatures</a></li>
-                                                </ul>
+                                                    <li><a href="commandes.html">Les commandes</a></li>
+                                                </ul>-->
                                             </li>
-                                            <li><a href="contact.php">Contact</a></li>
+                                            <li><a href="quickchat.php">QuickChat</a></li>
+                                            <li><a href="../../view/entretien/entretien.html">Entretien</a></li>
+
+
+
+
+                                            
+                                            <?php if ($showUpdateAccountButton): ?>
+                                                <li><a href="updateUser.php">Update Account</a></li>
+                                            <?php endif; ?>
+
+                                            <?php if ($showGoToBackofficeButton): ?>
+                                                <li><a href="../../view/backoffice/pages/dashboard.php">Go to backoffice</a></li>
+                                            <?php endif; ?>
+
+                                            
                                         </ul>
+                                        
                                     </nav>
-                                </div>
+                                </div>          
                                 <!-- Header-btn -->
-                                <div class="header-btn d-none f-right d-lg-block">
-                                    <a href="#" class="btn head-btn1">Register</a>
-                                    <a href="#" class="btn head-btn2">Login</a>
-                                </div>
+                                <?php if (!$showUpdateAccountButton): ?>
+            <div class="header-btn d-none f-right d-lg-block">
+                <a href="../../view/User/user.html" class="btn head-btn1">SignUp/SignIn</a>
+            </div>
+        <?php endif; ?>
+
+
+                                <?php if ($showUpdateAccountButton): ?>
+                                    <li><a  href="../../controller/User/logout.php" class="logout">
+                            <i class="fas fa-sign-out-alt fa-icons"></i> Log out
+                        </a></li>
+                       
+                        <?php endif; ?>
                             </div>
                         </div>
                         <!-- Mobile Menu -->
@@ -84,9 +158,36 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+           </div>
+       </div>
         <!-- Header End -->
+
+      
+                                        </ul>
+                                    </nav>
+                                </div>          
+                                <!-- Header-btn -->
+                               
+                            </div>
+                        </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+           </div>
+       </div>
+        <!-- Header End -->
+        <style>
+    .error-message {
+        color: red;
+    }
+
+    #description {
+        margin-top: 10px; /* Ajoute une marge entre la select box et la textarea */
+    }
+</style>
     </header>
     <!-- Hero Area Start-->
     <div class="slider-area ">
@@ -95,145 +196,265 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="hero-cap text-center">
-                            <h2>Contacter Nous</h2>
+                            <h2>Réclamation</h2>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Hero Area End -->
+        <!-- Hero Area End -->
     <!-- ================ contact section start ================= -->
 
-    <section class="contact-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="contact-title">Votre Candidature :</h2>
-                </div>
-            </div>
-            <form id="service" action="ajouter_cand.php" method="post" enctype="multipart/form-data">
+
+    <section class="contact-section text-center">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h2 class="contact-title"> Envoyez vos reclamations ici ! </h2>
+            <form action="contact1.php" method="POST" id="inscription" onsubmit="return validateForm()">
                 <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <input class="form-control valid" name="id_offre" id="id_offre" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'ID de l\'offre'" placeholder="ID de l'offre" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <input class="form-control valid" name="date_candidature" id="date_candidature" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Date de candidature'" placeholder="Date de candidature" required>
-                        </div>
-                    </div>
                     <div class="col-12">
                         <div class="form-group">
-                            <input class="form-control-file" name="cv" id="cv" type="file" accept=".pdf,.doc,.docx" required>
-                            <small class="form-text text-muted">Veuillez télécharger votre CV au format PDF ou Word.</small>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label for="disponibilite">Disponibilité :</label>
-                            <select class="form-control" id="disponibilite" name="disponibilite" required>
-                                <option value="">Sélectionnez votre disponibilité</option>
-                                <option value="temps_plein">Temps plein</option>
-                                <option value="temps_partiel">Temps partiel</option>
-                                <option value="flexible">Flexibilité des horaires</option>
-                                <option value="nuit">Travail de nuit</option>
-                                <option value="weekend">Week-ends seulement</option>
+                            <select class="description1 form-select" name="sujet1" id="sujet" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Subject'">
+                                <option value="" disabled selected>Select Subject</option>
+                                <option value="General Inquiry">General Inquiry</option>
+                                <option value="Technical Support">Technical Support</option>
+                                <option value="Billing Issue">Billing Issue</option>
+                                <!-- Ajoutez d'autres options au besoin -->
                             </select>
+                            <div id="sujet-error" class="error-message"></div>
+                        </div>  
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <textarea class="description1 w-100" name="description1" id="description" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" placeholder="Enter Message"></textarea>
+                            <div id="description-error" class="error-message"></div>
                         </div>
                     </div>
-                    <div class="form-group mt-3">
-                        <button type="submit" class="button button-contactForm boxed-btn">Ajouter</button>
-                    </div>
+                    <div class="col-12">
+                         <div class="form-group">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email Address" value="<?php echo $EmailU; ?>" readonly>
+                          <div id="email-error" class="error-message"></div>
+                         </div>
+                   </div>
+
+                </div>
+                <div class="form-group mt-3">
+                    <button type="submit" class="button button-contactForm boxed-btn">Send</button>
+                    <!-- Nouveau bouton pour consulter les réclamations -->
+                    <a href="listereclamation.php" class="button button-contactForm boxed-btn">View Your Claims</a>
                 </div>
             </form>
         </div>
-    </section>
+    </div>
 
-    <!-- Formulaire indépendant pour le QR code -->
-    <form action="../../controller/qrcode.php" method="get">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control me-3" id="qr" name="qr" placeholder="Entrez l'ID de la matière à scanner">
-                        <button type="submit" class="btn btn-success">QR CODE</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
+        </section>
+        <script>
+    function validateForm() {
+        var sujet = document.getElementById("sujet").value;
+        var description = document.getElementById("description").value;
+        var sujetError = document.getElementById("sujet-error");
+        var descriptionError = document.getElementById("description-error");
 
+        // Validation du sujet : vérifier s'il a sélectionné une option valide
+        if (sujet === null || sujet === "") {
+            sujetError.textContent = "Please select a subject.";
+            return false;
+        } else {
+            sujetError.textContent = ""; // Efface le message d'erreur s'il est affiché
+        }
+
+        // Validation de la description : vérifier si elle est vide
+        if (description.trim() === "") {
+            descriptionError.textContent = "Please enter a description.";
+            return false;
+        } else {
+            descriptionError.textContent = ""; // Efface le message d'erreur s'il est affiché
+        }
+
+        // Validation de la description : pas de gros mots
+        var descriptionRegex = /(fuck|bitch|kill)/i; 
+        if (description.match(descriptionRegex)) {
+            descriptionError.textContent = "The description cannot contain foul language.";
+            return false;
+        } else {
+            descriptionError.textContent = ""; // Efface le message d'erreur s'il est affiché
+        }
+
+        return true; // Soumission du formulaire si la validation réussit
+    }
+</script>
     <!-- ================ contact section end ================= -->
+
     <footer>
         <!-- Footer Start-->
+        <div class="footer-area footer-bg footer-padding">
+            <div class="container">
+                <div class="row d-flex justify-content-between">
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                       <div class="single-footer-caption mb-50">
+                         <div class="single-footer-caption mb-30">
+                             <div class="footer-tittle">
+                                 <h4>About Us</h4>
+                                 <div class="footer-pera">
+                                     <p>Heaven frucvitful doesn't cover lesser dvsays appear creeping seasons so behold.</p>
+                                </div>
+                             </div>
+                         </div>
+
+                       </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Contact Info</h4>
+                                <ul>
+                                    <li>
+                                    <p>Address :Your address goes
+                                        here, your demo address.</p>
+                                    </li>
+                                    <li><a href="#">Phone : +8880 44338899</a></li>
+                                    <li><a href="#">Email : info@colorlib.com</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Important Link</h4>
+                                <ul>
+                                    <li><a href="#"> View Project</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="#">Testimonial</a></li>
+                                    <li><a href="#">Proparties</a></li>
+                                    <li><a href="#">Support</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Newsletter</h4>
+                                <div class="footer-pera footer-pera2">
+                                 <p>Heaven fruitful doesn't over lesser in days. Appear creeping.</p>
+                             </div>
+                             <!-- Form -->
+                             <div class="footer-form" >
+                                 <div id="mc_embed_signup">
+                                     <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                                     method="get" class="subscribe_form relative mail_part">
+                                         <input type="email" name="email" id="newsletter-form-email" placeholder="Email Address"
+                                         class="placeholder hide-on-focus" onfocus="this.placeholder = ''"
+                                         onblur="this.placeholder = ' Email Address '">
+                                         <div class="form-icon">
+                                             <button type="submit" name="submit" id="newsletter-submit"
+                                             class="email_icon newsletter-submit button-contactForm"><img src="assets/img/icon/form.png" alt=""></button>
+                                         </div>
+                                         <div class="mt-10 info"></div>
+                                     </form>
+                                 </div>
+                             </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <!--  -->
+               <div class="row footer-wejed justify-content-between">
+                       <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                          <!-- logo -->
+                          <div class="footer-logo mb-20">
+                            <a href="index.php"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                          </div>
+                       </div>
+                       <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                        <div class="footer-tittle-bottom">
+                            <span>5000+</span>
+                            <p>Talented Hunter</p>
+                        </div>
+                       </div>
+                       <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                            <div class="footer-tittle-bottom">
+                                <span>451</span>
+                                <p>Talented Hunter</p>
+                            </div>
+                       </div>
+                       <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                            <!-- Footer Bottom Tittle -->
+                            <div class="footer-tittle-bottom">
+                                <span>568</span>
+                                <p>Talented Hunter</p>
+                            </div>
+                       </div>
+               </div>
+            </div>
+        </div>
+        <!-- footer-bottom area -->
         <div class="footer-bottom-area footer-bg">
             <div class="container">
                 <div class="footer-border">
-                    <div class="row d-flex justify-content-between align-items-center">
-                        <div class="col-xl-10 col-lg-10 ">
-                            <div class="footer-copy-right">
-                                <p>
-                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-2">
-                            <div class="footer-social f-right">
-                                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fas fa-globe"></i></a>
-                                <a href="#"><i class="fab fa-behance"></i></a>
-                            </div>
-                        </div>
-                    </div>
+                     <div class="row d-flex justify-content-between align-items-center">
+                         <div class="col-xl-10 col-lg-10 ">
+                             <div class="footer-copy-right">
+                                 <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                             </div>
+                         </div>
+                         <div class="col-xl-2 col-lg-2">
+                             <div class="footer-social f-right">
+                                 <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                 <a href="#"><i class="fab fa-twitter"></i></a>
+                                 <a href="#"><i class="fas fa-globe"></i></a>
+                                 <a href="#"><i class="fab fa-behance"></i></a>
+                             </div>
+                         </div>
+                     </div>
                 </div>
             </div>
         </div>
         <!-- Footer End-->
     </footer>
 
+<!-- JS here -->
+	
+		<!-- All JS Custom Plugins Link Here here -->
+        <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+		<!-- Jquery, Popper, Bootstrap -->
+		<script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+        <script src="./assets/js/popper.min.js"></script>
+        <script src="./assets/js/bootstrap.min.js"></script>
+	    <!-- Jquery Mobile Menu -->
+        <script src="./assets/js/jquery.slicknav.min.js"></script>
 
-    <!-- JS here -->
+		<!-- Jquery Slick , Owl-Carousel Plugins -->
+        <script src="./assets/js/owl.carousel.min.js"></script>
+        <script src="./assets/js/slick.min.js"></script>
+        <script src="./assets/js/price_rangs.js"></script>
+        
+		<!-- One Page, Animated-HeadLin -->
+        <script src="./assets/js/wow.min.js"></script>
+		<script src="./assets/js/animated.headline.js"></script>
+		
+		<!-- Scrollup, nice-select, sticky -->
+        <script src="./assets/js/jquery.scrollUp.min.js"></script>
+        <script src="./assets/js/jquery.nice-select.min.js"></script>
+		<script src="./assets/js/jquery.sticky.js"></script>
+        <script src="./assets/js/jquery.magnific-popup.js"></script>
 
-    <!-- All JS Custom Plugins Link Here here -->
-    <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
-    <!-- Jquery, Popper, Bootstrap -->
-    <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
-    <script src="./assets/js/popper.min.js"></script>
-    <script src="./assets/js/bootstrap.min.js"></script>
-    <!-- Jquery Mobile Menu -->
-    <script src="./assets/js/jquery.slicknav.min.js"></script>
-
-    <!-- Jquery Slick , Owl-Carousel Plugins -->
-    <script src="./assets/js/owl.carousel.min.js"></script>
-    <script src="./assets/js/slick.min.js"></script>
-    <script src="./assets/js/price_rangs.js"></script>
-
-    <!-- One Page, Animated-HeadLin -->
-    <script src="./assets/js/wow.min.js"></script>
-    <script src="./assets/js/animated.headline.js"></script>
-
-    <!-- Scrollup, nice-select, sticky -->
-    <script src="./assets/js/jquery.scrollUp.min.js"></script>
-    <script src="./assets/js/jquery.nice-select.min.js"></script>
-    <script src="./assets/js/jquery.sticky.js"></script>
-    <script src="./assets/js/jquery.magnific-popup.js"></script>
-
-    <!-- contact js -->
-    <script src="./assets/js/contact.js"></script>
-    <script src="./assets/js/jquery.form.js"></script>
-    <script src="./assets/js/jquery.validate.min.js"></script>
-    <script src="./assets/js/mail-script.js"></script>
-    <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
-
-    <!-- Jquery Plugins, main Jquery -->
-    <script src="./assets/js/plugins.js"></script>
-    <script src="./assets/js/main.js"></script>
-
-</body>
-
-</html>
+        <!-- contact js -->
+        <script src="./assets/js/contact.js"></script>
+        <script src="./assets/js/jquery.form.js"></script>
+        <script src="./assets/js/jquery.validate.min.js"></script>
+        <script src="./assets/js/mail-script.js"></script>
+        <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
+        
+		<!-- Jquery Plugins, main Jquery -->	
+        <script src="./assets/js/plugins.js"></script>
+        <script src="./assets/js/main.js"></script>
+        
+    </body>
+    
+    </html>

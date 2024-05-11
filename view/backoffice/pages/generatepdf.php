@@ -1,58 +1,49 @@
-
-
 <?php
 ob_start();
-require_once "C:/wamp64/www/Projet_web_DigitalSpark-gestion_des_offres/controller/offreController.php";
-require_once "C:/wamp64/www/Projet_web_DigitalSpark-gestion_des_offres/view/backoffice/pages/vendor/autoload.php";
-
-$c = new offreController();
-$tab = $c->listOffres();
+require_once "C:/xampp/htdocs/projet web integration/view/backoffice/pages/vendor/autoload.php";
+require_once "C:/xampp/htdocs/projet web integration/controller/User/user.php";
+$controller = new userCRUD();
+$userList = $controller->listUsers();
 
 if (isset($_POST["type"]) && $_POST["type"] === "pdf") {
-    error_reporting(0);
-    ob_start();
-
-    // Create new PDF instance
+    // Créer une instance de TCPDF
     $pdf = new TCPDF();
     
-    // Set document information
+    // Définir les informations du document
     $pdf->SetCreator(PDF_CREATOR);
-    $pdf->SetAuthor('asma');
-    $pdf->SetTitle('offre Table PDF');
-    $pdf->SetSubject('offre Table');
+    $pdf->SetAuthor('ons');
+    $pdf->SetTitle('Table des utilisateurs PDF');
+    $pdf->SetSubject('user Table');
 
-    // Add a page
+    // Ajouter une page
     $pdf->AddPage();
 
-    // Set font
+    // Définir la police
     $pdf->SetFont('dejavusans', '', 12);
 
-    // Output the HTML content with custom design
-    $html = '<h1 style="text-align: center;">table des offres</h1>';
+    // Construire le contenu HTML de la table des utilisateurs
+    $html = '<h1 style="text-align: center;">Users Table</h1>';
     $html .= '<table border="1" cellpadding="5" style="width: 100%;">';
-    $html .= '<thead><tr><th>ID offre</th><th>titre</th><th>entreprise</th><th>date de publication</th><th>description</th><th>statut</th></tr></thead>';
+    $html .= '<thead><tr><th>ID</th><th>prenom</th><th>nom</th><th>email</th><th>Role</th></tr></thead>';
     $html .= '<tbody>';
     
-    foreach ($tab as $c) {
+    foreach ($userList as $user) {
         $html .= '<tr>';
-        $html .= '<td>' . $c['id_offre'] . '</td>';
-        $html .= '<td>' . $c['titre'] . '</td>';
-        $html .= '<td>' . $c['entreprise'] . '</td>';
-        $html .= '<td>' . $c['date_pub'] . '</td>';
-        $html .= '<td>' . $c['description'] . '</td>';
-        $html .= '<td>' . $c['statut'] . '</td>';
+        $html .= '<td>' . $user['id_utilisateur'] . '</td>';
+        $html .= '<td>' . $user['prenom'] . '</td>';
+        $html .= '<td>' . $user['nom'] . '</td>';
+        $html .= '<td>' . $user['Email'] . '</td>';
+        $html .= '<td>' . $user['Role'] . '</td>';
         $html .= '</tr>';
     }
     
     $html .= '</tbody></table>';
 
+    // Écrire le contenu HTML dans le PDF
     $pdf->writeHTML($html, true, false, true, false, '');
 
-
-
-    // Output the PDF for download
-    $pdf->Output('offre_table.pdf', 'D');
+    // Télécharger le fichier PDF
+    $pdf->Output('user_table.pdf', 'D');
     exit;
-  
 }
 ?>

@@ -1,5 +1,5 @@
 <?php
-require_once "C:/wamp64/www/Projet_web_DigitalSpark-gestion_des_offres/controller/candiController.php";
+require_once 'C:\xampp\htdocs\projet web integration\controller\candiController.php';
 
 // Vérifier si les paramètres GET sont présents
 if(isset($_GET['id_candidature']) && isset($_GET['id_offre'])) {
@@ -14,7 +14,7 @@ if(isset($_GET['id_candidature']) && isset($_GET['id_offre'])) {
     $controller->supprimercommande($id_candidature);
 
     // Rediriger l'utilisateur vers une autre page ou afficher un message de confirmation
-    header("Location: notifications.php");
+    header("Location: candidature.php");
     exit();
 } else {
     // Gérer le cas où les paramètres GET sont manquants

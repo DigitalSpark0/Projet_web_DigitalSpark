@@ -1,6 +1,6 @@
 <?php
-include_once 'C:/wamp64/www/Projet_web_DigitalSpark-gestion_des_offres/config.php';
-include 'C:/wamp64/www/Projet_web_DigitalSpark-gestion_des_offres/model/user.php';
+include_once "C:/xampp/htdocs/projet web integration/config.php";
+include 'C:/xampp/htdocs/projet web integration/model/user.php';
 
 class offreController
 {
@@ -66,23 +66,44 @@ class offreController
     }
 
     public function SupprimerOffre($id)
-    {
-        $sql = "DELETE FROM offre WHERE id_offre = :id";
-        $db = config::getConnexion();
-        try {
-            $query = $db->prepare($sql);
-            $query->bindValue(':id', $id);
-            $query->execute();
-            $rowCount = $query->rowCount();
-            if ($rowCount > 0) {
-                echo "Suppression réussie. $rowCount lignes affectées.";
-            } else {
-                echo "Aucune ligne supprimée.";
-            }
-        } catch(Exception $e) {
-            die('Erreur: ' . $e->getMessage());
+{
+    $db = config::getConnexion();
+    try {
+        // Vérifier s'il existe des candidatures associées à cette offre
+        $queryCheck = $db->prepare("SELECT COUNT(*) FROM candidatures WHERE id_offre = :id");
+        $queryCheck->bindValue(':id', $id);
+        $queryCheck->execute();
+        $rowCount = $queryCheck->fetchColumn();
+
+        if ($rowCount > 0) {
+            // Il y a des candidatures associées, supprimez-les d'abord
+            $queryDeleteCandidatures = $db->prepare("DELETE FROM candidatures WHERE id_offre = :id");
+            $queryDeleteCandidatures->bindValue(':id', $id);
+            $queryDeleteCandidatures->execute();
         }
+
+        // Maintenant que les candidatures ont été supprimées, supprimez l'offre
+        $queryDeleteOffre = $db->prepare("DELETE FROM offre WHERE id_offre = :id");
+        $queryDeleteOffre->bindValue(':id', $id);
+        $queryDeleteOffre->execute();
+
+        // Vérifier le nombre de lignes affectées
+        $rowCount = $queryDeleteOffre->rowCount();
+        if ($rowCount > 0) {
+            echo "Suppression réussie. $rowCount lignes affectées.";
+        } else {
+            echo "Aucune ligne supprimée.";
+        }
+        return true; // Indiquer que la suppression a réussi
+    } catch(PDOException $e) {
+        // Gestion de l'erreur
+        echo "Erreur lors de la suppression de l'offre: " . $e->getMessage();
+        return false; // Indiquer que la suppression a échoué
     }
+}
+
+
+
 
     public function updateoffre($offre)
     {

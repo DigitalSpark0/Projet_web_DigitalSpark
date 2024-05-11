@@ -1,24 +1,20 @@
 
 <?php
-
-
-require_once "C:/wamp64/www/Projet_web_DigitalSpark-gestion_des_offres/controller/offreController.php";
-
-$offreController = new offreController();
-
-
+require_once "../../../controller/User/user.php";
+require_once "../../../model/userC.php";
+$controller = new userCRUD();
 
 $db = config::getConnexion();
 
 // Récupérer toutes les occurrences de lieu_commande
-$queryAllLocations = $db->query("SELECT DISTINCT entreprise FROM offre");
+$queryAllLocations = $db->query("SELECT DISTINCT Role FROM user");
 $queryAllLocations->execute();
 $allLocations = $queryAllLocations->fetchAll(PDO::FETCH_COLUMN);
 
 // Récupérer le nombre d'occurrences pour chaque lieu_commande
 $locationCounts = [];
 foreach ($allLocations as $location) {
-    $queryCount = $db->prepare("SELECT COUNT(*) FROM offre WHERE entreprise = :location");
+    $queryCount = $db->prepare("SELECT COUNT(*) FROM user WHERE Role = :location");
     
     $queryCount->bindParam(':location', $location);
     $queryCount->execute();
@@ -37,13 +33,14 @@ $locationLabelsJSON = json_encode(array_keys($locationCounts));
 <html lang="en">
 
 <head>
+<div class="container-fluid">
+                   
+
     <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>
-        Now UI Dashboard by Creative Tim
-    </title>
+   
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no"
     name="viewport" />
   <!--     Fonts and icons     -->
@@ -66,19 +63,16 @@ $locationLabelsJSON = json_encode(array_keys($locationCounts));
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
     
-      
-    <div class="main-panel" id="main-panel">
-           
-            
 
 
-            <div class="graphBox"  style="width: 500px; height: 500px;"  >
+            <div class="graphBox"  style="width: 400px; height: 400px;"  >
   <div class="box1">
   <canvas id="pieChart"></canvas> 
 </div>
 </div>
     </div>
-<div style="width: 500px; height: 500px;" > 
+    <br>
+<div> 
     <script>
 var locationCounts = <?php echo $locationCountsJSON; ?>;
 var locationLabels = <?php echo $locationLabelsJSON; ?>;
@@ -120,9 +114,9 @@ var myChart = new Chart(ctx, {
 });
 </script>
 </div>
-    
 
 </head>
+
     <!--   Core JS Files   -->
     <script src="../assets/js/core/jquery.min.js"></script>
     <script src="../assets/js/core/popper.min.js"></script>
@@ -139,7 +133,7 @@ var myChart = new Chart(ctx, {
     <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
     <script src="../assets/demo/demo.js"></script>
   
-
+    
 </body>
 
 </html>

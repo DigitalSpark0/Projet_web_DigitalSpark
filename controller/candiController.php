@@ -1,6 +1,6 @@
 <?php
-include_once 'C:/wamp64/www/Projet_web_DigitalSpark-gestion_des_offres/config.php';
-include 'C:/wamp64/www/Projet_web_DigitalSpark-gestion_des_offres/model/candidature.php';
+include_once "C:/xampp/htdocs/projet web integration/config.php";
+include 'C:/xampp/htdocs/projet web integration/model/candidature.php';
 
 class candiController
 {
@@ -102,61 +102,84 @@ class candiController
     
 
     public function updateCand($candidatures)
-    {
-        try {
-            $db = config::getConnexion();
-    
-            // Check if $offre is candidaturesan array or an object
-            if (is_array($candidatures)) {
-                // If $offre is an array, check if it contains an "offre" key
-                if (array_key_exists('candidatures', $candidatures)) {
-                    // If the "offre" key is present, extract the offre object from it
-                    $candidaturesObject = $candidatures['candidatures'];
-                } else {
-                    // If the "offre" key is not present, throw an exception
-                    throw new Exception("candidatures array is missing the 'candidatures' key.");
-                }
+{
+    try {
+        $db = config::getConnexion();
+
+        // Check if $candidatures is an array or an object
+        if (is_array($candidatures)) {
+            // If $candidatures is an array, check if it contains a "candidatures" key
+            if (array_key_exists('candidatures', $candidatures)) {
+                // If the "candidatures" key is present, extract the candidatures object from it
+                $candidaturesObject = $candidatures['candidatures'];
             } else {
-                // If $offre is an object, assume it's the offre object
-                $candidaturesObject = $candidatures;
+                // If the "candidatures" key is not present, throw an exception
+                throw new Exception("candidatures array is missing the 'candidatures' key.");
             }
-    
-            $query = $db->prepare(
-                'UPDATE candidatures SET 
-                id_offre = :id_offre,
-                date_candidature = :date_candidature,
-                cv = :cv,
-                disponibilité = :disponibilité
-                WHERE id_candidature = :id'
-            );
-            $query->execute([
-                'id_offre' => $candidaturesObject->getid_offre(),
-                'date_candidature' => $candidaturesObject->getdate_cand(),
-                'cv' => $candidaturesObject->getcv(),
-                'date_candidature' => $candidaturesObject->getdate_cand(),
-                'id' => $candidaturesObject->getid_cand()
-            ]);
-        } catch (PDOException $e) {
-            echo "Error updating offre: " .$e->getMessage();
-       } catch (Exception $e) {
-            echo "Error updating offre: " .$e->getMessage();
+        } else {
+            // If $candidatures is an object, assume it's the candidatures object
+            $candidaturesObject = $candidatures;
         }
+
+        $query = $db->prepare(
+            'UPDATE candidatures SET 
+            id_offre = :id_offre,
+            date_candidature = :date_candidature,
+            cv = :cv,
+            disponibilité = :disponibilité
+            WHERE id_candidature = :id'
+        );
+        $query->execute([
+            'id_offre' => $candidaturesObject->getid_offre(),
+            'date_candidature' => $candidaturesObject->getdate_cand(),
+            'cv' => $candidaturesObject->getcv(),
+            'disponibilité' => $candidaturesObject->getDisponibilite(), // Assumant qu'il y a une méthode getDisponibilite()
+            'id' => $candidaturesObject->getid_cand()
+        ]);
+    } catch (PDOException $e) {
+        // Renvoyer l'exception pour qu'elle puisse être traitée à un niveau supérieur
+        throw $e;
+   } catch (Exception $e) {
+        // Renvoyer l'exception pour qu'elle puisse être traitée à un niveau supérieur
+        throw $e;
     }
+}
+
     
     public function getCandidatureById($id_candidature, $id_offre, $cv, $disponibilité)
 {
     $pdo = config::getConnexion();
-    $stmt = $pdo->prepare("SELECT * FROM candidatures WHERE id_candidature = :id_candidature");
-    $stmt->execute(['id_candidature' => $id_candidature]);
-    $stmt->execute(['cv' => $cv]);
-    $stmt->execute(['disponibilité' => $disponibilité]);
-    $candidature = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    // Vérifier si l'id de l'offre est disponible
-    if ($id_offre) {
-        // Ajouter l'id de l'offre à la candidature si disponible
-        $candidature['id_offre'] = $id_offre;
+    // Construire la requête en fonction des paramètres fournis
+    $sql = "SELECT * FROM candidatures WHERE id_candidature = :id_candidature";
+    if ($id_offre !== null) {
+        $sql .= " AND id_offre = :id_offre";
     }
+    if ($cv !== null) {
+        $sql .= " AND cv = :cv";
+    }
+    if ($disponibilité !== null) {
+        $sql .= " AND disponibilité = :disponibilité";
+    }
+    
+    // Préparation de la requête
+    $stmt = $pdo->prepare($sql);
+
+    // Bind des paramètres
+    $stmt->bindParam(':id_candidature', $id_candidature);
+    if ($id_offre !== null) {
+        $stmt->bindParam(':id_offre', $id_offre);
+    }
+    if ($cv !== null) {
+        $stmt->bindParam(':cv', $cv);
+    }
+    if ($disponibilité !== null) {
+        $stmt->bindParam(':disponibilité', $disponibilité);
+    }
+
+    // Exécution de la requête
+    $stmt->execute();
+
+    $candidature = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Créer un objet candidature seulement si une candidature est trouvée
     if ($candidature) {
@@ -169,6 +192,7 @@ class candiController
         return false;
     }
 }
+
 
 
     

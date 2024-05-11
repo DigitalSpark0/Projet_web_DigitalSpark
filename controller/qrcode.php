@@ -1,5 +1,5 @@
 <?php
-include '../phpqrcode/qrlib.php';
+include 'C:\xampp\htdocs\projet web integration\model\phpqrcode\qrlib.php';
 
 if(isset($_GET['qr'])) {
     $id_offre = $_GET['qr'];
@@ -18,7 +18,7 @@ if(isset($_GET['qr'])) {
         $description = $matiere['description'];
         $date_pub = $matiere['date_pub']; // Correction de la variable non définie
         $titre = $matiere['titre'];
-        $entreprise = $matiere['entreprise'];
+        $entreprise = $matiere['entreprise'];  
 
         $qr_content = "id_offre: $id_offre\n";
         $qr_content .= "statut: $statut\n";

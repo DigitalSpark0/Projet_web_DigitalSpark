@@ -1,6 +1,6 @@
 <?php
-require_once "C:\wamp64\www\Projet_web_DigitalSpark-gestion_des_offres\controller\candiController.php";
-require_once "C:\wamp64\www\Projet_web_DigitalSpark-gestion_des_offres\model\candidature.php";
+require_once 'C:\xampp\htdocs\projet web integration\controller\candiController.php';
+require_once 'C:\xampp\htdocs\projet web integration\model\candidature.php';
 
 // Vérifier si tous les champs sont remplis
 if(empty($_POST["id_offre"]) || empty($_POST["date_candidature"]) || empty($_FILES["cv"]["name"]) || empty($_POST["disponibilite"])) {
@@ -63,7 +63,7 @@ if(move_uploaded_file($cv_temp, $upload_dir . $cv)) {
     $candiC->ajouterCand($candidatures);
 
     // Redirection vers la page contact.php après l'ajout de la candidature
-    header('Location: contact.php');
+    header('Location: offre.php');
 } else {
     echo "Une erreur s'est produite lors de l'enregistrement du CV.";
 }

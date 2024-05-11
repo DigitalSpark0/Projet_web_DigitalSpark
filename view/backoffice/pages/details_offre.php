@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <?php
-        require_once "C:\wamp64\www\Projet_web_DigitalSpark-gestion_des_offres\controller\offreController.php";
+        require_once 'C:\xampp\htdocs\projet web integration\controller\offreController.php';
         $controller = new offreController();
 
         // Vérifier si l'ID de l'offre est présent dans l'URL

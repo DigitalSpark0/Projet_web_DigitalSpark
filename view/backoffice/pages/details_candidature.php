@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <?php
-        require_once "C:\wamp64\www\Projet_web_DigitalSpark-gestion_des_offres\controller\candiController.php";
+        require_once 'C:\xampp\htdocs\Projet_web_DigitalSpark-gestion_des_offres\controller\candiController.php';
         $controller = new candiController();
 
         // Vérifier si l'ID de la candidature est présent dans l'URL
@@ -22,7 +22,8 @@
                 // Si l'ID de l'offre n'est pas défini dans l'URL, initialiser à NULL
                 $id_offre = null;
             }
-            $candidature = $controller->getCandidatureById($id_candidature, $id_offre);
+            // Fournir les quatre arguments attendus
+            $candidature = $controller->getCandidatureById($id_candidature, $id_offre, null, null);
 
             if ($candidature) {
                 echo "<h2>Détails de la candidature</h2>";
